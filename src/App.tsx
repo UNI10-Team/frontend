@@ -4,7 +4,7 @@ import {AttachmentDrop} from "./components/attachment-drop/attachmentDrop";
 
 const App: React.FC = () => {
   return (
-    <AttachmentDrop></AttachmentDrop>
+    <AttachmentDrop/>
   );
 };
 
