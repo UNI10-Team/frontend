@@ -184,7 +184,7 @@
     position: absolute;
     left: 33%;
     right: 6.72%;
-    top: 60.83%;
+    top: 66.83%;
     bottom: 41.21%;
     height: 8%;
     width: 30%;
@@ -195,9 +195,9 @@
 
 .lets-start-text{
     position: absolute;
-    left: 25%;
-    right: 6.72%;
-    top: 36.83%;
+    left: 15%;
+    /*right: 6.72%;*/
+    top: 19.83%;
     bottom: 38.21%;
 
     font-family: Ruda;

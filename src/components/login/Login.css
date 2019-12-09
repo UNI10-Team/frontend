@@ -103,8 +103,8 @@
     right: 15%;
     top: 15%;
     bottom: 15%;
-    width: 8vw;
-    height: 8vw;
+    min-width: 8vw;
+    min-height: 8vw;
     background: rgba(23, 145, 57, 0.66);
     border-radius: 50%;
     border: thick groove rgba(23, 145, 57, 0.66);
@@ -114,15 +114,15 @@
 }
 .second-green-circle:hover{
     position: absolute;
-    left: 16%;
-    right: 14%;
-    top: 16%;
-    bottom: 14%;
-    width: 8vw;
-    height: 8vw;
+    left: 15%;
+    right: 15%;
+    top: 15%;
+    bottom: 15%;
+    min-width: 8vw;
+    min-height: 8vw;
     background: rgba(23, 145, 57, 0.66);
     border-radius: 50%;
-    border: groove rgba(23, 145, 57, 0.66);
+    border: thick groove rgba(23, 145, 57, 0.66);
     opacity: 0.6;
 }
 

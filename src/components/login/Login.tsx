@@ -3,6 +3,7 @@ import Book from "../../interfaces/book";
 import {UserService} from "../../services/UserService";
 import {IoMdPerson, IoMdPersonAdd} from "react-icons/io";
 import './Login.css';
+import {StudentCoursesComponent} from "../student-courses/StudentCoursesComponent";
 
 export interface LoginProperties {
 
@@ -10,12 +11,11 @@ export interface LoginProperties {
 
 
 export interface LoginState {
-    books: Book[]
 }
 
 export class Login extends Component<LoginProperties, LoginState> {
 
-    constructor(private bookService: UserService, props: LoginProperties) {
+    constructor(props: LoginProperties) {
         super(props);
     }
 
@@ -24,7 +24,7 @@ export class Login extends Component<LoginProperties, LoginState> {
             <div className={"login-component"}>
                 <div className={"image-left-component"}>
                     <div className={"login-page-image"}/>
-                    <text className={"welcome-text"}>Welcome to UNI10</text>
+                    <div className={"welcome-text"}>Welcome to UNI10</div>
                     <div className={"welcome-text-line"}/>
                 </div>
                 <div className={"white-rectangle"}>
@@ -43,7 +43,7 @@ export class Login extends Component<LoginProperties, LoginState> {
                 </div>
                 <div className={"right-component"}>
                     <form>
-                        <text className={"login-text"}>Login</text>
+                        <div className={"login-text"}>Login</div>
                         <input type="text" id="fname" name="firstname" placeholder="Username.."
                                className={"username-input"}/>
                         <input type="password" id="fname" name="firstname" placeholder="Password.."
