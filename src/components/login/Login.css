@@ -1,0 +1,231 @@
+.login-component{
+    width:80%;
+    height: 90%;
+    overflow:hidden;
+    /*background-color: red;*/
+    position: absolute;
+    margin: 2% 10%;
+    border-style: outset;
+}
+.image-left-component{
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    top: 0%;
+    bottom: 0%;
+    float: left;
+    background: url("../../resources/loginImage.jpg") no-repeat;
+    background-size: cover;
+    opacity: 90%;
+    border: 1px solid #E1DDDD;
+    box-sizing: border-box;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0.4vw 0.8vw 0 rgba(0, 0, 0, 0.2), 0 0.6vw 2vw 0 rgba(0, 0, 0, 0.19);
+}
+.login-page-image{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*width: 12vw;*/
+    /*height: 12vw;*/
+    background: #FFFFFF;
+    background: url("../../resources/loginImage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 95%;
+    box-shadow: 0.4vw 0.2vw 0.2vw 0.3vw rgba(0, 0, 0, 0.2), 0 0 0.7vw 0 rgba(0, 0, 0, 0.19);
+}
+.welcome-text{
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 22.77%;
+    bottom: 87.96%;
+    text-shadow: 0.2vw 0.2vw 0.4vw #000000;
+    font-family: Ruda;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 4vw;
+    line-height: 4vw;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+.welcome-text-line{
+    position: absolute;
+    left: 40%;
+    right: 40%;
+    top: 42%;
+    bottom: 68%;
+    border: 0.3vw solid #FFFFFF;
+    width: 20%;
+    text-shadow: 0.2vw 0.2vw 0.4vw #000000;
+}
+.white-rectangle{
+    position: absolute;
+    left: 33%;
+    right: 67%;
+    top: 48%;
+    bottom: 26.07%;
+    width: 11vw;
+    height: 11vw;
+    background: #FFFFFF;
+    background-size: cover;
+    border-radius: 100%;
+}
+
+.second-white-rectangle{
+    position: absolute;
+    left: 33%;
+    right: 67%;
+    top: 72%;
+    bottom: 5.37%;
+    width: 11vw;
+    height: 11vw;
+    background: #FFFFFF;
+    border-radius: 100%;
+}
+
+.first-green-circle{
+    position: absolute;
+    left: 14%;
+    right: 16%;
+    top: 14%;
+    bottom: 16%;
+    background: rgba(23, 145, 57, 0.66);
+    border-radius: 50%;
+    min-width: 8vw;
+    min-height: 8vw;
+}
+.second-green-circle{
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    top: 15%;
+    bottom: 15%;
+    width: 8vw;
+    height: 8vw;
+    background: rgba(23, 145, 57, 0.66);
+    border-radius: 50%;
+    border: thick groove rgba(23, 145, 57, 0.66);
+}
+.second-green-circle:focus{
+    outline: none;
+}
+.second-green-circle:hover{
+    position: absolute;
+    left: 16%;
+    right: 14%;
+    top: 16%;
+    bottom: 14%;
+    width: 8vw;
+    height: 8vw;
+    background: rgba(23, 145, 57, 0.66);
+    border-radius: 50%;
+    border: groove rgba(23, 145, 57, 0.66);
+    opacity: 0.6;
+}
+
+.login-icon{
+    position: absolute;
+    left: 17%;
+    top: 13%;
+    color: rgba(0, 0, 0, 0.51);
+    height: 5vw;
+    width: 5vw;
+}
+
+.register-icon{
+    position: absolute;
+    left: 15%;
+    top: 10%;
+    color: rgba(0, 0, 0, 0.51);
+    height: 5vw;
+    width: 5vw;
+}
+
+
+.right-component{
+    position: absolute;
+    float: right;
+    /*background-color: blue;*/
+    width: 60%;
+    height: 100%;
+    right: 0%;
+}
+
+.username-input{
+    position: absolute;
+    left: 18.07%;
+    right: 6.72%;
+    top: 34.08%;
+    bottom: 60.64%;
+    height: 5%;
+    width: 60%;
+    font-family: Adamina;
+
+    background: rgba(206, 202, 202, 0.33);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+.password-input{
+    position: absolute;
+    left: 18.07%;
+    right: 6.72%;
+    top: 41.08%;
+    bottom: 60.64%;
+    height: 5%;
+    width: 60%;
+    resize: none;
+    font-family: Adamina;
+    background: rgba(206, 202, 202, 0.33);
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+
+.lets-go-button{
+    position: absolute;
+    left: 33%;
+    right: 6.72%;
+    top: 52.83%;
+    bottom: 41.21%;
+    height: 8%;
+    width: 30%;
+    background: rgba(23, 145, 57, 0.66);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+}
+
+.lets-go-text{
+    position: absolute;
+    left: 25%;
+    right: 6.72%;
+    top: 28.83%;
+    bottom: 38.21%;
+
+    font-family: Ruda;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    display: flex;
+
+    color: white;
+}
+
+.login-text{
+    position: absolute;
+    left: 10.1%;
+    right: 12%;
+    top: 11.77%;
+    bottom: 74.9%;
+
+    font-family: Ruda;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 42px;
+    line-height: 51px;
+    text-align: center;
+
+    color: rgba(0, 0, 0, 0.51);
+}
