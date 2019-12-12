@@ -1,10 +1,12 @@
-import React from 'react';
-import {AttachmentDrop} from "./components/attachment-drop/attachmentDrop";
+import React, {useEffect} from 'react';
 import {StudentCoursesComponent} from "./components/student-courses/StudentCoursesComponent";
-import {Login} from "./components/login/Login";
-import Register from "./components/register/Register";
 import './App.css';
+import bundle from "./interfaces/messages";
+
 const App: React.FC = () => {
+  useEffect(() => {
+    document.title = bundle.messages.TITLE;
+  });
   return (
     <StudentCoursesComponent/>
   );

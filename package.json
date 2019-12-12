@@ -15,12 +15,14 @@
 		"material-ui-icons": "^1.0.0-beta.36",
 		"react": "^16.12.0",
 		"react-dom": "^16.12.0",
+		"react-icons": "latest",
 		"react-scripts": "3.3.0",
-		"typescript": "^3.7.3",
-		"react-icons": "latest"
+		"serve": "^11.2.0",
+		"typescript": "^3.7.3"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"dev": "react-scripts start",
+		"start": "serve -l 3000 -s build",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
