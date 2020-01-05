@@ -1,14 +1,15 @@
 import React from 'react';
 import './App.css';
-//import { Route, Redirect, Switch } from 'react-router-dom';
+import {StudentProfile} from "./components/profile/student-profile/StudentProfile";
+import {TeacherProfile} from "./components/profile/teacher-profile/TeacherProfile";
+import {HomePage} from "./components/home/HomePage";
 import {StudentCoursesComponent} from './components/student-courses/StudentCoursesComponent';
 import Register from './components/register/Register';
 import NotFound from './components/not-found/NotFound';
-
 const App: React.FC = () => {
-    return (
-        <StudentCoursesComponent/>
-    );
+  return (
+    <HomePage/>
+  );
 };
 /*<React.Fragment>
   <Switch>
