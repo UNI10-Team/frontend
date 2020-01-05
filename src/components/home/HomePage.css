@@ -1,0 +1,80 @@
+.home-page {
+    background: url("../../resources/home.jpg") no-repeat;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.welcome-text {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    position: absolute;
+    top: 10%;
+    font-size: 1.8vw;
+    font-family: Ruda, fantasy;
+    left: 5%;
+    color: rgba(167, 62, 39, 0.69);
+}
+.button-turnoff {
+    display: block !important;
+    height: 10%;
+    width: 5%;
+    text-align: center;
+    left: 95%;
+    margin-top: -5% !important;
+    background: rgba(167, 62, 39, 0.69) !important;
+}
+
+.button {
+    position: absolute;
+    margin-top: 15% !important;
+    left: 5%;
+    margin-right: 1% !important;
+    color: rgba(167, 62, 39, 0.69) !important;
+    height: 10vw;
+    width: 10vw;
+    border: 1px rgba(23, 145, 57, 0.66) solid !important;
+    background-color: rgba(206, 202, 202, 0.33) !important;
+}
+
+.icon {
+    position: absolute !important;
+    margin-top: -15%;
+    font-size: 5vw !important;
+    color: rgba(0, 0, 0, 0.51);
+}
+.text-button {
+    font-family: Ruda, fantasy;
+    font-size: 2vw;
+    margin-top: 50%;
+    color: rgba(23, 145, 57, 0.66);
+}
+
+.notifications {
+    position: absolute;
+    width: 40%;
+    left: 55%;
+    top: 10%;
+}
+
+.main-text {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    text-align: center;
+    color: rgba(167, 62, 39, 0.69);
+    font-family: Ruda, fantasy !important;
+    font-size: 1.5vw !important;
+}
+
+.accept-button {
+    background-color:  rgba(23, 145, 57, 0.66) !important;
+    margin-right: 1% !important;
+}
+.decline-button {
+    background-color:  rgba(167, 62, 39, 0.69) !important;
+}

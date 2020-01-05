@@ -6,9 +6,10 @@ import Register from "./components/register/Register";
 import './App.css';
 import {StudentProfile} from "./components/profile/student-profile/StudentProfile";
 import {TeacherProfile} from "./components/profile/teacher-profile/TeacherProfile";
+import {HomePage} from "./components/home/HomePage";
 const App: React.FC = () => {
   return (
-    <StudentProfile/>
+    <HomePage/>
   );
 };
 
