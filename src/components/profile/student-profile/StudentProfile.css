@@ -1,0 +1,10 @@
+.student-profile {
+    background: url("../../../resources/profile-image.jpg") no-repeat;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+

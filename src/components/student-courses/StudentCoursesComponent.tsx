@@ -11,9 +11,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 export interface StudentCoursesProperties {
-
 }
-
 
 export interface StudentCoursesState {
 }
