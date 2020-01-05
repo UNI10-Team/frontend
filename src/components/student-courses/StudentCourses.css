@@ -62,24 +62,13 @@
     text-align: center;
     color: #FFFFFF;
 }
-.button-1, .button-2, .button-3, .button-4 {
-    height: 10%;
-    width: 5%;
-    display: block !important;
-    position: absolute;
-    text-align: center;
-    background: rgba(39, 167, 136, 0.69) !important;
-}
-.button-1 {
-    margin-top: 15% !important;
-}
+
 .icon {
     color: white;
 }
 
-.button-1:hover, .button-2:hover, .button-3:hover, .button-4:hover {
-    width: 10%;
-    background: rgba(255, 233, 36, 0.69) !important;
+.button:hover {
+    background: rgba(39, 167, 136, 0.69) !important;
 }
 
 .button-home, .button-profile, .button-turnoff {
@@ -90,7 +79,7 @@
     left: 95%;
 }
 .button-turnoff{
-    margin-top: -15% !important;
+    margin-top: 15% !important;
 }
 
 .button-home {
@@ -102,4 +91,18 @@
 .button-turnoff {
     background: rgba(167, 62, 39, 0.69) !important;
 }
+.panel-1 {
+    width: fit-content;
+    background: rgba(39, 167, 136, 0.69) !important;
+    margin-top: -15% !important;
+}
 
+.panel {
+    width: fit-content;
+    background: rgba(39, 167, 136, 0.69) !important;
+
+}
+
+.panel:hover, .panel-1:hover {
+    background: rgba(255, 233, 36, 0.69) !important;
+}
