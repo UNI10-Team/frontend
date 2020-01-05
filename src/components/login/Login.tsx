@@ -1,9 +1,10 @@
 import React, {Component} from "react";
-import Book from "../../interfaces/book";
-import {UserService} from "../../services/UserService";
+import UserService, {userService} from "../../services/UserService";
+import RestService, {restService} from "../../services/RestService";
 import {IoMdPerson, IoMdPersonAdd} from "react-icons/io";
 import './Login.css';
 import {StudentCoursesComponent} from "../student-courses/StudentCoursesComponent";
+import {AuthenticationRequest, AuthenticationResponse} from "../../interfaces/authentication";
 
 export interface LoginProperties {
 
@@ -11,6 +12,8 @@ export interface LoginProperties {
 
 
 export interface LoginState {
+    username: string;
+    password: string;
 }
 
 export class Login extends Component<LoginProperties, LoginState> {
@@ -30,28 +33,43 @@ export class Login extends Component<LoginProperties, LoginState> {
                 <div className={"white-rectangle"}>
                     <div className={"first-green-circle"}>
                         <div className={"login-icon"}>
-                            <IoMdPerson style={{"height":"inherit","width":"auto"}}/>
+                            <IoMdPerson style={{"height": "inherit", "width": "auto"}}/>
                         </div>
                     </div>
                 </div>
                 <div className={"second-white-rectangle"}>
                     <button className={"second-green-circle"}>
                         <div className={"register-icon"}>
-                            <IoMdPersonAdd style={{"height":"inherit","width":"auto"}}/>
+                            <IoMdPersonAdd style={{"height": "inherit", "width": "auto"}}/>
                         </div>
                     </button>
                 </div>
                 <div className={"right-component"}>
-                    <form>
-                        <div className={"login-text"}>Login</div>
-                        <input type="text" id="fname" name="firstname" placeholder="Username.."
-                               className={"username-input"}/>
-                        <input type="password" id="fname" name="firstname" placeholder="Password.."
-                               className={"password-input"}/>
-                        <button className={"lets-go-button"}>
-                            <div className={"lets-go-text"}>LET'S GO</div>
-                        </button>
-                    </form>
+                    <div className={"login-text"}>Login</div>
+                    <input type="text" id="username" name="username" placeholder="Username.."
+                           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                               this.setState({
+                                   username: event.target.value
+                               })
+                           }}
+                           className={"username-input"}/>
+                    <input type="password" id="password" name="password" placeholder="Password.."
+                           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                               this.setState({
+                                   password: event.target.value
+                               })
+                           }}
+                           className={"password-input"}/>
+                    <button className={"lets-go-button"} onClick={() => {
+                        const {username, password} = this.state;
+                        userService.authenticate({username, password}).then((response: AuthenticationResponse) => {
+                            restService.addJWT(response.jwt);
+                            console.log("S-a logat " + response.jwt);
+                        });
+                        console.log(username);
+                    }}>
+                        <div className={"lets-go-text"}>LET'S GO</div>
+                    </button>
                 </div>
             </div>
         );
