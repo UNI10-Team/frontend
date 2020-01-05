@@ -10,7 +10,7 @@
 
 .grey-rectangle {
     position: absolute;
-    background: rgba(57, 57, 57, 0.6);
+    background: var(--grey);
     width: 60%;
     height: 100%;
     margin-left: 20%;
@@ -83,13 +83,13 @@
 }
 
 .button-home {
-    background: rgba(255, 233, 36, 0.69) !important;
+    background: var(--yellow) !important;
 }
 .button-profile {
-    background: rgba(39, 167, 136, 0.69) !important;
+    background: var(--green) !important;
 }
 .button-turnoff {
-    background: rgba(167, 62, 39, 0.69) !important;
+    background: var(--red) !important;
 }
 .panel-1 {
     width: fit-content;

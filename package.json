@@ -15,15 +15,17 @@
 		"material-ui-icons": "^1.0.0-beta.36",
 		"react": "^16.12.0",
 		"react-dom": "^16.12.0",
+		"react-icons": "latest",
 		"react-scripts": "3.3.0",
-		"typescript": "^3.7.3",
-		"react-icons": "latest"
+		"serve": "^11.2.0",
+		"typescript": "^3.7.3"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"dev": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"heroku-postbuild": "serve -s build -l 3000"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
@@ -43,5 +45,9 @@
 	"engines": {
 		"node": "10.16.3",
 		"npm": "6.9"
-	}
+	},
+	"devDependencies": {
+		"webpack-cli": "^3.3.10"
+	},
+	"heroku-run-build-script": true
 }

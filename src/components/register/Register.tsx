@@ -1,6 +1,5 @@
 import React, {Component} from "react";
-import Book from "../../interfaces/book";
-import {UserService} from "../../services/UserService";
+import UserService from "../../services/UserService";
 import {IoMdPerson, IoMdPersonAdd } from "react-icons/io";
 import './Register.css';
 
@@ -10,25 +9,14 @@ export interface registerProperties {
 
 
 export interface registerState {
-    books: Book[]
 }
+
 
 export default class Register extends Component<registerProperties, registerState> {
 
     constructor(private userService: UserService, props: registerProperties) {
         super(props);
-        this.setState({
-            books: []
-        });
     }
-
-    // componentDidMount(): void {
-    //     this.bookService.getBooks().then((data: Book[]) => {
-    //         this.setState({
-    //             books: data
-    //         });
-    //     });
-    // }
 
     render() {
         return(
