@@ -46,14 +46,14 @@ export class Login extends Component<LoginProperties, LoginState> {
                 </div>
                 <div className={"right-component"}>
                     <div className={"login-text"}>Login</div>
-                    <input type="text" id="username" name="username" placeholder="Username.."
+                    <input type="text" id="username" name="username" placeholder="Username..."
                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                this.setState({
                                    username: event.target.value
                                })
                            }}
                            className={"username-input"}/>
-                    <input type="password" id="password" name="password" placeholder="Password.."
+                    <input type="password" id="password" name="password" placeholder="Password..."
                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                this.setState({
                                    password: event.target.value

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Button from "@material-ui/core/Button";
-import {SettingsPower} from "@material-ui/icons";
-import './HomePage.css'
+import {AccountCircle, SettingsPower} from "@material-ui/icons";
+import './TeacherHomePage.css'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ViewComfyIcon from '@material-ui/icons/ViewComfy';
@@ -14,6 +14,8 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/core/Avatar';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
 const messages = [
     {
@@ -34,7 +36,7 @@ export interface HomeProperties {
 export interface HomeState {
 }
 
-export class HomePage extends Component<HomeProperties, HomeState> {
+export class TeacherHomePage extends Component<HomeProperties, HomeState> {
     constructor(props: HomeProperties) {
         super(props);
     }
@@ -44,7 +46,7 @@ export class HomePage extends Component<HomeProperties, HomeState> {
 
         return (
             <div className={"home-page"}>
-                <div className={"welcome-text"}>Bine ai venit, Alexandra!</div>
+                <div className={"welcome-text"}>Bine ai venit, prof. Gabriela!</div>
                 <div>
 
                     <div className={"notifications"}>
@@ -62,8 +64,8 @@ export class HomePage extends Component<HomeProperties, HomeState> {
                                                     <Avatar><NotificationsIcon/></Avatar>
                                                 </ListItemAvatar>
                                                 <ListItemText primary={primary} secondary={secondary}/>
-                                                <Button className={"accept-button"}>Accepta</Button>
-                                                <Button className={"decline-button"}>Refuza</Button>
+                                                <Button className={"accept-button"}>Accepta<CheckIcon/></Button>
+                                                <Button className={"decline-button"}>Refuza<CloseIcon/></Button>
                                             </ListItem>
                                         </React.Fragment>
                                     ))}
@@ -87,7 +89,10 @@ export class HomePage extends Component<HomeProperties, HomeState> {
 
 
                 <Button className={"button-turnoff"}>
-                    <SettingsPower className={"icon-turn-off"}/>
+                    <SettingsPower/>
+                </Button>
+                <Button className={"button-profile"}>
+                    <AccountCircle/>
                 </Button>
             </div>
         );
