@@ -11,6 +11,7 @@ import {TeacherHomePage} from "./components/home/teacher-home/TeacherHomePage";
 import {StudentProfile} from "./components/profile/student-profile/StudentProfile";
 import {TeacherProfile} from "./components/profile/teacher-profile/TeacherProfile";
 import {StudentCourses} from "./components/student-courses/StudentCourses";
+import {TeacherCourses} from "./components/teacher-courses/TeacherCourses";
 import history from "./history";
 
 ReactDOM.render(
@@ -23,6 +24,7 @@ ReactDOM.render(
             <Route path="/student/profile" component={StudentProfile}/>
             <Route exact path="/teacher/profile" component={TeacherProfile}/>
             <Route exact path="/student/courses" component={StudentCourses}/>
+            <Route exact path="/teacher/courses" component={TeacherCourses}/>
         </Switch>
     </Router>,
     document.getElementById('root'));

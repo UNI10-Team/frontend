@@ -1,0 +1,113 @@
+.teacher-courses-component {
+    background: url("../../resources/student-courses-image.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+.grey-rectangle-courses {
+    position: absolute;
+    background: var(--grey);
+    width: 60%;
+    height: 100%;
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+}
+
+.logo {
+    position: absolute;
+    width: 20%;
+    height: 22%;
+    top: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+    background: url("../../resources/logo.jpg") round;
+    background-size: cover;
+    mix-blend-mode: hard-light;
+    opacity: 0.7;
+    border-radius: 50%;
+}
+
+.main-text-1-courses {
+    position: absolute;
+
+    top: 45%;
+    font-family: Ruda, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 4vw;
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.main-text-2-courses {
+    position: absolute;
+
+    top: 55%;
+    font-family: Ruda, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2vw;
+    margin-left: 18%;
+    margin-right: 18%;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.white-icon {
+    color: white;
+}
+
+.course-button:hover {
+    background: rgba(39, 167, 136, 0.69) !important;
+}
+
+.button-home, .button-profile, .button-turnoff {
+    display: block !important;
+    height: 10%;
+    width: 5%;
+    text-align: center;
+    left: 95%;
+}
+.button-turnoff{
+    margin-top: 15% !important;
+}
+
+.button-home {
+    background: var(--yellow) !important;
+}
+.button-profile {
+    background: var(--green) !important;
+}
+.button-turnoff {
+    background: var(--red) !important;
+}
+.panel-1 {
+    width: fit-content;
+    background: rgba(39, 167, 136, 0.69) !important;
+    margin-top: -15% !important;
+}
+
+.panel {
+    width: fit-content;
+    background: rgba(39, 167, 136, 0.69) !important;
+
+}
+
+.panel:hover, .panel-1:hover {
+    background: rgba(255, 233, 36, 0.69) !important;
+}
+
+
