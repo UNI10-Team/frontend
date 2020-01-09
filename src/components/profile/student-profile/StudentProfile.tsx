@@ -13,6 +13,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PortraitIcon from '@material-ui/icons/Portrait';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import InfoIcon from '@material-ui/icons/Info';
+import bundle from "../../../util/nls";
 
 export interface StudentProfileProperties {
 }
@@ -27,17 +28,21 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
     }
 
     render() {
+        const messages = bundle.messages;
         return (
             <div className={"student-profile"}>
                 <div className={"grey-rectangle-profile"}>
                     <div className={"profile-icon-student"}>
-                        <div className={"welcome-text-profile"}>SALUT, ALEXANDRA!
+                        <div className={"welcome-text-profile"}>
+                            {`${messages.HELLO}, Alexandra!`}
                         </div>
                     </div>
 
                     <div className={"light-grey-rectangle-1"}>
                         <form>
-                            <div className={"main-text-profile"}>Schimbare parola</div>
+                            <div className={"main-text-profile"}>
+                                {messages.CHANGE_PASSWORD}
+                            </div>
                             <input type="password" id="opassword" name="oldpassword" placeholder="Parola curenta"
                                    className={"password-input-profile"}/>
                             <input type="password" id="npassword" name="newpassword" placeholder="Parola noua"
@@ -45,7 +50,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                             <input type="password" id="rpassword" name="repeatpassword" placeholder="Repeta parola noua"
                                    className={"password-input-profile"}/>
                             <Button className={"submit-button"}>
-                                Reseteaza parola
+                                {messages.RESET_PASSWORD}
                             </Button>
                         </form>
                     </div>
@@ -61,7 +66,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                                     secondary="Nume si prenume"
                                 />
                             </ListItem>
-                            <Divider variant="inset" component="li" />
+                            <Divider variant="inset" component="li"/>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar><MailOutlineIcon/></Avatar>
@@ -71,7 +76,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                                     secondary="Email"
                                 />
                             </ListItem>
-                            <Divider variant="inset" component="li" />
+                            <Divider variant="inset" component="li"/>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar><GroupWorkIcon/></Avatar>
@@ -81,7 +86,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                                     secondary="Grupa"
                                 />
                             </ListItem>
-                            <Divider variant="inset" component="li" />
+                            <Divider variant="inset" component="li"/>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar><InfoIcon/></Avatar>

@@ -16,8 +16,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/core/Avatar';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
+import bundle from '../../../util/nls';
 
-const messages = [
+const news_messages = [
     {
         id: 1,
         primary: 'Silviu @ LFTC_C1',
@@ -43,10 +44,12 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
 
 
     render() {
-
+        const messages = bundle.messages;
         return (
             <div className={"home-page"}>
-                <div className={"welcome-text-home"}>Bine ai venit, prof. Gabriela!</div>
+                <div className={"welcome-text-home"}>
+                    {`${messages.WELCOME}, prof. Gabriela!`}
+                </div>
                 <div>
 
                     <div className={"notifications"}>
@@ -54,10 +57,10 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                             <CssBaseline/>
                             <Paper square>
                                 <Typography className={"main-text-home"}>
-                                    Noutati
+                                    {messages.NEWS}
                                 </Typography>
                                 <List>
-                                    {messages.map(({id, primary, secondary}) => (
+                                    {news_messages.map(({id, primary, secondary}) => (
                                         <React.Fragment key={id}>
                                             <ListItem button>
                                                 <ListItemAvatar>
@@ -75,15 +78,15 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                     </div>
                     <Button className={"big-button"}>
                         <AccountCircleIcon className={"big-icon"}/>
-                        <div className={"text-button"}>PROFIL</div>
+                        <div className={"text-button"}>{messages.PROFILE}</div>
                     </Button>
                     <Button className={"big-button"}>
                         <FileCopyIcon className={"big-icon"}/>
-                        <div className={"text-button"}>CURSURI</div>
+                        <div className={"text-button"}>{messages.COURSES}</div>
                     </Button>
                     <Button className={"big-button"}>
                         <ViewComfyIcon className={"big-icon"}/>
-                        <div className={"text-button"}>ORAR</div>
+                        <div className={"text-button"}>{messages.TIMETABLE}</div>
                     </Button>
                 </div>
 

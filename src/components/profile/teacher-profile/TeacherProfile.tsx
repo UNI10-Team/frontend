@@ -12,6 +12,7 @@ import PortraitIcon from '@material-ui/icons/Portrait';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import './TeacherProfile.css';
 import '../Profile.css';
+import bundle from "../../../util/nls";
 
 export interface TeacherProfileProperties {
 }
@@ -26,17 +27,21 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
     }
 
     render() {
+        const messages = bundle.messages;
         return (
             <div className={"teacher-profile"}>
                 <div className={"grey-rectangle-profile"}>
                     <div className={"profile-icon-teacher"}>
-                        <div className={"welcome-text-profile"}>SALUT!
+                        <div className={"welcome-text-profile"}>
+                            {`${messages.HELLO}!`}
                         </div>
                     </div>
 
                     <div className={"light-grey-rectangle-1"}>
                         <form>
-                            <div className={"main-text-profile"}>Schimbare parola</div>
+                            <div className={"main-text-profile"}>
+                                {messages.CHANGE_PASSWORD}
+                            </div>
                             <input type="password" id="opassword" name="oldpassword" placeholder="Parola curenta"
                                    className={"password-input-profile"}/>
                             <input type="password" id="npassword" name="newpassword" placeholder="Parola noua"
@@ -44,7 +49,7 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                             <input type="password" id="rpassword" name="repeatpassword" placeholder="Repeta parola noua"
                                    className={"password-input-profile"}/>
                             <Button className={"submit-button"}>
-                                Reseteaza parola
+                                {messages.RESET_PASSWORD}
                             </Button>
                         </form>
                     </div>
