@@ -1,0 +1,70 @@
+.side-rectangle{
+    position: absolute;
+    width: 5%;
+    height: 100%;
+    left: 15%;
+    top: 0px;
+    background: rgba(22, 23, 22, 0.72);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.course-logo{
+    position: absolute;
+    width: 10%;
+    height: 20%;
+    top: 4%;
+    left: 12%;
+    background: url("../../resources/logo.jpg") round;
+    background-size: cover;
+    /*//mix-blend-mode: hard-light;*/
+    opacity: 80%;
+    border-radius: 100%;
+}
+
+.side-text{
+    position: absolute;
+    left: 8%;
+    top: 50%;
+    font-family: Ruda;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 7.2vw;
+
+    color: #FFFFFF;
+
+    transform: rotate(-90deg);
+}
+
+.panel-1 {
+    width: fit-content;
+    background: rgba(39, 167, 136, 0.69) !important;
+    margin-top: 5% !important;
+}
+
+.icon {
+    color: white;
+}
+
+.panel {
+    width: fit-content;
+    background: rgba(39, 167, 136, 0.69) !important;
+
+}
+
+.panel:hover, .panel-1:hover {
+    background: rgba(255, 233, 36, 0.69) !important;
+}
+
+.button:hover {
+    background: rgba(39, 167, 136, 0.69) !important;
+}
+
+.grey-rectangle {
+    position: absolute;
+    background: var(--grey);
+    width: 60%;
+    height: 100%;
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: center;
+}
