@@ -17,7 +17,7 @@ export interface StudentCoursesProperties {
 export interface StudentCoursesState {
 }
 
-export class StudentCoursesComponent extends Component<StudentCoursesProperties, StudentCoursesState> {
+export class StudentCourses extends Component<StudentCoursesProperties, StudentCoursesState> {
 
     constructor(props: StudentCoursesProperties) {
         super(props);
@@ -27,36 +27,36 @@ export class StudentCoursesComponent extends Component<StudentCoursesProperties,
         const messages = bundle.messages;
         return (
             <div className={"student-courses-component"}>
-                <div className={"grey-rectangle"}>
+                <div className={"grey-rectangle-courses"}>
                     <div className={"logo"}/>
-                    <div className={"main-text-1"}>
+                    <div className={"main-text-1-courses"}>
                         {messages.WHAT_WILL_YOU_STUDY_TODAY}
                     </div>
-                    <div className={"main-text-2"}>
+                    <div className={"main-text-2-courses"}>
                         {messages.TAKE_A_LOOK_TO_COURSES}
                     </div>
                 </div>
                 <Button className={"button-turnoff"}>
-                    <SettingsPower className={"icon"}/>
+                    <SettingsPower className={"white-icon"}/>
                 </Button>
                 <Button className={"button-profile"}>
-                    <AccountCircle className={"icon"}/>
+                    <AccountCircle className={"white-icon"}/>
                 </Button>
                 <Button className={"button-home"}>
-                    <Home className={"icon"}/>
+                    <Home className={"white-icon"}/>
                 </Button>
                 <LightTooltip title={`${messages.YEAR} 1`} placement={"right"}>
                 <ExpansionPanel className={"panel-1"}>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter1 className={"icon"}/>
+                            <Filter1 className={"white-icon"}/>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Button className={"button"}>
+                            <Button className={"course-button"}>
                                 FP
                             </Button>
                         </ExpansionPanelDetails>
                         <ExpansionPanelDetails>
-                            <Button className={"button"}>
+                            <Button className={"course-button"}>
                                 ASC
                             </Button>
                         </ExpansionPanelDetails>
@@ -65,15 +65,15 @@ export class StudentCoursesComponent extends Component<StudentCoursesProperties,
                 <LightTooltip title={`${messages.YEAR} 2`} placement={"right"}>
                 <ExpansionPanel className={"panel"}>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter2 className={"icon"}/>
+                            <Filter2 className={"white-icon"}/>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Button className={"button"}>
+                            <Button className={"course-button"}>
                                 MPP
                             </Button>
                         </ExpansionPanelDetails>
                         <ExpansionPanelDetails>
-                            <Button className={"button"}>
+                            <Button className={"course-button"}>
                                 MAP
                             </Button>
                         </ExpansionPanelDetails>
@@ -82,15 +82,15 @@ export class StudentCoursesComponent extends Component<StudentCoursesProperties,
                 <LightTooltip title={`${messages.YEAR} 3`} placement={"right"}>
                 <ExpansionPanel className={"panel"}>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter3 className={"icon"}/>
+                            <Filter3 className={"white-icon"}/>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Button className={"button"}>
+                            <Button className={"course-button"}>
                                 MPP
                             </Button>
                         </ExpansionPanelDetails>
                         <ExpansionPanelDetails>
-                            <Button className={"button"}>
+                            <Button className={"course-button"}>
                                 MAP
                             </Button>
                         </ExpansionPanelDetails>
@@ -99,15 +99,15 @@ export class StudentCoursesComponent extends Component<StudentCoursesProperties,
                 <LightTooltip title={`${messages.YEAR} 4`} placement={"right"}>
                 <ExpansionPanel className={"panel"}>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter4 className={"icon"}/>
+                            <Filter4 className={"white-icon"}/>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Button className={"button"}>
+                            <Button className={"course-button"}>
                                 MPP
                             </Button>
                         </ExpansionPanelDetails>
                         <ExpansionPanelDetails>
-                            <Button className={"button"}>
+                            <Button className={"course-button"}>
                                 MAP
                             </Button>
                         </ExpansionPanelDetails>

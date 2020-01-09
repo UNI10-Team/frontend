@@ -8,7 +8,16 @@
     height: 100%;
 }
 
-.light-grey-rectangle-2 {
+
+
+.light-grey-rectangle-2-teacher {
+    position: absolute;
+    background: rgba(196, 196, 196, 0.6);
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    align-items: center;
+    text-align: center;
     top: 60% !important;
     height: 35% !important;
 

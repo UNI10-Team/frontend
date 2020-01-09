@@ -3,8 +3,9 @@ import UserService, {userService} from "../../services/UserService";
 import RestService, {restService} from "../../services/RestService";
 import {IoMdPerson, IoMdPersonAdd} from "react-icons/io";
 import './Login.css';
-import {StudentCoursesComponent} from "../student-courses/StudentCoursesComponent";
+import {StudentCourses} from "../student-courses/StudentCourses";
 import {AuthenticationRequest, AuthenticationResponse} from "../../interfaces/authentication";
+import history from "../../history";
 
 export interface LoginProperties {
 
@@ -17,7 +18,6 @@ export interface LoginState {
 }
 
 export class Login extends Component<LoginProperties, LoginState> {
-
     constructor(props: LoginProperties) {
         super(props);
     }
@@ -27,24 +27,24 @@ export class Login extends Component<LoginProperties, LoginState> {
             <div className={"login-component"}>
                 <div className={"image-left-component"}>
                     <div className={"login-page-image"}/>
-                    <div className={"welcome-text"}>Welcome to UNI10</div>
+                    <div className={"welcome-text-login"}>Welcome to UNI10</div>
                     <div className={"welcome-text-line"}/>
                 </div>
                 <div className={"white-rectangle"}>
-                    <div className={"first-green-circle"}>
+                    <div className={"first-green-circle-login"}>
                         <div className={"login-icon"}>
                             <IoMdPerson style={{"height": "inherit", "width": "auto"}}/>
                         </div>
                     </div>
                 </div>
                 <div className={"second-white-rectangle"}>
-                    <button className={"second-green-circle"}>
+                    <button className={"second-green-circle-login"} onClick={() => history.push('/register')}>
                         <div className={"register-icon"}>
                             <IoMdPersonAdd style={{"height": "inherit", "width": "auto"}}/>
                         </div>
                     </button>
                 </div>
-                <div className={"right-component"}>
+                <div className={"right-component-login"}>
                     <div className={"login-text"}>Login</div>
                     <input type="text" id="username" name="username" placeholder="Username..."
                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +66,7 @@ export class Login extends Component<LoginProperties, LoginState> {
                             restService.addJWT(response.jwt);
                             console.log("S-a logat " + response.jwt);
                         });
+
                         console.log(username);
                     }}>
                         <div className={"lets-go-text"}>LET'S GO</div>

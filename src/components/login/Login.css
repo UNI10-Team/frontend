@@ -31,7 +31,7 @@
     opacity: 95%;
     box-shadow: 0.4vw 0.2vw 0.2vw 0.3vw rgba(0, 0, 0, 0.2), 0 0 0.7vw 0 rgba(0, 0, 0, 0.19);
 }
-.welcome-text{
+.welcome-text-login{
     position: absolute;
     left: 10%;
     right: 10%;
@@ -82,38 +82,36 @@
     border-radius: 100%;
 }
 
-.first-green-circle{
-    position: absolute;
-    left: 15%;
-    right: 15%;
-    top: 14%;
-    bottom: 16%;
-    background: rgba(23, 145, 57, 0.66);
-    border-radius: 50%;
-    min-width: 8vw;
-    min-height: 8vw;
-}
-.second-green-circle{
+.first-green-circle-login{
     position: absolute;
     left: 15%;
     right: 15%;
     top: 15%;
     bottom: 15%;
+    background: rgba(23, 145, 57, 0.66);
+    border-radius: 50%;
+    min-width: 8vw;
+    min-height: 8vw;
+}
+.second-green-circle-login{
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    top: 15%;
     min-width: 8vw;
     min-height: 8vw;
     background: rgba(23, 145, 57, 0.66);
     border-radius: 50%;
     border: solid thick rgba(23, 145, 57, 0.66);
 }
-.second-green-circle:focus{
+.second-green-circle-login:focus{
     outline: none;
 }
-.second-green-circle:hover{
+.second-green-circle-login:hover{
     position: absolute;
     left: 15%;
     right: 15%;
     top: 15%;
-    bottom: 15%;
     min-width: 8vw;
     min-height: 8vw;
     background: rgba(23, 145, 57, 0.66);
@@ -142,7 +140,7 @@
 }
 
 
-.right-component{
+.right-component-login{
     position: absolute;
     width: 50%;
     height: 100%;
@@ -154,7 +152,6 @@
     left: 20%;
     right: 10%;
     top: 34%;
-    bottom: 66%;
     height: 5%;
     width: 60%;
     font-family: Adamina, serif;
@@ -170,7 +167,6 @@
     left: 20%;
     right: 10%;
     top: 42%;
-    bottom: 68%;
     height: 5%;
     width: 60%;
     resize: none;
@@ -185,8 +181,7 @@
     position: absolute;
     left: 35%;
     right: 40%;
-    top: 53%;
-    bottom: 42%;
+    top: 60%;
     height: 8%;
     width: 30%;
     background: rgba(23, 145, 57, 0.66);

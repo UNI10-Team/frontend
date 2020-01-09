@@ -8,7 +8,7 @@
     height: 100%;
 }
 
-.grey-rectangle {
+.grey-rectangle-courses {
     position: absolute;
     background: var(--grey);
     width: 60%;
@@ -32,7 +32,7 @@
     border-radius: 50%;
 }
 
-.main-text-1 {
+.main-text-1-courses {
     position: absolute;
 
     top: 45%;
@@ -48,7 +48,7 @@
     color: #FFFFFF;
 }
 
-.main-text-2 {
+.main-text-2-courses {
     position: absolute;
 
     top: 55%;
@@ -63,11 +63,11 @@
     color: #FFFFFF;
 }
 
-.icon {
+.white-icon {
     color: white;
 }
 
-.button:hover {
+.course-button:hover {
     background: rgba(39, 167, 136, 0.69) !important;
 }
 

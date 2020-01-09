@@ -46,14 +46,14 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
 
         return (
             <div className={"home-page"}>
-                <div className={"welcome-text"}>Bine ai venit, prof. Gabriela!</div>
+                <div className={"welcome-text-home"}>Bine ai venit, prof. Gabriela!</div>
                 <div>
 
                     <div className={"notifications"}>
                         <React.Fragment>
                             <CssBaseline/>
                             <Paper square>
-                                <Typography className={"main-text"}>
+                                <Typography className={"main-text-home"}>
                                     Noutati
                                 </Typography>
                                 <List>
@@ -73,26 +73,26 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                             </Paper>
                         </React.Fragment>
                     </div>
-                    <Button className={"button"}>
-                        <AccountCircleIcon className={"icon"}/>
+                    <Button className={"big-button"}>
+                        <AccountCircleIcon className={"big-icon"}/>
                         <div className={"text-button"}>PROFIL</div>
                     </Button>
-                    <Button className={"button"}>
-                        <FileCopyIcon className={"icon"}/>
+                    <Button className={"big-button"}>
+                        <FileCopyIcon className={"big-icon"}/>
                         <div className={"text-button"}>CURSURI</div>
                     </Button>
-                    <Button className={"button"}>
-                        <ViewComfyIcon className={"icon"}/>
+                    <Button className={"big-button"}>
+                        <ViewComfyIcon className={"big-icon"}/>
                         <div className={"text-button"}>ORAR</div>
                     </Button>
                 </div>
 
 
-                <Button className={"button-turnoff"}>
-                    <SettingsPower/>
+                <Button className={"button-turnoff-home"}>
+                    <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-profile"}>
-                    <AccountCircle/>
+                <Button className={"button-profile-home"}>
+                    <AccountCircle className={"white-icon"}/>
                 </Button>
             </div>
         );

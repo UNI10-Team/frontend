@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import UserService from "../../services/UserService";
 import {IoMdPerson, IoMdPersonAdd } from "react-icons/io";
 import './Register.css';
+import history from "../../history";
 
 export interface registerProperties {
 
@@ -23,11 +24,11 @@ export default class Register extends Component<registerProperties, registerStat
             <div className={"login-component"}>
                 <div className={"image-left-component"}>
                     <div className={"login-page-image"}/>
-                    <text className={"welcome-text"}>Welcome to UNI10</text>
+                    <text className={"welcome-text-register"}>Welcome to UNI10</text>
                     <div className={"welcome-text-line"}/>
                 </div>
                 <div className={"white-rectangle"}>
-                    <button className={"first-green-circle"}>
+                    <button className={"first-green-circle"} onClick={()=>history.push('/login')}>
                         <div className={"login-icon"}>
                             <IoMdPerson style={{"height":"inherit","width":"auto"}}/>
                         </div>
