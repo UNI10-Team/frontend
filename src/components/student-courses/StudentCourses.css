@@ -94,13 +94,15 @@
 .panel-1 {
     width: fit-content;
     background: rgba(39, 167, 136, 0.69) !important;
-    margin-top: -15% !important;
+    margin-top: -29% !important;
 }
 
 .panel {
     width: fit-content;
     background: rgba(39, 167, 136, 0.69) !important;
-
+}
+.expansion-panel {
+    margin: 0 !important;;
 }
 
 .panel:hover, .panel-1:hover {

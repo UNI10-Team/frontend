@@ -14,6 +14,7 @@ import PortraitIcon from '@material-ui/icons/Portrait';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import InfoIcon from '@material-ui/icons/Info';
 import bundle from "../../../util/nls";
+import history from "../../../history";
 
 export interface StudentProfileProperties {
 }
@@ -102,7 +103,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                 <Button className={"button-turnoff"}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-home"}>
+                <Button className={"button-home"} onClick={()=>history.push('/student/home')}>
                     <Home className={"white-icon"}/>
                 </Button>
             </div>

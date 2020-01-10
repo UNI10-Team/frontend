@@ -9,7 +9,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import bundle from '../../util/nls';
-
+import history from '../../history';
 
 export interface TeacherCoursesProperties {
 }
@@ -36,10 +36,10 @@ export class TeacherCourses extends Component<TeacherCoursesProperties, TeacherC
                 <Button className={"button-turnoff"}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-profile"}>
+                <Button className={"button-profile"} onClick={()=>history.push('/teacher/profile')}>
                     <AccountCircle className={"white-icon"}/>
                 </Button>
-                <Button className={"button-home"}>
+                <Button className={"button-home"} onClick={()=>history.push('/teacher/home')}>
                     <Home className={"white-icon"}/>
                 </Button>
                 <LightTooltip title={`${messages.YEAR} 1`} placement={"right"} >

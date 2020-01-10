@@ -17,7 +17,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import bundle from '../../../util/nls';
-
+import history from "../../../history";
 const news_messages = [
     {
         id: 1,
@@ -76,11 +76,11 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                             </Paper>
                         </React.Fragment>
                     </div>
-                    <Button className={"big-button"}>
+                    <Button className={"big-button"} onClick={()=>history.push('/teacher/profile')}>
                         <AccountCircleIcon className={"big-icon"}/>
                         <div className={"text-button"}>{messages.PROFILE}</div>
                     </Button>
-                    <Button className={"big-button"}>
+                    <Button className={"big-button"} onClick={()=>history.push('/teacher/courses')}>
                         <FileCopyIcon className={"big-icon"}/>
                         <div className={"text-button"}>{messages.COURSES}</div>
                     </Button>
@@ -94,7 +94,7 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                 <Button className={"button-turnoff-home"}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-profile-home"}>
+                <Button className={"button-profile-home"} onClick={()=>history.push('/teacher/profile')}>
                     <AccountCircle className={"white-icon"}/>
                 </Button>
             </div>

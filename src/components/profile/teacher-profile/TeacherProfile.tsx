@@ -13,6 +13,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import './TeacherProfile.css';
 import '../Profile.css';
 import bundle from "../../../util/nls";
+import history from "../../../history";
 
 export interface TeacherProfileProperties {
 }
@@ -91,7 +92,7 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                 <Button className={"button-turnoff"}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-home"}>
+                <Button className={"button-home"} onClick={()=>history.push('/teacher/home')}>
                     <Home className={"white-icon"}/>
                 </Button>
             </div>

@@ -15,6 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/core/Avatar';
 import bundle from '../../../util/nls';
+import history from "../../../history";
 
 const news_messages = [
     {
@@ -71,11 +72,11 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
                             </Paper>
                         </React.Fragment>
                     </div>
-                    <Button className={"big-button"}>
+                    <Button className={"big-button"} onClick={() => history.push('/student/profile')}>
                         <AccountCircleIcon className={"big-icon"}/>
                         <div className={"text-button"}>{messages.PROFILE}</div>
                     </Button>
-                    <Button className={"big-button"}>
+                    <Button className={"big-button"} onClick={() => history.push('/student/courses')}>
                         <FileCopyIcon className={"big-icon"}/>
                         <div className={"text-button"}>{messages.COURSES}</div>
                     </Button>
@@ -90,7 +91,7 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
                 <Button className={"button-turnoff-home"}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-profile-home"}>
+                <Button className={"button-profile-home"} onClick={()=>history.push('/student/profile')}>
                     <AccountCircle className={"white-icon"}/>
                 </Button>
             </div>

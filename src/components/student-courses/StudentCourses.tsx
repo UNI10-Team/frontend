@@ -9,7 +9,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import bundle from '../../util/nls';
-
+import history from "../../history";
 
 export interface StudentCoursesProperties {
 }
@@ -39,10 +39,10 @@ export class StudentCourses extends Component<StudentCoursesProperties, StudentC
                 <Button className={"button-turnoff"}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-profile"}>
+                <Button className={"button-profile"} onClick={()=>history.push('/student/profile')}>
                     <AccountCircle className={"white-icon"}/>
                 </Button>
-                <Button className={"button-home"}>
+                <Button className={"button-home"} onClick={()=>history.push('/student/home')}>
                     <Home className={"white-icon"}/>
                 </Button>
                 <LightTooltip title={`${messages.YEAR} 1`} placement={"right"}>
@@ -50,12 +50,12 @@ export class StudentCourses extends Component<StudentCoursesProperties, StudentC
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                             <Filter1 className={"white-icon"}/>
                         </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
+                        <ExpansionPanelDetails className={"expansion-panel"}>
                             <Button className={"course-button"}>
                                 FP
                             </Button>
                         </ExpansionPanelDetails>
-                        <ExpansionPanelDetails>
+                        <ExpansionPanelDetails className={"expansion-panel"}>
                             <Button className={"course-button"}>
                                 ASC
                             </Button>

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {Router, Switch, Route, useParams} from "react-router-dom"
+import {Router, Switch, Route, useParams, Redirect} from "react-router-dom"
 import {Login} from "./components/login/Login";
 import Register from "./components/register/Register";
 import {StudentHomePage} from "./components/home/student-home/StudentHomePage";
@@ -25,6 +25,7 @@ ReactDOM.render(
             <Route exact path="/teacher/profile" component={TeacherProfile}/>
             <Route exact path="/student/courses" component={StudentCourses}/>
             <Route exact path="/teacher/courses" component={TeacherCourses}/>
+            <Redirect from="/" to="/login"/>
         </Switch>
     </Router>,
     document.getElementById('root'));
