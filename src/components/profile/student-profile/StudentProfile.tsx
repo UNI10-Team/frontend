@@ -80,16 +80,6 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                             <Divider variant="inset" component="li"/>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
-                                    <Avatar><GroupWorkIcon/></Avatar>
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary="232"
-                                    secondary="Grupa"
-                                />
-                            </ListItem>
-                            <Divider variant="inset" component="li"/>
-                            <ListItem alignItems="flex-start">
-                                <ListItemAvatar>
                                     <Avatar><InfoIcon/></Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
