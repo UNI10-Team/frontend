@@ -10,6 +10,8 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import bundle from '../../util/nls';
 import history from "../../history";
+import {RightMenuComponent} from "../right-menu/RightMenuComponent";
+import {LeftMenuComponent} from "../left-menu/LeftMenuComponent";
 
 export interface StudentCoursesProperties {
 }
@@ -36,93 +38,10 @@ export class StudentCourses extends Component<StudentCoursesProperties, StudentC
                         {messages.TAKE_A_LOOK_TO_COURSES}
                     </div>
                 </div>
-                <Button className={"button-turnoff"}>
-                    <SettingsPower className={"white-icon"}/>
-                </Button>
-                <Button className={"button-profile"} onClick={()=>history.push('/student/profile')}>
-                    <AccountCircle className={"white-icon"}/>
-                </Button>
-                <Button className={"button-home"} onClick={()=>history.push('/student/home')}>
-                    <Home className={"white-icon"}/>
-                </Button>
-                <LightTooltip title={`${messages.YEAR} 1`} placement={"right"}>
-                <ExpansionPanel className={"panel-1"}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter1 className={"white-icon"}/>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails className={"expansion-panel"}>
-                            <Button className={"course-button"}>
-                                FP
-                            </Button>
-                        </ExpansionPanelDetails>
-                        <ExpansionPanelDetails className={"expansion-panel"}>
-                            <Button className={"course-button"}>
-                                ASC
-                            </Button>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                </LightTooltip>
-                <LightTooltip title={`${messages.YEAR} 2`} placement={"right"}>
-                <ExpansionPanel className={"panel"}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter2 className={"white-icon"}/>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MPP
-                            </Button>
-                        </ExpansionPanelDetails>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MAP
-                            </Button>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                </LightTooltip>
-                <LightTooltip title={`${messages.YEAR} 3`} placement={"right"}>
-                <ExpansionPanel className={"panel"}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter3 className={"white-icon"}/>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MPP
-                            </Button>
-                        </ExpansionPanelDetails>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MAP
-                            </Button>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                </LightTooltip>
-                <LightTooltip title={`${messages.YEAR} 4`} placement={"right"}>
-                <ExpansionPanel className={"panel"}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter4 className={"white-icon"}/>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MPP
-                            </Button>
-                        </ExpansionPanelDetails>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MAP
-                            </Button>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                </LightTooltip>
+                <RightMenuComponent role={"student"}/>
+                <LeftMenuComponent/>
             </div>
         );
     }
 }
 
-const LightTooltip = withStyles(theme => ({
-    tooltip: {
-        backgroundColor: theme.palette.common.black,
-        color: 'rgba(255, 233, 36, 0.69)',
-        boxShadow: theme.shadows[1],
-        fontSize: 20,
-    },
-}))(Tooltip);
