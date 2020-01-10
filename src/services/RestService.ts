@@ -1,10 +1,7 @@
-const jwt = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1bmkxMCIsImV4cCI6MTU3OTU0NDAzNiwiaWF0IjoxNTc4MjMwMDM2fQ.VPR_APe1o4ZhwlQ2LgwvoBhYcpYqH_ZT3Mbtqs2fyW0';
-
 export default class RestService {
 
     private defaultHeaders: any = {
-        "Content-type": "application/json",
-        "Authorization": `Bearer ${jwt}`
+        "Content-type": "application/json"
     };
 
     get(path: string, headers?: Headers): Promise<any> {
