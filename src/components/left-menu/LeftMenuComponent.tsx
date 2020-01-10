@@ -25,7 +25,7 @@ export class LeftMenuComponent extends Component<LeftMenuComponentProperties, Le
     render() {
         const messages = bundle.messages;
         return (
-            <div className={"panel-div"}>
+            <div>
                 <LightTooltip title={`${messages.YEAR} 1`} placement={"right"} >
                     <ExpansionPanel className={"panel-1"}>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} >

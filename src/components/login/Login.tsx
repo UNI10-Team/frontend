@@ -73,6 +73,7 @@ export class Login extends Component<LoginProperties, LoginState> {
 
                         console.log(username);
                     }}>
+
                         <div className={"lets-go-text"}>{messages.LET_S_GO}</div>
                     </button>
                 </div>

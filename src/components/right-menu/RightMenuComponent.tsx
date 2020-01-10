@@ -26,7 +26,7 @@ export class RightMenuComponent extends Component<RightMenuComponentProperties, 
                 <Button className={"button-profile"} onClick={()=>history.push(`/${this.props.role}/profile`)}>
                     <AccountCircle className={"white-icon"}/>
                 </Button>
-                <Button className={"button-home"} onClick={()=>history.push('/teacher/home')}>
+                <Button className={"button-home"} onClick={()=>history.push(`/${this.props.role}/home`)}>
                     <Home className={"white-icon"}/>
                 </Button>
             </div>

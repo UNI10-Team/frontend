@@ -7,23 +7,6 @@
     margin-right: 10%;
     align-items: center;
 }
-.button-home, .button-turnoff {
-    display: block !important;
-    height: 10%;
-    width: 5%;
-    text-align: center;
-    left: 95%;
-}
-.button-turnoff{
-    margin-top: 15% !important;
-}
-
-.button-home {
-    background: rgba(255, 233, 36, 0.69) !important;
-}
-.button-turnoff {
-    background: rgba(167, 62, 39, 0.69) !important;
-}
 
 .profile-icon-student {
     background: url("../../resources/profile-avatar.jpg") no-repeat;

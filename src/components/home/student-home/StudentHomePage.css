@@ -23,8 +23,8 @@
 }
 .button-turnoff-home, .button-profile-home {
     display: block !important;
-    height: 10%;
-    width: 5%;
+    height: 5vw;
+    width: 5vw;
     text-align: center;
     left: 95%;
 }
