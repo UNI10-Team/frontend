@@ -13,13 +13,4 @@ const App: React.FC = () => {
     <Login/>
   );
 };
-/*<React.Fragment>
-  <Switch>
-    <Route path="/register" component={Register} />
-    <Route path="/login" component={Login} />
-    <Route path="/not-found" component={NotFound} />
-    <Redirect from="/" exact to="/login" />
-    <Redirect to="/not-found" />
-  </Switch>
-</React.Fragment>*/
 export default App;

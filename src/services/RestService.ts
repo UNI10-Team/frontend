@@ -1,8 +1,14 @@
+import User from "../interfaces/user";
+
+const decoder = require('jwt-decode');
+
 export default class RestService {
 
     private defaultHeaders: any = {
         "Content-type": "application/json"
     };
+
+    private jwt: string = '';
 
     get(path: string, headers?: Headers): Promise<any> {
         return fetch(path, {headers: {...this.defaultHeaders, ...headers}}).then(data => data.json());
@@ -18,8 +24,15 @@ export default class RestService {
     }
 
     addJWT(jwt: string) {
+        this.jwt = jwt;
         this.defaultHeaders = {...this.defaultHeaders, "Authorization": `Bearer ${jwt}`}
     }
+
+    parseJWT() {
+        return decoder(this.jwt);
+    }
+
+
 }
 
 export const restService = new RestService();

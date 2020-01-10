@@ -60,14 +60,15 @@ export class Login extends Component<LoginProperties, LoginState> {
                                this.setState({
                                    password: event.target.value
                                })
-                           }} className={"password-input"}/>
+                           }}
+                           className={"password-input"}/>
                     <button className={"lets-go-button"} onClick={() => {
-
                         const {username, password} = this.state;
                         userService.authenticate({username, password}).then((response: AuthenticationResponse) => {
                             restService.addJWT(response.jwt);
                             console.log("S-a logat " + response.jwt);
-                            history.push('/student/home');
+                            console.log(restService.parseJWT());
+                            history.push("/student/home");
                         });
 
                         console.log(username);
