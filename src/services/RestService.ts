@@ -27,6 +27,10 @@ export default class RestService {
         }).then(data => data.json());
     }
 
+    delete(path: string, headers?: Headers): Promise<any> {
+        return fetch(path, {headers: {...this.defaultHeaders, ...headers},method: 'DELETE'}).then(data => data.json());
+    }
+
     addJWT(jwt: string) {
         this.jwt = jwt;
         this.defaultHeaders = {...this.defaultHeaders, "Authorization": `Bearer ${jwt}`}
