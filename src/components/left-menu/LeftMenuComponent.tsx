@@ -9,11 +9,18 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import {withStyles} from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
 import './LeftMenuComponent.css'
+import {subjectService} from "../../services/SubjectService";
+import {i18NService} from "../../services/I18NService";
 
 export interface LeftMenuComponentProperties {
 }
 
 export interface LeftMenuComponentState {
+
+}
+
+export class LeftMenuComponentItem extends Component{
+
 }
 
 export class LeftMenuComponent extends Component<LeftMenuComponentProperties, LeftMenuComponentState> {
@@ -23,7 +30,7 @@ export class LeftMenuComponent extends Component<LeftMenuComponentProperties, Le
     }
 
     render() {
-        const messages = bundle.messages;
+        const messages = i18NService.getBundle();
         return (
             <div>
                 <LightTooltip title={`${messages.YEAR} 1`} placement={"right"} >

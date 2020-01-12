@@ -1,10 +1,9 @@
 import React, {Component} from "react";
-import UserService, {userService} from "../../services/UserService";
-import RestService, {restService} from "../../services/RestService";
+import {userService} from "../../services/UserService";
+import {restService} from "../../services/RestService";
 import {IoMdPerson, IoMdPersonAdd} from "react-icons/io";
 import './Login.css';
-import {StudentCourses} from "../student-courses/StudentCourses";
-import {AuthenticationRequest, AuthenticationResponse} from "../../interfaces/authentication";
+import {AuthenticationResponse} from "../../interfaces/authentication";
 import history from "../../history";
 import bundle from "../../util/nls";
 

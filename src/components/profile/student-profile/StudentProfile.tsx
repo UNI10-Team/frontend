@@ -11,7 +11,6 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PortraitIcon from '@material-ui/icons/Portrait';
-import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import InfoIcon from '@material-ui/icons/Info';
 import bundle from "../../../util/nls";
 import history from "../../../history";
