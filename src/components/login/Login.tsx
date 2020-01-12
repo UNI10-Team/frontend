@@ -67,6 +67,7 @@ export class Login extends Component<LoginProperties, LoginState> {
                         const {username, password} = this.state;
                         userService.authenticate({username, password}).then((response: AuthenticationResponse) => {
                             restService.addJWT(response.jwt);
+                            console.log(response.jwt);
                             const ROLE = restService.parseJWT().ROLES[0];
                             if(ROLE === Role.ROLE_STUDENT){
                                 history.push("/student/home");

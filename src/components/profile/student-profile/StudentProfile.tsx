@@ -14,27 +14,43 @@ import PortraitIcon from '@material-ui/icons/Portrait';
 import InfoIcon from '@material-ui/icons/Info';
 import bundle from "../../../util/nls";
 import history from "../../../history";
+import User from '../../../interfaces/user';
+import {Role} from '../../../interfaces/role';
+import UserService, {userService} from '../../../services/UserService';
 
 export interface StudentProfileProperties {
 }
 
 export interface StudentProfileState {
+    currentUser: User;
 }
 
 export class StudentProfile extends Component<StudentProfileProperties, StudentProfileState> {
 
     constructor(props: StudentProfileProperties) {
         super(props);
+        const userNull : User = {
+            email: "",
+            firstName: "",
+            id: 1,
+            lastName: "",
+            role: Role.ROLE_COURSE_TEACHER,
+            username: "",
+        };
+        this.state = {currentUser:userNull};
     }
 
     render() {
         const messages = bundle.messages;
+        userService.getCurrentUser().then((response: User) => {
+            this.setState({currentUser: response});
+        });
         return (
             <div className={"student-profile"}>
                 <div className={"grey-rectangle-profile"}>
                     <div className={"profile-icon-student"}>
                         <div className={"welcome-text-profile"}>
-                            {`${messages.HELLO}, Alexandra!`}
+                            {`${messages.WELCOME}, ${this.state.currentUser.firstName}!`}
                         </div>
                     </div>
 
@@ -62,7 +78,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                                     <Avatar><PortraitIcon/></Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary="Bunea Alexandra-Amalia"
+                                    primary={`${this.state.currentUser.lastName} ${this.state.currentUser.firstName}`}
                                     secondary="Nume si prenume"
                                 />
                             </ListItem>
@@ -72,7 +88,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                                     <Avatar><MailOutlineIcon/></Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary="amaliabunea98@gmail.com"
+                                    primary={`${this.state.currentUser.email}`}
                                     secondary="Email"
                                 />
                             </ListItem>

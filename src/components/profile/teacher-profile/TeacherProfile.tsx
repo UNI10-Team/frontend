@@ -14,21 +14,37 @@ import './TeacherProfile.css';
 import '../Profile.css';
 import bundle from "../../../util/nls";
 import history from "../../../history";
+import User from '../../../interfaces/user';
+import {Role} from '../../../interfaces/role';
+import UserService, {userService} from '../../../services/UserService';
 
 export interface TeacherProfileProperties {
 }
 
 export interface TeacherProfileState {
+    currentUser: User;
 }
 
 export class TeacherProfile extends Component<TeacherProfileProperties, TeacherProfileState> {
 
     constructor(props: TeacherProfileProperties) {
         super(props);
+        const userNull : User = {
+            email: "",
+            firstName: "",
+            id: 1,
+            lastName: "",
+            role: Role.ROLE_COURSE_TEACHER,
+            username: "",
+        };
+        this.state = {currentUser:userNull};
     }
 
     render() {
         const messages = bundle.messages;
+        userService.getCurrentUser().then((response: User) => {
+            this.setState({currentUser: response});
+        });
         return (
             <div className={"teacher-profile"}>
                 <div className={"grey-rectangle-profile"}>
@@ -62,8 +78,8 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                                     <Avatar><PortraitIcon/></Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary="Czibula Gabriela"
-                                    secondary="Nume si prenume"
+                                    primary= {`${this.state.currentUser.lastName} ${this.state.currentUser.firstName}`}
+                                    secondary= "Nume"
                                 />
                             </ListItem>
                             <Divider variant="inset" component="li" />
@@ -72,7 +88,7 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                                     <Avatar><MailOutlineIcon/></Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary="gabis@cs.ubbcluj.ro"
+                                    primary={`${this.state.currentUser.email}`}
                                     secondary="Email"
                                 />
                             </ListItem>
@@ -82,7 +98,10 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                                     <Avatar><LocationOnIcon/></Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary="Strada Mihail Kogălniceanu 1, Cluj-Napoca 400000"
+                                    primary="Universitatea Babeş-Bolyai Cluj-Napoca
+                                             Facultatea de Matematică şi Informatică
+                                             Str. Mihail Kogălniceanu, nr. 1
+                                             RO-400084 Cluj-Napoca"
                                     secondary="Adresa de contact"
                                 />
                             </ListItem>
