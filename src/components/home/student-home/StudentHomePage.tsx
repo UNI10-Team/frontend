@@ -14,12 +14,11 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/core/Avatar';
-import bundle from '../../../util/nls';
 import history from "../../../history";
+import {i18NService} from "../../../services/I18NService";
 import User from '../../../interfaces/user';
 import {Role} from '../../../interfaces/role';
-import UserService, {userService} from '../../../services/UserService';
-import RestService, {restService} from '../../../services/RestService';
+import {userService} from '../../../services/UserService';
 
 const news_messages = [
     {
@@ -38,13 +37,13 @@ export interface HomeProperties {
 }
 
 export interface HomeState {
-    currentUser:User;
+    currentUser: User;
 }
 
 export class StudentHomePage extends Component<HomeProperties, HomeState> {
     constructor(props: HomeProperties) {
         super(props);
-        const userNull : User = {
+        const userNull: User = {
             email: "",
             firstName: "",
             id: 1,
@@ -52,15 +51,12 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
             role: Role.ROLE_COURSE_TEACHER,
             username: "",
         };
-        this.state = {currentUser:userNull};
+        this.state = {currentUser: userNull};
     }
 
 
     render() {
-        const messages = bundle.messages;
-        userService.getCurrentUser().then((response: User) => {
-            this.setState({currentUser: response});
-        });
+        const messages = i18NService.getBundle();
         return (
             <div className={"home-page"}>
                 <div className={"welcome-text-home"}>
@@ -104,14 +100,19 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
                 </div>
 
 
-
                 <Button className={"button-turnoff-home"}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-profile-home"} onClick={()=>history.push('/student/profile')}>
+                <Button className={"button-profile-home"} onClick={() => history.push('/student/profile')}>
                     <AccountCircle className={"white-icon"}/>
                 </Button>
             </div>
         );
+    }
+
+    componentDidMount(): void {
+        userService.getCurrentUser().then((response: User) => {
+            this.setState({currentUser: response});
+        });
     }
 }

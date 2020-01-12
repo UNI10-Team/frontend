@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import './TeacherCourses.css'
-import bundle from '../../util/nls';
 import {LeftMenuComponent} from "../left-menu/LeftMenuComponent";
 import {RightMenuComponent} from "../right-menu/RightMenuComponent";
+import {i18NService} from "../../services/I18NService";
 
 export interface TeacherCoursesProperties {
 }
@@ -12,12 +12,8 @@ export interface TeacherCoursesState {
 
 export class TeacherCourses extends Component<TeacherCoursesProperties, TeacherCoursesState> {
 
-    constructor(props: TeacherCoursesProperties) {
-        super(props);
-    }
-
     render() {
-        const messages = bundle.messages;
+        const messages = i18NService.getBundle();
         return (
             <div className={"teacher-courses-component"}>
                 <div className={"grey-rectangle-courses"}>

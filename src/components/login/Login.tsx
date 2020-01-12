@@ -3,11 +3,10 @@ import {userService} from "../../services/UserService";
 import {restService} from "../../services/RestService";
 import {IoMdPerson, IoMdPersonAdd} from "react-icons/io";
 import './Login.css';
-import {StudentCourses} from "../student-courses/StudentCourses";
-import {AuthenticationRequest, AuthenticationResponse} from "../../interfaces/authentication";
+import {AuthenticationResponse} from "../../interfaces/authentication";
 import {Role} from "../../interfaces/role";
 import history from "../../history";
-import bundle from "../../util/nls";
+import {i18NService} from "../../services/I18NService";
 
 export interface LoginProperties {
 
@@ -20,12 +19,9 @@ export interface LoginState {
 }
 
 export class Login extends Component<LoginProperties, LoginState> {
-    constructor(props: LoginProperties) {
-        super(props);
-    }
 
     render() {
-        const messages = bundle.messages;
+        const messages = i18NService.getBundle();
         return (
             <div className={"login-component"}>
                 <div className={"image-left-component"}>
@@ -69,16 +65,16 @@ export class Login extends Component<LoginProperties, LoginState> {
                             restService.addJWT(response.jwt);
                             console.log(response.jwt);
                             const ROLE = restService.parseJWT().ROLES[0];
-                            if(ROLE === Role.ROLE_STUDENT){
+                            if (ROLE === Role.ROLE_STUDENT) {
                                 history.push("/student/home");
                             }
-                            if(ROLE == Role.ROLE_ADMIN){
-                            //TO DO
-                            }
-                            else{
+                            if (ROLE === Role.ROLE_ADMIN) {
+                                //TO DO
+                            } else {
                                 history.push("/teacher/home");
                             }
-
+                        }).catch(error => {
+                            console.log(error);
                         });
 
                         console.log(username);

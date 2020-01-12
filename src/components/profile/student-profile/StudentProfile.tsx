@@ -12,11 +12,11 @@ import Avatar from '@material-ui/core/Avatar';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PortraitIcon from '@material-ui/icons/Portrait';
 import InfoIcon from '@material-ui/icons/Info';
-import bundle from "../../../util/nls";
 import history from "../../../history";
+import {i18NService} from "../../../services/I18NService";
 import User from '../../../interfaces/user';
 import {Role} from '../../../interfaces/role';
-import UserService, {userService} from '../../../services/UserService';
+import {userService} from '../../../services/UserService';
 
 export interface StudentProfileProperties {
 }
@@ -41,10 +41,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
     }
 
     render() {
-        const messages = bundle.messages;
-        userService.getCurrentUser().then((response: User) => {
-            this.setState({currentUser: response});
-        });
+        const messages = i18NService.getBundle();
         return (
             <div className={"student-profile"}>
                 <div className={"grey-rectangle-profile"}>
@@ -113,5 +110,11 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                 </Button>
             </div>
         );
+    }
+
+    componentDidMount(): void {
+        userService.getCurrentUser().then((response: User) => {
+            this.setState({currentUser: response});
+        });
     }
 }

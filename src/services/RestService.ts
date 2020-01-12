@@ -12,8 +12,9 @@ export default class RestService {
         return fetch(path, {
             headers: {
                 ...this.defaultHeaders, ...headers
-            }
-        }).then(data => data.json());
+            },
+            method: 'GET'
+        }).then(response => RestService.json(response));
     }
 
     post(path: string, body: any, headers?: Headers): Promise<any> {
@@ -24,11 +25,17 @@ export default class RestService {
                 ...this.defaultHeaders, ...headers
             },
             method: 'POST'
-        }).then(data => data.json());
+        }).then(RestService.json);
     }
 
     delete(path: string, headers?: Headers): Promise<any> {
-        return fetch(path, {headers: {...this.defaultHeaders, ...headers},method: 'DELETE'}).then(data => data.json());
+        return fetch(path, {
+            headers: {
+                ...this.defaultHeaders,
+                ...headers
+            },
+            method: 'DELETE'
+        }).then(RestService.json);
     }
 
     addJWT(jwt: string) {
@@ -40,7 +47,15 @@ export default class RestService {
         return decoder(this.jwt);
     }
 
+    private static json = (response: Response) => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error(response.statusText);
+        }
+    }
 }
+
 
 export const restService = new RestService();
 

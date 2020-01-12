@@ -13,10 +13,6 @@ export interface RightMenuComponentState {
 
 export class RightMenuComponent extends Component<RightMenuComponentProperties, RightMenuComponentState> {
 
-    constructor(props: RightMenuComponentProperties) {
-        super(props);
-    }
-
     render() {
         return (
             <div>

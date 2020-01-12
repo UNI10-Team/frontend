@@ -1,16 +1,17 @@
 import React, {Component} from "react";
-import bundle from "../../util/nls";
 import Button from "@material-ui/core/Button";
-import {Filter1, Filter2, Filter3} from "@material-ui/icons";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import {withStyles} from "@material-ui/core";
+import {List, withStyles} from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
 import './LeftMenuComponent.css'
-import {subjectService} from "../../services/SubjectService";
 import {i18NService} from "../../services/I18NService";
+import Subject from "../../interfaces/subject";
+import {Page} from "../../interfaces/page";
+import {subjectService} from "../../services/SubjectService";
+import {Filter1, Filter2, Filter3} from "@material-ui/icons";
 
 export interface LeftMenuComponentProperties {
 }
@@ -19,71 +20,102 @@ export interface LeftMenuComponentState {
 
 }
 
-export class LeftMenuComponentItem extends Component{
+export interface LeftMenuComponentItemProperties {
+    year: number,
+    title: string,
+    expansionClass: string
+}
 
+export interface LeftMenuComponentItemState {
+    subjects: Subject[]
+}
+
+
+export class LeftMenuComponentItem extends Component<LeftMenuComponentItemProperties, LeftMenuComponentItemState> {
+
+
+    constructor(props: Readonly<LeftMenuComponentItemProperties>) {
+        super(props);
+        this.state = {
+            subjects: []
+        }
+    }
+
+    render() {
+        const {title, expansionClass, year} = this.props;
+        const {subjects} = this.state;
+        return (
+            <LightTooltip title={title} placement={'right'}>
+                <ExpansionPanel className={expansionClass}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        {LeftMenuComponentItem.getIcon(year)}
+                    </ExpansionPanelSummary>
+                    <List>
+                        {
+                            subjects.map(subject => {
+                                return (
+                                    <ExpansionPanelDetails key={subject.id}>
+                                        <Button className={"course-button"}>
+                                            {LeftMenuComponentItem.getSubjectName(subject.name)}
+                                        </Button>
+                                    </ExpansionPanelDetails>
+                                )
+                            })
+                        }
+                    </List>
+                </ExpansionPanel>
+            </LightTooltip>
+        )
+    }
+
+    componentDidMount(): void {
+        subjectService.getSubjectsByYear(this.props.year).then((page: Page<Subject>) => {
+            this.setState({
+                subjects: page.content
+            });
+        });
+    }
+
+    private static getIcon(year: number): JSX.Element {
+        switch (year) {
+            case 1:
+                return <Filter1 className={"white-icon"}/>;
+            case 2:
+                return <Filter2 className={"white-icon"}/>;
+            case 3:
+                return <Filter3 className={"white-icon"}/>;
+            default:
+                return <Filter1/>
+        }
+    }
+
+    private static getSubjectName(initial: string): string {
+        const words = initial.split(' ');
+        let finalName = '';
+        for (let word of words) {
+            finalName += word.charAt(0);
+        }
+        return finalName;
+    }
 }
 
 export class LeftMenuComponent extends Component<LeftMenuComponentProperties, LeftMenuComponentState> {
-
-    constructor(props: LeftMenuComponentProperties) {
-        super(props);
-    }
 
     render() {
         const messages = i18NService.getBundle();
         return (
             <div>
-                <LightTooltip title={`${messages.YEAR} 1`} placement={"right"} >
-                    <ExpansionPanel className={"panel-1"}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} >
-                            <Filter1 className={"white-icon"}/>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                FP
-                            </Button>
-                        </ExpansionPanelDetails>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                ASC
-                            </Button>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                </LightTooltip>
-                <LightTooltip title={`${messages.YEAR} 2`} placement={"right"}>
-                    <ExpansionPanel className={"panel"}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter2 className={"white-icon"}/>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MPP
-                            </Button>
-                        </ExpansionPanelDetails>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MAP
-                            </Button>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                </LightTooltip>
-                <LightTooltip title={`${messages.YEAR} 3`} placement={"right"}>
-                    <ExpansionPanel className={"panel"}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Filter3 className={"white-icon"}/>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MPP
-                            </Button>
-                        </ExpansionPanelDetails>
-                        <ExpansionPanelDetails>
-                            <Button className={"course-button"}>
-                                MAP
-                            </Button>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                </LightTooltip>
+                <LeftMenuComponentItem year={1} title={`${messages.YEAR} 1`} expansionClass={'panel-1'}>
+
+                </LeftMenuComponentItem>
+
+                <LeftMenuComponentItem year={2} title={`${messages.YEAR} 2`} expansionClass={'panel'}>
+
+                </LeftMenuComponentItem>
+
+                <LeftMenuComponentItem year={3} title={`${messages.YEAR} 3`} expansionClass={'panel'}>
+
+                </LeftMenuComponentItem>
             </div>
         );
     }

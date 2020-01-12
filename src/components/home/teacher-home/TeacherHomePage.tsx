@@ -16,10 +16,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/core/Avatar';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
-import bundle from '../../../util/nls';
 import history from "../../../history";
-import UserService, {userService} from '../../../services/UserService';
-import RestService, {restService} from '../../../services/RestService';
+import {i18NService} from "../../../services/I18NService";
+import {userService} from '../../../services/UserService';
 import User from '../../../interfaces/user';
 import {Role} from '../../../interfaces/role';
 const news_messages = [
@@ -59,10 +58,7 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
 
 
     render() {
-        const messages = bundle.messages;
-        userService.getCurrentUser().then((response: User) => {
-            this.setState({currentUser: response});
-        });
+        const messages = i18NService.getBundle();
         return (
             <div className={"home-page"}>
                 <div className={"welcome-text-home"}>
@@ -117,5 +113,11 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                 </Button>
             </div>
         );
+    }
+
+    componentDidMount(): void {
+        userService.getCurrentUser().then((response: User) => {
+            this.setState({currentUser: response});
+        });
     }
 }

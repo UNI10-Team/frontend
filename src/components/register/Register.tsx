@@ -1,9 +1,8 @@
 import React, {Component} from "react";
-import UserService from "../../services/UserService";
 import {IoMdPerson, IoMdPersonAdd} from "react-icons/io";
 import './Register.css';
 import history from "../../history";
-import bundle from "../../util/nls";
+import {i18NService} from "../../services/I18NService";
 
 export interface registerProperties {
 
@@ -16,12 +15,8 @@ export interface registerState {
 
 export default class Register extends Component<registerProperties, registerState> {
 
-    constructor(private userService: UserService, props: registerProperties) {
-        super(props);
-    }
-
     render() {
-        const messages = bundle.messages;
+        const messages = i18NService.getBundle();
         return (
             <div className={"login-component"}>
                 <div className={"image-left-component"}>
