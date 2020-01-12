@@ -1,4 +1,4 @@
-.grey-rectangle {
+.grey-rectangle-profile {
     position: absolute;
     background: rgba(72, 72, 72, 0.71);
     width: 80%;
@@ -7,25 +7,8 @@
     margin-right: 10%;
     align-items: center;
 }
-.button-home, .button-turnoff {
-    display: block !important;
-    height: 10%;
-    width: 5%;
-    text-align: center;
-    left: 95%;
-}
-.button-turnoff{
-    margin-top: 15% !important;
-}
 
-.button-home {
-    background: rgba(255, 233, 36, 0.69) !important;
-}
-.button-turnoff {
-    background: rgba(167, 62, 39, 0.69) !important;
-}
-
-.profile-icon {
+.profile-icon-student {
     background: url("../../resources/profile-avatar.jpg") no-repeat;
     background-size: cover;
     position: absolute;
@@ -35,8 +18,20 @@
     height: 35%;
     border-radius: 50%;
 }
-
-.welcome-text {
+.profile-icon-teacher {
+    background: url("../../resources/profile-teacher-avatar.jpg") no-repeat;
+    background-size: cover;
+    position: absolute;
+    left: 10%;
+    top: 5%;
+    width: 20%;
+    height: 35%;
+    border-radius: 50%;
+}
+.white-icon {
+    color: white;
+}
+.welcome-text-profile {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -63,19 +58,7 @@
     text-align: center;
 }
 
-.light-grey-rectangle-2 {
-    position: absolute;
-    background: rgba(196, 196, 196, 0.6);
-    width: 80%;
-    height: 45%;
-    margin-left: 10%;
-    margin-right: 10%;
-    top: 50%;
-    align-items: center;
-    text-align: center;
-}
-
-.password-input {
+.password-input-profile {
     display: block;
     font-family: Adamina, serif;
     color: rgba(158, 150, 150, 0.97);
@@ -92,7 +75,7 @@
     -ms-user-select: none;
 }
 
-.main-text {
+.main-text-profile {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -112,7 +95,7 @@
     font-family: Ruda, fantasy !important;
 }
 
-.root {
+.root-profile {
     width: 100%;
     color:rgba(167, 62, 39, 0.69);
 }

@@ -12,6 +12,8 @@ import PortraitIcon from '@material-ui/icons/Portrait';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import './TeacherProfile.css';
 import '../Profile.css';
+import bundle from "../../../util/nls";
+import history from "../../../history";
 
 export interface TeacherProfileProperties {
 }
@@ -26,31 +28,35 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
     }
 
     render() {
+        const messages = bundle.messages;
         return (
             <div className={"teacher-profile"}>
-                <div className={"grey-rectangle"}>
-                    <div className={"profile-icon"}>
-                        <div className={"welcome-text"}>SALUT!
+                <div className={"grey-rectangle-profile"}>
+                    <div className={"profile-icon-teacher"}>
+                        <div className={"welcome-text-profile"}>
+                            {`${messages.HELLO}!`}
                         </div>
                     </div>
 
                     <div className={"light-grey-rectangle-1"}>
                         <form>
-                            <div className={"main-text"}>Schimbare parola</div>
+                            <div className={"main-text-profile"}>
+                                {messages.CHANGE_PASSWORD}
+                            </div>
                             <input type="password" id="opassword" name="oldpassword" placeholder="Parola curenta"
-                                   className={"password-input"}/>
+                                   className={"password-input-profile"}/>
                             <input type="password" id="npassword" name="newpassword" placeholder="Parola noua"
-                                   className={"password-input"}/>
+                                   className={"password-input-profile"}/>
                             <input type="password" id="rpassword" name="repeatpassword" placeholder="Repeta parola noua"
-                                   className={"password-input"}/>
+                                   className={"password-input-profile"}/>
                             <Button className={"submit-button"}>
-                                Reseteaza parola
+                                {messages.RESET_PASSWORD}
                             </Button>
                         </form>
                     </div>
 
-                    <div className={"light-grey-rectangle-2"}>
-                        <List className={"root"}>
+                    <div className={"light-grey-rectangle-2-teacher"}>
+                        <List className={"root-profile"}>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar><PortraitIcon/></Avatar>
@@ -84,10 +90,10 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                     </div>
                 </div>
                 <Button className={"button-turnoff"}>
-                    <SettingsPower className={"icon"}/>
+                    <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-home"}>
-                    <Home className={"icon"}/>
+                <Button className={"button-home"} onClick={()=>history.push('/teacher/home')}>
+                    <Home className={"white-icon"}/>
                 </Button>
             </div>
         );

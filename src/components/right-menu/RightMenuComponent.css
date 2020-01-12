@@ -1,0 +1,24 @@
+.button-home, .button-profile, .button-turnoff {
+    display: block !important;
+    height: 5vw;
+    width: 5vw;
+    text-align: center;
+    left: 95%;
+}
+.button-turnoff{
+    margin-top: 15% !important;
+}
+
+.button-home {
+    background: var(--yellow) !important;
+}
+.button-profile {
+    background: var(--green) !important;
+}
+.button-turnoff {
+    background: var(--red) !important;
+}
+
+.white-icon {
+    color: white;
+}

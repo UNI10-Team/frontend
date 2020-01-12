@@ -13,6 +13,8 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PortraitIcon from '@material-ui/icons/Portrait';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import InfoIcon from '@material-ui/icons/Info';
+import bundle from "../../../util/nls";
+import history from "../../../history";
 
 export interface StudentProfileProperties {
 }
@@ -27,31 +29,35 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
     }
 
     render() {
+        const messages = bundle.messages;
         return (
             <div className={"student-profile"}>
-                <div className={"grey-rectangle"}>
-                    <div className={"profile-icon"}>
-                        <div className={"welcome-text"}>SALUT, ALEXANDRA!
+                <div className={"grey-rectangle-profile"}>
+                    <div className={"profile-icon-student"}>
+                        <div className={"welcome-text-profile"}>
+                            {`${messages.HELLO}, Alexandra!`}
                         </div>
                     </div>
 
                     <div className={"light-grey-rectangle-1"}>
                         <form>
-                            <div className={"main-text"}>Schimbare parola</div>
+                            <div className={"main-text-profile"}>
+                                {messages.CHANGE_PASSWORD}
+                            </div>
                             <input type="password" id="opassword" name="oldpassword" placeholder="Parola curenta"
-                                   className={"password-input"}/>
+                                   className={"password-input-profile"}/>
                             <input type="password" id="npassword" name="newpassword" placeholder="Parola noua"
-                                   className={"password-input"}/>
+                                   className={"password-input-profile"}/>
                             <input type="password" id="rpassword" name="repeatpassword" placeholder="Repeta parola noua"
-                                   className={"password-input"}/>
+                                   className={"password-input-profile"}/>
                             <Button className={"submit-button"}>
-                                Reseteaza parola
+                                {messages.RESET_PASSWORD}
                             </Button>
                         </form>
                     </div>
 
-                    <div className={"light-grey-rectangle-2"}>
-                        <List className={"root"}>
+                    <div className={"light-grey-rectangle-2-student"}>
+                        <List className={"root-profile"}>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar><PortraitIcon/></Avatar>
@@ -61,7 +67,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                                     secondary="Nume si prenume"
                                 />
                             </ListItem>
-                            <Divider variant="inset" component="li" />
+                            <Divider variant="inset" component="li"/>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar><MailOutlineIcon/></Avatar>
@@ -71,17 +77,7 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                                     secondary="Email"
                                 />
                             </ListItem>
-                            <Divider variant="inset" component="li" />
-                            <ListItem alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar><GroupWorkIcon/></Avatar>
-                                </ListItemAvatar>
-                                <ListItemText
-                                    primary="232"
-                                    secondary="Grupa"
-                                />
-                            </ListItem>
-                            <Divider variant="inset" component="li" />
+                            <Divider variant="inset" component="li"/>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                     <Avatar><InfoIcon/></Avatar>
@@ -95,10 +91,10 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                     </div>
                 </div>
                 <Button className={"button-turnoff"}>
-                    <SettingsPower className={"icon"}/>
+                    <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-home"}>
-                    <Home className={"icon"}/>
+                <Button className={"button-home"} onClick={()=>history.push('/student/home')}>
+                    <Home className={"white-icon"}/>
                 </Button>
             </div>
         );

@@ -4,37 +4,39 @@
     position: absolute;
     left: 0;
     top: 0;
+    bottom:0;
+    right:0;
     width: 100%;
     height: 100%;
 }
 
-.welcome-text {
+.welcome-text-home {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     position: absolute;
-    top: 10%;
     font-size: 1.8vw;
     font-family: Ruda, fantasy;
     left: 5%;
+    top: 10%;
     color: rgba(167, 62, 39, 0.69);
 }
-.button-turnoff, .button-profile {
+.button-turnoff-home, .button-profile-home {
     display: block !important;
-    height: 10%;
-    width: 5%;
+    height: 5vw;
+    width: 5vw;
     text-align: center;
     left: 95%;
 }
 
-.button-turnoff {
+.button-turnoff-home {
     margin-top: -5% !important;
     background: rgba(167, 62, 39, 0.69) !important;
 }
-.button-profile {
+.button-profile-home {
     background: var(--green) !important;
 }
-.button {
+.big-button {
     position: absolute;
     margin-top: 15% !important;
     left: 5%;
@@ -45,11 +47,14 @@
     background-color: rgba(206, 202, 202, 0.33) !important;
 }
 
-.icon {
+.big-icon {
     position: absolute !important;
     margin-top: -15%;
     font-size: 5vw !important;
-    color: rgba(0, 0, 0, 0.51);
+    color: rgba(0, 0, 0, 0.51) !important;
+}
+.white-icon {
+    color: white;
 }
 .text-button {
     font-family: Ruda, fantasy;
@@ -65,7 +70,7 @@
     top: 10%;
 }
 
-.main-text {
+.main-text-home {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;

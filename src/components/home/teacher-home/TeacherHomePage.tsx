@@ -16,8 +16,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/core/Avatar';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
-
-const messages = [
+import bundle from '../../../util/nls';
+import history from "../../../history";
+const news_messages = [
     {
         id: 1,
         primary: 'Silviu @ LFTC_C1',
@@ -43,21 +44,23 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
 
 
     render() {
-
+        const messages = bundle.messages;
         return (
             <div className={"home-page"}>
-                <div className={"welcome-text"}>Bine ai venit, prof. Gabriela!</div>
+                <div className={"welcome-text-home"}>
+                    {`${messages.WELCOME}, prof. Gabriela!`}
+                </div>
                 <div>
 
                     <div className={"notifications"}>
                         <React.Fragment>
                             <CssBaseline/>
                             <Paper square>
-                                <Typography className={"main-text"}>
-                                    Noutati
+                                <Typography className={"main-text-home"}>
+                                    {messages.NEWS}
                                 </Typography>
                                 <List>
-                                    {messages.map(({id, primary, secondary}) => (
+                                    {news_messages.map(({id, primary, secondary}) => (
                                         <React.Fragment key={id}>
                                             <ListItem button>
                                                 <ListItemAvatar>
@@ -73,26 +76,26 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                             </Paper>
                         </React.Fragment>
                     </div>
-                    <Button className={"button"}>
-                        <AccountCircleIcon className={"icon"}/>
-                        <div className={"text-button"}>PROFIL</div>
+                    <Button className={"big-button"} onClick={()=>history.push('/teacher/profile')}>
+                        <AccountCircleIcon className={"big-icon"}/>
+                        <div className={"text-button"}>{messages.PROFILE}</div>
                     </Button>
-                    <Button className={"button"}>
-                        <FileCopyIcon className={"icon"}/>
-                        <div className={"text-button"}>CURSURI</div>
+                    <Button className={"big-button"} onClick={()=>history.push('/teacher/courses')}>
+                        <FileCopyIcon className={"big-icon"}/>
+                        <div className={"text-button"}>{messages.COURSES}</div>
                     </Button>
-                    <Button className={"button"}>
-                        <ViewComfyIcon className={"icon"}/>
-                        <div className={"text-button"}>ORAR</div>
+                    <Button className={"big-button"}>
+                        <ViewComfyIcon className={"big-icon"}/>
+                        <div className={"text-button"}>{messages.TIMETABLE}</div>
                     </Button>
                 </div>
 
 
-                <Button className={"button-turnoff"}>
-                    <SettingsPower/>
+                <Button className={"button-turnoff-home"}>
+                    <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-profile"}>
-                    <AccountCircle/>
+                <Button className={"button-profile-home"} onClick={()=>history.push('/teacher/profile')}>
+                    <AccountCircle className={"white-icon"}/>
                 </Button>
             </div>
         );

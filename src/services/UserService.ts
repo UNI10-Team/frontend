@@ -4,8 +4,7 @@ import {AuthenticationResponse, AuthenticationRequest } from "../interfaces/auth
 
 export default class UserService {
 
-    constructor(private restService: RestService){
-
+    constructor(private restService: RestService) {
     }
 
     authenticate(request: AuthenticationRequest): Promise<AuthenticationResponse>{

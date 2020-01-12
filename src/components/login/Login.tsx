@@ -3,8 +3,10 @@ import UserService, {userService} from "../../services/UserService";
 import RestService, {restService} from "../../services/RestService";
 import {IoMdPerson, IoMdPersonAdd} from "react-icons/io";
 import './Login.css';
-import {StudentCoursesComponent} from "../student-courses/StudentCoursesComponent";
+import {StudentCourses} from "../student-courses/StudentCourses";
 import {AuthenticationRequest, AuthenticationResponse} from "../../interfaces/authentication";
+import history from "../../history";
+import bundle from "../../util/nls";
 
 export interface LoginProperties {
 
@@ -17,35 +19,35 @@ export interface LoginState {
 }
 
 export class Login extends Component<LoginProperties, LoginState> {
-
     constructor(props: LoginProperties) {
         super(props);
     }
 
     render() {
+        const messages = bundle.messages;
         return (
             <div className={"login-component"}>
                 <div className={"image-left-component"}>
                     <div className={"login-page-image"}/>
-                    <div className={"welcome-text"}>Welcome to UNI10</div>
+                    <div className={"welcome-text-login"}>{messages.WELCOME_TO_UNI10}</div>
                     <div className={"welcome-text-line"}/>
                 </div>
                 <div className={"white-rectangle"}>
-                    <div className={"first-green-circle"}>
+                    <div className={"first-green-circle-login"}>
                         <div className={"login-icon"}>
                             <IoMdPerson style={{"height": "inherit", "width": "auto"}}/>
                         </div>
                     </div>
                 </div>
                 <div className={"second-white-rectangle"}>
-                    <button className={"second-green-circle"}>
+                    <button className={"second-green-circle-login"} onClick={() => history.push('/register')}>
                         <div className={"register-icon"}>
                             <IoMdPersonAdd style={{"height": "inherit", "width": "auto"}}/>
                         </div>
                     </button>
                 </div>
-                <div className={"right-component"}>
-                    <div className={"login-text"}>Login</div>
+                <div className={"right-component-login"}>
+                    <div className={"login-text"}>{messages.LOGIN}</div>
                     <input type="text" id="username" name="username" placeholder="Username..."
                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                this.setState({
@@ -65,10 +67,14 @@ export class Login extends Component<LoginProperties, LoginState> {
                         userService.authenticate({username, password}).then((response: AuthenticationResponse) => {
                             restService.addJWT(response.jwt);
                             console.log("S-a logat " + response.jwt);
+                            console.log(restService.parseJWT());
+                            history.push("/student/home");
                         });
+
                         console.log(username);
                     }}>
-                        <div className={"lets-go-text"}>LET'S GO</div>
+
+                        <div className={"lets-go-text"}>{messages.LET_S_GO}</div>
                     </button>
                 </div>
             </div>
