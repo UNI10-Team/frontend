@@ -3,7 +3,9 @@ import {userService} from "../../services/UserService";
 import {restService} from "../../services/RestService";
 import {IoMdPerson, IoMdPersonAdd} from "react-icons/io";
 import './Login.css';
-import {AuthenticationResponse} from "../../interfaces/authentication";
+import {StudentCourses} from "../student-courses/StudentCourses";
+import {AuthenticationRequest, AuthenticationResponse} from "../../interfaces/authentication";
+import {Role} from "../../interfaces/role";
 import history from "../../history";
 import bundle from "../../util/nls";
 
@@ -67,7 +69,17 @@ export class Login extends Component<LoginProperties, LoginState> {
                             restService.addJWT(response.jwt);
                             console.log("S-a logat " + response.jwt);
                             console.log(restService.parseJWT());
-                            history.push("/student/home");
+                            const ROLE = restService.parseJWT().ROLES[0];
+                            if(ROLE === Role.ROLE_STUDENT){
+                                history.push("/student/home");
+                            }
+                            if(ROLE == Role.ROLE_ADMIN){
+                            //TO DO
+                            }
+                            else{
+                                history.push("/teacher/home");
+                            }
+
                         });
 
                         console.log(username);
