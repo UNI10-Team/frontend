@@ -5,4 +5,5 @@ export const authenticate = `${defaultURL}/authenticate`;
 export const subjects = `${defaultURL}/subjects`;
 export const comments = `${defaultURL}/comments`;
 export const courses = `${defaultURL}/courses`;
-export const users = '';
+export const users = `${defaultURL}/users`;
+export const currentUser = `${users}/currentUser`;

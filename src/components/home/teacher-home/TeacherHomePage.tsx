@@ -18,6 +18,10 @@ import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
 import bundle from '../../../util/nls';
 import history from "../../../history";
+import UserService, {userService} from '../../../services/UserService';
+import RestService, {restService} from '../../../services/RestService';
+import User from '../../../interfaces/user';
+import {Role} from '../../../interfaces/role';
 const news_messages = [
     {
         id: 1,
@@ -35,20 +39,34 @@ export interface HomeProperties {
 }
 
 export interface HomeState {
+    currentUser:User;
 }
 
 export class TeacherHomePage extends Component<HomeProperties, HomeState> {
     constructor(props: HomeProperties) {
         super(props);
+        const userNull : User = {
+            email: "",
+        firstName: "",
+        id: 1,
+        lastName: "",
+        role: Role.ROLE_COURSE_TEACHER,
+        username: "",
+        };
+        this.state = {currentUser:userNull};
+
     }
 
 
     render() {
         const messages = bundle.messages;
+        userService.getCurrentUser().then((response: User) => {
+            this.setState({currentUser: response});
+        });
         return (
             <div className={"home-page"}>
                 <div className={"welcome-text-home"}>
-                    {`${messages.WELCOME}, prof. Gabriela!`}
+                    {`${messages.WELCOME}, prof. ${this.state.currentUser.firstName}`}
                 </div>
                 <div>
 

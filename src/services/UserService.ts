@@ -13,7 +13,7 @@ export default class UserService {
     }
 
     getCurrentUser():Promise<User>{
-        return this.restService.get(endpoints.users);
+        return this.restService.get(endpoints.currentUser);
     }
 
 }

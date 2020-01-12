@@ -6,7 +6,7 @@ export default class RestService {
         'Content-type': 'application/json'
     };
 
-    private jwt: string = '';
+    public jwt: string = '';
 
     get(path: string, headers?: Headers): Promise<any> {
         return fetch(path, {

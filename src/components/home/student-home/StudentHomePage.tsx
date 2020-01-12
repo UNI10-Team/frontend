@@ -16,6 +16,10 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/core/Avatar';
 import bundle from '../../../util/nls';
 import history from "../../../history";
+import User from '../../../interfaces/user';
+import {Role} from '../../../interfaces/role';
+import UserService, {userService} from '../../../services/UserService';
+import RestService, {restService} from '../../../services/RestService';
 
 const news_messages = [
     {
@@ -34,20 +38,33 @@ export interface HomeProperties {
 }
 
 export interface HomeState {
+    currentUser:User;
 }
 
 export class StudentHomePage extends Component<HomeProperties, HomeState> {
     constructor(props: HomeProperties) {
         super(props);
+        const userNull : User = {
+            email: "",
+            firstName: "",
+            id: 1,
+            lastName: "",
+            role: Role.ROLE_COURSE_TEACHER,
+            username: "",
+        };
+        this.state = {currentUser:userNull};
     }
 
 
     render() {
         const messages = bundle.messages;
+        userService.getCurrentUser().then((response: User) => {
+            this.setState({currentUser: response});
+        });
         return (
             <div className={"home-page"}>
                 <div className={"welcome-text-home"}>
-                    {`${messages.WELCOME}, Alexandra!`}
+                    {`${messages.WELCOME}, ${this.state.currentUser.firstName}!`}
                 </div>
                 <div>
                     <div className={"notifications"}>
