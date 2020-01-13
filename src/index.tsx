@@ -25,7 +25,7 @@ ReactDOM.render(
             <Route exact path="/teacher/profile" component={TeacherProfile}/>
             <Route exact path="/student/courses" component={StudentCourses}/>
             <Route exact path="/teacher/courses" component={TeacherCourses}/>
-            <Route extract path="/courses/viewer" component={CoursesViewer}/>
+            <Route extract path="/student/courses/viewer" component={CoursesViewer}/>
             <Redirect from="/" to="/login"/>
         </Switch>
     </Router>,

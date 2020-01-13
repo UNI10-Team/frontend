@@ -32,6 +32,10 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
         const {attachments = []} = this.state;
         return (
             <div className={"courses-viewer-component"}>
+                <div className={"side-rectangle"}>
+                    <div className={"side-text"}>Numele Cursului</div>
+                </div>
+                <div className={"course-logo"}/>
                 <div className={"grey-rectangle-courses"}>
                     <div className={"left"}>
                         <Button> <ArrowBackIosIcon className={"left-icon"}/> </Button>
