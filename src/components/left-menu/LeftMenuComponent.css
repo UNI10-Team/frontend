@@ -1,34 +1,45 @@
 .panel-1 {
-    width: fit-content;
-    background: rgba(39, 167, 136, 0.69) !important;
     margin-top: -29% !important;
 }
 
+.panel-1,
 .panel {
-    width: fit-content;
-    background: rgba(39, 167, 136, 0.69) !important;
+    width: 130px;
+    background: var(--green) !important;
 }
 
-.panel:hover, .panel-1:hover {
-    background: rgba(255, 233, 36, 0.69) !important;
+.panel:hover,
+.panel-1:hover {
+    background: var(--yellow) !important;
 }
 
 .white-icon {
     color: white;
 }
 
+.course-button {
+    display: block !important;
+    width: 100% !important;
+}
+
 .course-button:hover {
-    background: rgba(39, 167, 136, 0.69) !important;
+    background: var(--green) !important;
 }
 
-.item {
-    width: 120px;
-    overflow: hidden;
-}
-
-.list {
+.panelDetails {
     max-height: 150px;
-    width: 100%;
-    overflow-y: auto;
-    padding-right: 20px;
+    overflow: auto;
+}
+
+.panelDetails::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.panelDetails::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+}
+
+.panelDetails::-webkit-scrollbar-thumb {
+    background-color: #000000;
 }

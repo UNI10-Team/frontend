@@ -17,19 +17,20 @@ export interface LeftMenuComponentProperties {
 }
 
 export interface LeftMenuComponentState {
-
+    expandedItem: number
 }
 
 export interface LeftMenuComponentItemProperties {
     year: number,
     title: string,
-    expansionClass: string
+    expansionClass: string,
+    expanded?: boolean,
+    onChange: (year: number, expanded: boolean) => void
 }
 
 export interface LeftMenuComponentItemState {
     subjects: Subject[]
 }
-
 
 export class LeftMenuComponentItem extends Component<LeftMenuComponentItemProperties, LeftMenuComponentItemState> {
 
@@ -42,27 +43,36 @@ export class LeftMenuComponentItem extends Component<LeftMenuComponentItemProper
     }
 
     render() {
-        const {title, expansionClass, year} = this.props;
+        const {
+            title,
+            expansionClass,
+            year, onChange,
+            expanded = false
+        } = this.props;
         const {subjects} = this.state;
         return (
             <LightTooltip title={title} placement={'right'}>
-                <ExpansionPanel className={expansionClass}>
+                <ExpansionPanel className={expansionClass} expanded={expanded} onChange={(event, nowExpanded) => {
+                    onChange(year, nowExpanded);
+                }}>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                         {LeftMenuComponentItem.getIcon(year)}
                     </ExpansionPanelSummary>
-                    <List>
-                        {
-                            subjects.map(subject => {
-                                return (
-                                    <ExpansionPanelDetails key={subject.id}>
-                                        <Button className={"course-button"}>
-                                            {LeftMenuComponentItem.getSubjectName(subject.name)}
-                                        </Button>
-                                    </ExpansionPanelDetails>
-                                )
-                            })
-                        }
-                    </List>
+                    <ExpansionPanelDetails className={'panelDetails'}>
+                        <List className={'list'}>
+                            <div className={'items'}>
+                                {
+                                    subjects.map(subject => {
+                                        return (
+                                            <Button key={subject.id} className={"course-button"}>
+                                                {LeftMenuComponentItem.getSubjectName(subject.name)}
+                                            </Button>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </List>
+                    </ExpansionPanelDetails>
                 </ExpansionPanel>
             </LightTooltip>
         )
@@ -101,23 +111,51 @@ export class LeftMenuComponentItem extends Component<LeftMenuComponentItemProper
 
 export class LeftMenuComponent extends Component<LeftMenuComponentProperties, LeftMenuComponentState> {
 
+
+    constructor(props: Readonly<LeftMenuComponentProperties>) {
+        super(props);
+        this.state = {
+            expandedItem: 0
+        }
+    }
+
     render() {
         const messages = i18NService.getBundle();
+        const {expandedItem} = this.state;
         return (
             <div>
-                <LeftMenuComponentItem year={1} title={`${messages.YEAR} 1`} expansionClass={'panel-1'}>
+                <LeftMenuComponentItem year={1}
+                                       expanded={expandedItem === 1}
+                                       onChange={this.onSelectItem}
+                                       title={`${messages.YEAR} 1`}
+                                       expansionClass={'panel-1'}/>
 
-                </LeftMenuComponentItem>
 
-                <LeftMenuComponentItem year={2} title={`${messages.YEAR} 2`} expansionClass={'panel'}>
+                <LeftMenuComponentItem year={2}
+                                       expanded={expandedItem === 2}
+                                       onChange={this.onSelectItem}
+                                       title={`${messages.YEAR} 2`}
+                                       expansionClass={'panel'}/>
 
-                </LeftMenuComponentItem>
 
-                <LeftMenuComponentItem year={3} title={`${messages.YEAR} 3`} expansionClass={'panel'}>
+                <LeftMenuComponentItem year={3}
+                                       expanded={expandedItem === 3}
+                                       onChange={this.onSelectItem}
+                                       title={`${messages.YEAR} 3`}
+                                       expansionClass={'panel'}/>
 
-                </LeftMenuComponentItem>
             </div>
         );
+    }
+
+    private onSelectItem = (year: number, expanded: boolean) => {
+        let expandedItem = 0;
+        if (expanded) {
+            expandedItem = year;
+        }
+        this.setState({
+            expandedItem
+        })
     }
 }
 
