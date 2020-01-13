@@ -9,8 +9,10 @@ import Attachment from "../../interfaces/attachment";
 import Course from "../../interfaces/course";
 import {RightMenuComponent} from "../right-menu/RightMenuComponent";
 import {LeftMenuComponent} from "../left-menu/LeftMenuComponent";
+import history from "../../history";
 
 export interface CoursesViewerProperties {
+    match: any;
 }
 
 export interface CoursesViewerState {
@@ -33,12 +35,12 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
         return (
             <div className={"courses-viewer-component"}>
                 <div className={"side-rectangle"}>
-                    <div className={"side-text"}>Numele Cursului</div>
+                    <div className={"side-text"}>{this.props.match.params.courseId}</div>
                 </div>
-                <div className={"course-logo"}/>
+                {/*<div className={"course-logo"}/>*/}
                 <div className={"grey-rectangle-courses"}>
                     <div className={"left"}>
-                        <Button> <ArrowBackIosIcon className={"left-icon"}/> </Button>
+                        <Button> <ArrowBackIosIcon className={"left-icon"} onClick={()=>history.goBack()}/> </Button>
                     </div>
                     <div className={"right"}>
                         <DesktopMacIcon className={"desktop-icon"}/>

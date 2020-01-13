@@ -20,6 +20,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import Avatar from "@material-ui/core/Avatar";
+import history from "../../history";
 
 const news_messages = [
     {
@@ -41,6 +42,7 @@ const comments = [
 ];
 
 export interface StudentCourseProperties {
+    match: any;
 }
 
 export interface StudentCourseState {
@@ -54,12 +56,13 @@ export class StudentCourse extends Component<StudentCourseProperties,
 
     render() {
         const messages = bundle.messages;
+        const currentSubject = this.props.match.params.courseId;
         return (
             <div className={"student-course-component"}>
                 <div className={"side-rectangle"}>
-                    <div className={"side-text"}>Numele Cursului</div>
+                    <div className={"side-text"}>{currentSubject}</div>
                 </div>
-                <div className={"course-logo"}/>
+                {/*<div className={"course-logo"}/>*/}
                 <div className={"grey-rectangle"}>
                     <div className={"news-rectangle"}>
                         <div className={"rectangle-text"}>{messages.WHATS_NEW}</div>
@@ -126,7 +129,8 @@ export class StudentCourse extends Component<StudentCourseProperties,
                         <MdFolderOpen className={"content-type-icon"}/>
                         <div className={"content-type-text"}>{messages.SEMINARII}</div>
                     </div>
-                    <div className={"content-type-circle cursuri-align"}>
+                    <div className={"content-type-circle cursuri-align"}
+                         onClick={() => history.push(`/student/courses/${currentSubject}/viewer`)}>
                         <MdDesktopMac className={"content-type-icon"}/>
                         <div className={"content-type-text"}>{messages.COURSES}</div>
                     </div>

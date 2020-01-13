@@ -13,6 +13,7 @@ import {StudentCourses} from "./components/student-courses/StudentCourses";
 import {TeacherCourses} from "./components/teacher-courses/TeacherCourses";
 import {CoursesViewer} from "./components/courses-viewer/CoursesViewer";
 import history from "./history";
+import {StudentCourse} from "./components/student-course/StudentCourse";
 
 ReactDOM.render(
     <Router history={history}>
@@ -25,7 +26,8 @@ ReactDOM.render(
             <Route exact path="/teacher/profile" component={TeacherProfile}/>
             <Route exact path="/student/courses" component={StudentCourses}/>
             <Route exact path="/teacher/courses" component={TeacherCourses}/>
-            <Route extract path="/student/courses/viewer" component={CoursesViewer}/>
+            <Route extract path="/student/courses/:courseId/viewer" component={CoursesViewer}/>
+            <Route exact path="/student/courses/:courseId" component={StudentCourse}/>
             <Redirect from="/" to="/login"/>
         </Switch>
     </Router>,

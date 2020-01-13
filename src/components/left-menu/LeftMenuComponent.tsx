@@ -12,6 +12,7 @@ import Subject from "../../interfaces/subject";
 import {Page} from "../../interfaces/page";
 import {subjectService} from "../../services/SubjectService";
 import {Filter1, Filter2, Filter3} from "@material-ui/icons";
+import history from "../../history";
 
 export interface LeftMenuComponentProperties {
 }
@@ -64,7 +65,7 @@ export class LeftMenuComponentItem extends Component<LeftMenuComponentItemProper
                                 {
                                     subjects.map(subject => {
                                         return (
-                                            <Button key={subject.id} className={"course-button"}>
+                                            <Button key={subject.id} className={"course-button"} onClick={()=>history.push(`/student/courses/${subject.name}`)}>
                                                 {LeftMenuComponentItem.getSubjectName(subject.name)}
                                             </Button>
                                         )
