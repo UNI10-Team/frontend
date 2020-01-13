@@ -65,10 +65,11 @@ export class Login extends Component<LoginProperties, LoginState> {
                             restService.addJWT(response.jwt);
                             console.log(response.jwt);
                             const ROLE = restService.parseJWT().ROLES[0];
+                            console.log(ROLE);
                             if (ROLE === Role.ROLE_STUDENT) {
                                 history.push("/student/home");
                             }
-                            if (ROLE === Role.ROLE_ADMIN) {
+                            else if (ROLE === Role.ROLE_ADMIN) {
                                 //TO DO
                             } else {
                                 history.push("/teacher/home");
