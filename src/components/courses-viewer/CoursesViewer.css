@@ -98,6 +98,8 @@
     color : white;
     text-align: left;
 }
-.course-button{
+.button-group{
     background-color: white !important;
+}
+.course-button{
 }
