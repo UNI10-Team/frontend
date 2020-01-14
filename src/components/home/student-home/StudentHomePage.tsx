@@ -19,6 +19,7 @@ import {i18NService} from "../../../services/I18NService";
 import User from '../../../interfaces/user';
 import {Role} from '../../../interfaces/role';
 import {userService} from '../../../services/UserService';
+import {restService} from "../../../services/RestService";
 
 const news_messages = [
     {
@@ -56,6 +57,7 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
 
 
     render() {
+
         const messages = i18NService.getBundle();
         return (
             <div className={"home-page"}>
@@ -100,7 +102,11 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
                 </div>
 
 
-                <Button className={"button-turnoff-home"}>
+                <Button className={"button-turnoff-home"}
+                        onClick={() => {
+                            restService.removeJWT();
+                            history.push('/');
+                        }}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
                 <Button className={"button-profile-home"} onClick={() => history.push('/student/profile')}>
@@ -109,6 +115,7 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
             </div>
         );
     }
+
 
     componentDidMount(): void {
         userService.getCurrentUser().then((response: User) => {

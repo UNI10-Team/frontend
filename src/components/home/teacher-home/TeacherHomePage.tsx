@@ -21,6 +21,8 @@ import {i18NService} from "../../../services/I18NService";
 import {userService} from '../../../services/UserService';
 import User from '../../../interfaces/user';
 import {Role} from '../../../interfaces/role';
+import {restService} from "../../../services/RestService";
+
 const news_messages = [
     {
         id: 1,
@@ -38,21 +40,21 @@ export interface HomeProperties {
 }
 
 export interface HomeState {
-    currentUser:User;
+    currentUser: User;
 }
 
 export class TeacherHomePage extends Component<HomeProperties, HomeState> {
     constructor(props: HomeProperties) {
         super(props);
-        const userNull : User = {
+        const userNull: User = {
             email: "",
-        firstName: "",
-        id: 1,
-        lastName: "",
-        role: Role.ROLE_COURSE_TEACHER,
-        username: "",
+            firstName: "",
+            id: 1,
+            lastName: "",
+            role: Role.ROLE_COURSE_TEACHER,
+            username: "",
         };
-        this.state = {currentUser:userNull};
+        this.state = {currentUser: userNull};
 
     }
 
@@ -62,7 +64,7 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
         return (
             <div className={"home-page"}>
                 <div className={"welcome-text-home"}>
-                    {`${messages.WELCOME}, prof. ${this.state.currentUser.firstName}`}
+                    {`${messages.WELCOME}, prof. ${this.state.currentUser.firstName}!`}
                 </div>
                 <div>
 
@@ -90,11 +92,11 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                             </Paper>
                         </React.Fragment>
                     </div>
-                    <Button className={"big-button"} onClick={()=>history.push('/teacher/profile')}>
+                    <Button className={"big-button"} onClick={() => history.push('/teacher/profile')}>
                         <AccountCircleIcon className={"big-icon"}/>
                         <div className={"text-button"}>{messages.PROFILE}</div>
                     </Button>
-                    <Button className={"big-button"} onClick={()=>history.push('/teacher/courses')}>
+                    <Button className={"big-button"} onClick={() => history.push('/teacher/courses')}>
                         <FileCopyIcon className={"big-icon"}/>
                         <div className={"text-button"}>{messages.COURSES}</div>
                     </Button>
@@ -105,10 +107,14 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                 </div>
 
 
-                <Button className={"button-turnoff-home"}>
+                <Button className={"button-turnoff-home"}
+                        onClick={() => {
+                            restService.removeJWT();
+                            history.push('/');
+                        }}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
-                <Button className={"button-profile-home"} onClick={()=>history.push('/teacher/profile')}>
+                <Button className={"button-profile-home"} onClick={() => history.push('/teacher/profile')}>
                     <AccountCircle className={"white-icon"}/>
                 </Button>
             </div>

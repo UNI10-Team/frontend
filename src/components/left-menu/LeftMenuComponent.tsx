@@ -13,15 +13,18 @@ import {Page} from "../../interfaces/page";
 import {subjectService} from "../../services/SubjectService";
 import {Filter1, Filter2, Filter3} from "@material-ui/icons";
 import history from "../../history";
+import {restService} from "../../services/RestService";
 
 export interface LeftMenuComponentProperties {
+    role: string;
 }
 
 export interface LeftMenuComponentState {
-    expandedItem: number
+    expandedItem: number;
 }
 
 export interface LeftMenuComponentItemProperties {
+    role: string,
     year: number,
     title: string,
     expansionClass: string,
@@ -65,7 +68,8 @@ export class LeftMenuComponentItem extends Component<LeftMenuComponentItemProper
                                 {
                                     subjects.map(subject => {
                                         return (
-                                            <Button key={subject.id} className={"course-button"} onClick={()=>history.push(`/student/courses/${subject.name}`)}>
+                                            <Button key={subject.id} className={"course-button"}
+                                                    onClick={() => history.push(`/${this.props.role}/courses/${subject.name}`)}>
                                                 {LeftMenuComponentItem.getSubjectName(subject.name)}
                                             </Button>
                                         )
@@ -80,11 +84,21 @@ export class LeftMenuComponentItem extends Component<LeftMenuComponentItemProper
     }
 
     componentDidMount(): void {
-        subjectService.getSubjectsByYear(this.props.year).then((page: Page<Subject>) => {
-            this.setState({
-                subjects: page.content
+        if (this.props.role == "student") {
+            subjectService.getSubjectsByYear(this.props.year).then((page: Page<Subject>) => {
+                this.setState({
+                    subjects: page.content
+                });
             });
-        });
+        }
+        else {
+            const teacherId = restService.parseJWT().ID;
+            subjectService.getSubjectsByTeacher(teacherId).then((page: Page<Subject>) => {
+                this.setState({
+                    subjects: page.content.filter(subject=>subject.year==this.props.year)
+                });
+            });
+        }
     }
 
     private static getIcon(year: number): JSX.Element {
@@ -116,30 +130,34 @@ export class LeftMenuComponent extends Component<LeftMenuComponentProperties, Le
     constructor(props: Readonly<LeftMenuComponentProperties>) {
         super(props);
         this.state = {
-            expandedItem: 0
+            expandedItem: 0,
         }
     }
 
     render() {
         const messages = i18NService.getBundle();
         const {expandedItem} = this.state;
+        const currentRole = this.props.role;
         return (
             <div>
-                <LeftMenuComponentItem year={1}
+                <LeftMenuComponentItem role={currentRole}
+                                       year={1}
                                        expanded={expandedItem === 1}
                                        onChange={this.onSelectItem}
                                        title={`${messages.YEAR} 1`}
                                        expansionClass={'panel-1'}/>
 
 
-                <LeftMenuComponentItem year={2}
+                <LeftMenuComponentItem role={currentRole}
+                                       year={2}
                                        expanded={expandedItem === 2}
                                        onChange={this.onSelectItem}
                                        title={`${messages.YEAR} 2`}
                                        expansionClass={'panel'}/>
 
 
-                <LeftMenuComponentItem year={3}
+                <LeftMenuComponentItem role={currentRole}
+                                       year={3}
                                        expanded={expandedItem === 3}
                                        onChange={this.onSelectItem}
                                        title={`${messages.YEAR} 3`}

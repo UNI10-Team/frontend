@@ -1,4 +1,4 @@
-.student-course-component {
+.course-component {
   background: url("../../resources/student-courses-image.jpg") no-repeat;
   background-size: cover;
   width: 100%;
@@ -20,11 +20,21 @@
   text-align: center;
 }
 
-.comments-list {
+.news-list, .long-comments-list {
   height: 18vw !important;
 }
-.news-list{
-  height: 23vw !important;
+
+.short-comments-list {
+  height: 9.5vw !important;
+  border-bottom: solid black 2px !important;
+}
+
+.comments-to-accept {
+  height: 8vw !important;
+}
+.center-div{
+  align-items: center;
+  text-align: center;
 }
 
 .side-text {
@@ -52,10 +62,6 @@
   text-transform: uppercase;
 }
 
-.panel-1 {
-  width: fit-content;
-  background: rgba(39, 167, 136, 0.69) !important;
-}
 
 .icon {
   color: white;
@@ -100,7 +106,7 @@
   border-radius: 25%;
 }
 
-.comments-inside-rectangle {
+.comments-inside-rectangle, .news-inside-rectangle {
   position: relative;
   background: rgba(152, 160, 157, 0.103);
   top: 2vw;
@@ -171,7 +177,7 @@
   font-size: 1.3vw;
 }
 
-.comment-input {
+.comment-input, .news-input {
   position: relative;
   width: 16vw;
   height: 2vw;
@@ -179,6 +185,7 @@
   background: rgba(244, 244, 244, 0.55);
   border-radius: 48px;
 }
+
 
 .send-icon {
   position: relative;
@@ -197,4 +204,12 @@
 .news-text {
   color: #ffffff;
   font-size: 1vw;
+}
+
+.accept-comment-button {
+  background-color:  rgba(23, 145, 57, 0.66) !important;
+  margin-right: 5% !important;
+}
+.decline-comment-button {
+  background-color:  rgba(167, 62, 39, 0.69) !important;
 }

@@ -24,7 +24,7 @@ export class TeacherCourses extends Component<TeacherCoursesProperties, TeacherC
                 </div>
 
                 <RightMenuComponent role={"teacher"}/>
-                <LeftMenuComponent/>
+                <LeftMenuComponent role={"teacher"}/>
 
             </div>
         );

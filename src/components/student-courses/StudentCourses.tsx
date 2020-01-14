@@ -26,7 +26,7 @@ export class StudentCourses extends Component<StudentCoursesProperties, StudentC
                     </div>
                 </div>
                 <RightMenuComponent role={"student"}/>
-                <LeftMenuComponent/>
+                <LeftMenuComponent role={"student"}/>
             </div>
         );
     }

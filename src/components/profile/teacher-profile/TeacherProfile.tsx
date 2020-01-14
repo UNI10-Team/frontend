@@ -17,6 +17,7 @@ import {i18NService} from "../../../services/I18NService";
 import User from '../../../interfaces/user';
 import {Role} from '../../../interfaces/role';
 import {userService} from '../../../services/UserService';
+import {restService} from "../../../services/RestService";
 
 export interface TeacherProfileProperties {
 }
@@ -105,7 +106,11 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                         </List>
                     </div>
                 </div>
-                <Button className={"button-turnoff"}>
+                <Button className={"button-turnoff"}
+                        onClick={()=>{
+                            restService.removeJWT();
+                            history.push("/");
+                        }}>
                     <SettingsPower className={"white-icon"}/>
                 </Button>
                 <Button className={"button-home"} onClick={()=>history.push('/teacher/home')}>

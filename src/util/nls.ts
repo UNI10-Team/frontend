@@ -20,6 +20,6 @@ export default {
     WHAT_WILL_YOU_STUDY_TODAY: "Ce vei studia astazi?",
     YEAR: "Anul",
     WHATS_NEW: "Ce e nou",
-    COMMENTS: "Ce zic colegii"
+    COMMENTS: "Ce zic studentii"
   }
 };

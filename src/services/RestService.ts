@@ -47,6 +47,12 @@ export default class RestService {
         return decoder(this.jwt);
     }
 
+    removeJWT() {
+        this.jwt = "";
+        this.defaultHeaders = {'Content-type': 'application/json'};
+    }
+
+
     private static json = (response: Response) => {
         if (response.ok) {
             return response.json();

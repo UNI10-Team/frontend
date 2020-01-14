@@ -97,7 +97,7 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
 
                 </div>
                 <RightMenuComponent role={this.props.role}/>
-                <LeftMenuComponent/>
+                <LeftMenuComponent role={this.props.role}/>
             </div>
         );
     }

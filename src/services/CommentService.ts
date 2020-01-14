@@ -17,6 +17,10 @@ export default class CommentService {
         return this.restService.get(`${endpoints.comments}?attachmentId=${attachmentId}`);
     }
 
+    getCommentsForSubject(subjectId: number):Promise<Page<Comment>> {
+        return this.restService.get(`${endpoints.comments}?subjectId=${subjectId}`);
+    }
+
     deleteComment(commentId: number) : Promise<Comment> {
         return this.restService.delete(`${endpoints.comments}/${commentId}`);
     }
