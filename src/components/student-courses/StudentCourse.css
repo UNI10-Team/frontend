@@ -20,18 +20,12 @@
   text-align: center;
 }
 
-/*.course-logo {*/
-/*  position: absolute;*/
-/*  width: 8%;*/
-/*  height: 16%;*/
-/*  top: 4%;*/
-/*  left: 13%;*/
-/*  background: url("../../resources/logo.jpg") round;*/
-/*  background-size: cover;*/
-/*  opacity: 80%;*/
-/*  border-radius: 100%;*/
-/*  z-index: 10;*/
-/*}*/
+.comments-list {
+  height: 18vw !important;
+}
+.news-list{
+  height: 23vw !important;
+}
 
 .side-text {
   position: relative;
@@ -61,7 +55,6 @@
 .panel-1 {
   width: fit-content;
   background: rgba(39, 167, 136, 0.69) !important;
-  /*margin-top: 5% !important;*/
 }
 
 .icon {

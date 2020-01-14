@@ -62,11 +62,10 @@ export class StudentCourse extends Component<StudentCourseProperties,
                 <div className={"side-rectangle"}>
                     <div className={"side-text"}>{currentSubject}</div>
                 </div>
-                {/*<div className={"course-logo"}/>*/}
                 <div className={"grey-rectangle"}>
                     <div className={"news-rectangle"}>
                         <div className={"rectangle-text"}>{messages.WHATS_NEW}</div>
-                        <List>
+                        <List className={"scrollable-list news-list"}>
                             {news_messages.map(({id, primary}) => (
                                 <React.Fragment key={id}>
                                     <ListItem button>
@@ -86,7 +85,7 @@ export class StudentCourse extends Component<StudentCourseProperties,
                     <div className={"comments-rectangle"}>
                         <div className={"rectangle-text"}>{messages.COMMENTS}</div>
                         <div className={"comments-inside-rectangle"}>
-                            <List>
+                            <List className={"scrollable-list comments-list"}>
                                 {comments.map(({id, primary, secondary}) => (
                                     <React.Fragment key={id}>
                                         <ListItem>
@@ -121,13 +120,15 @@ export class StudentCourse extends Component<StudentCourseProperties,
                         />
                         <MdSend className={"send-icon"}/>
                     </div>
-                    <div className={"content-type-circle laboratoare-align"}>
+                    <div className={"content-type-circle laboratoare-align"}
+                        onClick={()=>history.push(`/student/labs/${currentSubject}/viewer`)}>
                         <MdLaptop className={"content-type-icon"}/>
-                        <div className={"content-type-text"}>{messages.LABORATOARE}</div>
+                        <div className={"content-type-text"}>{messages.LABORATORIES}</div>
                     </div>
-                    <div className={"content-type-circle seminarii-align"}>
+                    <div className={"content-type-circle seminarii-align"}
+                        onClick={()=>history.push(`/student/seminaries/${currentSubject}/viewer`)}>
                         <MdFolderOpen className={"content-type-icon"}/>
-                        <div className={"content-type-text"}>{messages.SEMINARII}</div>
+                        <div className={"content-type-text"}>{messages.SEMINARIES}</div>
                     </div>
                     <div className={"content-type-circle cursuri-align"}
                          onClick={() => history.push(`/student/courses/${currentSubject}/viewer`)}>

@@ -73,7 +73,7 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                                 <Typography className={"main-text-home"}>
                                     {messages.NEWS}
                                 </Typography>
-                                <List>
+                                <List className={"scrollable-list"}>
                                     {news_messages.map(({id, primary, secondary}) => (
                                         <React.Fragment key={id}>
                                             <ListItem button>

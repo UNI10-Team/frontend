@@ -11,10 +11,10 @@
     position: absolute;
     background: rgba(196, 196, 196, 0.6);
     width: 80%;
-    height: 45%;
+    height: 35%;
     margin-left: 10%;
     margin-right: 10%;
-    top: 50%;
+    top: 60%;
     align-items: center;
     text-align: center;
 }

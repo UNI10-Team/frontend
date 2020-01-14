@@ -11,28 +11,34 @@ import {StudentProfile} from "./components/profile/student-profile/StudentProfil
 import {TeacherProfile} from "./components/profile/teacher-profile/TeacherProfile";
 import {StudentCourses} from "./components/student-courses/StudentCourses";
 import {TeacherCourses} from "./components/teacher-courses/TeacherCourses";
-import {CoursesViewer} from "./components/courses-viewer/CoursesViewer";
-import {TeacherCoursesViewer} from "./components/teacher-courses-viewer/TeacherCoursesViewer";
+import {TeacherCoursesViewer} from "./components/teacher-courses/TeacherCoursesViewer";
 
 import history from "./history";
-import {StudentCourse} from "./components/student-course/StudentCourse";
+import {StudentCourse} from "./components/student-courses/StudentCourse";
+import {StudentCoursesViewer} from "./components/student-courses/StudentCoursesViewer";
+import {StudentSeminariesViewer} from "./components/student-courses/StudentSeminariesViewer";
+import {TeacherSeminariesViewer} from "./components/teacher-courses/TeacherSeminariesViewer";
+import {StudentLaboratoriesViewer} from "./components/student-courses/StudentLaboratoriesViewer";
+import {TeacherLaboratoriesViewer} from "./components/teacher-courses/TeacherLaboratoriesViewer";
 
 ReactDOM.render(
     <Router history={history}>
         <Switch>
             <Route path="/register" component={Register}/>
             <Route path="/login" component={Login} />
-            <Route path="/student/home" component={StudentHomePage}/>
+            <Route exact path="/student/home" component={StudentHomePage}/>
             <Route exact path="/teacher/home" component={TeacherHomePage}/>
-            <Route path="/student/profile" component={StudentProfile}/>
+            <Route exact path="/student/profile" component={StudentProfile}/>
             <Route exact path="/teacher/profile" component={TeacherProfile}/>
             <Route exact path="/student/courses" component={StudentCourses}/>
             <Route exact path="/teacher/courses" component={TeacherCourses}/>
-            <Route extract path="/student/courses/viewer" component={CoursesViewer}/>
-            <Route extract path="/teacher/courses/viewer" component={TeacherCoursesViewer}/>
-
-            <Route extract path="/student/courses/:courseId/viewer" component={CoursesViewer}/>
             <Route exact path="/student/courses/:courseId" component={StudentCourse}/>
+            <Route exact path="/student/courses/:courseId/viewer" component={StudentCoursesViewer}/>
+            <Route exact path="/teacher/courses/:courseId/viewer" component={TeacherCoursesViewer}/>
+            <Route exact path="/student/seminaries/:courseId/viewer" component={StudentSeminariesViewer}/>
+            <Route exact path="/teacher/seminaries/:courseId/viewer" component={TeacherSeminariesViewer}/>
+            <Route exact path="/student/labs/:courseId/viewer" component={StudentLaboratoriesViewer}/>
+            <Route exact path="/teacher/labs/:courseId/viewer" component={TeacherLaboratoriesViewer}/>
             <Redirect from="/" to="/login"/>
         </Switch>
     </Router>,
