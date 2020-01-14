@@ -1,0 +1,15 @@
+.browse button{
+
+    background-color: #efefef ;
+}
+.input{
+    font-size: large !important;
+    font-family: Arial !important;
+    /*background: var(--green) !important;*/
+
+}
+.upload{
+    font-size: large;
+    background: var(--green) !important;
+    color: white !important;
+}

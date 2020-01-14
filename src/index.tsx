@@ -12,6 +12,8 @@ import {TeacherProfile} from "./components/profile/teacher-profile/TeacherProfil
 import {StudentCourses} from "./components/student-courses/StudentCourses";
 import {TeacherCourses} from "./components/teacher-courses/TeacherCourses";
 import {CoursesViewer} from "./components/courses-viewer/CoursesViewer";
+import {TeacherCoursesViewer} from "./components/teacher-courses-viewer/TeacherCoursesViewer";
+
 import history from "./history";
 import {StudentCourse} from "./components/student-course/StudentCourse";
 
@@ -26,6 +28,9 @@ ReactDOM.render(
             <Route exact path="/teacher/profile" component={TeacherProfile}/>
             <Route exact path="/student/courses" component={StudentCourses}/>
             <Route exact path="/teacher/courses" component={TeacherCourses}/>
+            <Route extract path="/student/courses/viewer" component={CoursesViewer}/>
+            <Route extract path="/teacher/courses/viewer" component={TeacherCoursesViewer}/>
+
             <Route extract path="/student/courses/:courseId/viewer" component={CoursesViewer}/>
             <Route exact path="/student/courses/:courseId" component={StudentCourse}/>
             <Redirect from="/" to="/login"/>

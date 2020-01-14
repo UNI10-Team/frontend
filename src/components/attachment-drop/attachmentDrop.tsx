@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-
+import './attachmentDrop.css'
+import Button from "@material-ui/core/Button/Button";
 interface AttachmentDropProperties {
 
 }
@@ -16,9 +17,9 @@ export class AttachmentDrop extends Component<AttachmentDropProperties, Attachme
 
     render() {
         return (
-            <div onDragOver={this.onDragOver} onDragLeave={this.onDragLeave}>
-                <input type="file" multiple onChange={this.onChange}/>
-                <button onClick={this.uploadFile}>Upload</button>
+            <div onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} className={"browse buttons"}>
+                <input type="file" multiple onChange={this.onChange} className={"input"}/>
+                <Button onClick={this.uploadFile} className={"upload"}>Încarcă</Button>
             </div>
         )
     }
