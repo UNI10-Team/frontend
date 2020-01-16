@@ -2,6 +2,7 @@ import RestService, {restService} from "./RestService";
 import * as endpoints from "../paths";
 import {AuthenticationResponse, AuthenticationRequest} from "../interfaces/authentication"
 import User from "../interfaces/user";
+import UserForPasswordUpdate from "../interfaces/userForPasswordUpdate";
 
 export default class UserService {
 
@@ -18,6 +19,10 @@ export default class UserService {
 
     isConnected(): boolean {
         return this.restService.jwt != "";
+    }
+
+    updateUser(user: UserForPasswordUpdate): Promise<User> {
+        return this.restService.put(`${endpoints.users}/${user.id}`, user);
     }
 
 }

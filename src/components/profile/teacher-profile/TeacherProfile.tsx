@@ -24,6 +24,9 @@ export interface TeacherProfileProperties {
 
 export interface TeacherProfileState {
     currentUser: User;
+    currentPassword: string;
+    newPassword:string;
+    repeatNewPassword:string;
 }
 
 export class TeacherProfile extends Component<TeacherProfileProperties, TeacherProfileState> {
@@ -38,7 +41,12 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
             role: Role.ROLE_COURSE_TEACHER,
             username: "",
         };
-        this.state = {currentUser:userNull};
+        this.state = {
+            currentUser:userNull,
+            currentPassword:'',
+            newPassword:'',
+            repeatNewPassword:''
+        };
     }
 
     render() {
@@ -58,13 +66,29 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                                 {messages.CHANGE_PASSWORD}
                             </div>
                             <input type="password" id="opassword" name="oldpassword" placeholder="Parola curenta"
-                                   className={"password-input-profile"}/>
+                                   className={"password-input-profile"}
+                                    onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {
+                                        this.setState({
+                                            currentPassword: event.target.value
+                                        })}}
+                            />
                             <input type="password" id="npassword" name="newpassword" placeholder="Parola noua"
-                                   className={"password-input-profile"}/>
+                                   className={"password-input-profile"}
+                                   onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {
+                                       this.setState({
+                                           newPassword: event.target.value
+                                       })}}
+                            />
                             <input type="password" id="rpassword" name="repeatpassword" placeholder="Repeta parola noua"
-                                   className={"password-input-profile"}/>
+                                   className={"password-input-profile"}
+                                   onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {
+                                       this.setState({
+                                           repeatNewPassword: event.target.value
+                                       })}}
+                            />
                             <Button className={"submit-button"}>
                                 {messages.RESET_PASSWORD}
+
                             </Button>
                         </form>
                     </div>

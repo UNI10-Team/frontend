@@ -28,6 +28,17 @@ export default class RestService {
         }).then(RestService.json);
     }
 
+    put(path: string, body: any, headers?: Headers): Promise<any> {
+        body = JSON.stringify(body);
+        return fetch(path, {
+            body,
+            headers: {
+                ...this.defaultHeaders, ...headers
+            },
+            method: 'PUT'
+        }).then(RestService.json);
+    }
+
     delete(path: string, headers?: Headers): Promise<any> {
         return fetch(path, {
             headers: {

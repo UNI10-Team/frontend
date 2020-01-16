@@ -17,8 +17,10 @@ import Avatar from '@material-ui/core/Avatar';
 import history from "../../../history";
 import {i18NService} from "../../../services/I18NService";
 import User from '../../../interfaces/user';
+import Notice from '../../../interfaces/notice';
 import {Role} from '../../../interfaces/role';
 import {userService} from '../../../services/UserService';
+import {noticeService} from '../../../services/NoticeService';
 import {restService} from "../../../services/RestService";
 
 const news_messages = [

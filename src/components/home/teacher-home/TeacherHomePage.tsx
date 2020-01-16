@@ -19,28 +19,24 @@ import CloseIcon from '@material-ui/icons/Close';
 import history from "../../../history";
 import {i18NService} from "../../../services/I18NService";
 import {userService} from '../../../services/UserService';
+import {subjectService} from '../../../services/SubjectService';
+import {commentService} from '../../../services/CommentService';
 import User from '../../../interfaces/user';
+import Subject from '../../../interfaces/subject';
+import Comment from '../../../interfaces/comment';
+import {Page} from "../../../interfaces/page";
 import {Role} from '../../../interfaces/role';
 import {restService} from "../../../services/RestService";
-
-const news_messages = [
-    {
-        id: 1,
-        primary: 'Silviu @ LFTC_C1',
-        secondary: "E materia mea preferata!"
-    },
-    {
-        id: 2,
-        primary: 'Amalia @ PPD_C10',
-        secondary: "Nu inteleg deloc acest curs."
-    }
-];
 
 export interface HomeProperties {
 }
 
 export interface HomeState {
     currentUser: User;
+    subjects: Subject[];
+    last:boolean;
+    comments: Comment[],
+    lastC: boolean
 }
 
 export class TeacherHomePage extends Component<HomeProperties, HomeState> {
@@ -54,7 +50,13 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
             role: Role.ROLE_COURSE_TEACHER,
             username: "",
         };
-        this.state = {currentUser: userNull};
+        this.state = {
+            currentUser: userNull,
+            last: false,
+            subjects:[],
+            comments: [],
+            lastC: false
+        };
 
     }
 
@@ -76,13 +78,13 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                                     {messages.NEWS}
                                 </Typography>
                                 <List className={"scrollable-list"}>
-                                    {news_messages.map(({id, primary, secondary}) => (
-                                        <React.Fragment key={id}>
+                                    { this.state.comments.map((comment) => (
+                                        <React.Fragment key={comment.id}>
                                             <ListItem button>
                                                 <ListItemAvatar>
                                                     <Avatar><NotificationsIcon/></Avatar>
                                                 </ListItemAvatar>
-                                                <ListItemText primary={primary} secondary={secondary}/>
+                                                <ListItemText primary={`${comment.username} @${this.getSubjectName1(this.state.subjects.filter((subject)=> subject.id == comment.subjectId )[0].name)}`} secondary={comment.text}/>
                                                 <Button className={"accept-button"}>Accepta<CheckIcon/></Button>
                                                 <Button className={"decline-button"}>Refuza<CloseIcon/></Button>
                                             </ListItem>
@@ -124,6 +126,30 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
     componentDidMount(): void {
         userService.getCurrentUser().then((response: User) => {
             this.setState({currentUser: response});
+            subjectService.getSubjectsByTeacher(this.state.currentUser.id).then((page:Page<Subject>) =>{
+                this.setState({
+                    subjects:page.content,
+                    last:page.last
+                });
+                for(let subject of this.state.subjects){
+                    commentService.getCommentsForSubject(subject.id).then((page: Page<Comment>) => {
+                        this.setState({
+                            comments: this.state.comments.concat(page.content),
+                            lastC: page.last
+                        });
+                    });
+            }
         });
+    });
     }
+
+    private getSubjectName1(initial: string): string {
+        const words = initial.split(' ');
+        let finalName = '';
+        for (let word of words) {
+            finalName += word.charAt(0);
+        }
+        return finalName.toUpperCase();
+    }
+
 }

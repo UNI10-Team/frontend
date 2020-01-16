@@ -15,15 +15,21 @@ import InfoIcon from '@material-ui/icons/Info';
 import history from "../../../history";
 import {i18NService} from "../../../services/I18NService";
 import User from '../../../interfaces/user';
+import UserForPasswordUpdate from '../../../interfaces/userForPasswordUpdate';
 import {Role} from '../../../interfaces/role';
 import {userService} from '../../../services/UserService';
 import {restService} from "../../../services/RestService";
+
 
 export interface StudentProfileProperties {
 }
 
 export interface StudentProfileState {
     currentUser: User;
+    userUpdated:UserForPasswordUpdate;
+    newPassword:string;
+    repeatNewPassword:string;
+    oldPassword:string;
 }
 
 export class StudentProfile extends Component<StudentProfileProperties, StudentProfileState> {
@@ -37,8 +43,26 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
             lastName: "",
             role: Role.ROLE_COURSE_TEACHER,
             username: "",
+
         };
-        this.state = {currentUser:userNull};
+
+        const userUpdatedNull : UserForPasswordUpdate = {
+            email: "",
+            firstName: "",
+            id: 1,
+            lastName: "",
+            role: Role.ROLE_COURSE_TEACHER,
+            username: "",
+            password: ""
+
+        };
+        this.state = {
+            currentUser:userNull,
+            userUpdated:userUpdatedNull,
+            oldPassword:"",
+            newPassword:"",
+            repeatNewPassword:""
+        };
     }
 
     render() {
@@ -58,13 +82,43 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                                 {messages.CHANGE_PASSWORD}
                             </div>
                             <input type="password" id="opassword" name="oldpassword" placeholder="Parola curenta"
-                                   className={"password-input-profile"}/>
+                                   className={"password-input-profile"}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                       this.setState({
+                                           oldPassword: event.target.value
+                                       })
+                                   }}
+                            />
                             <input type="password" id="npassword" name="newpassword" placeholder="Parola noua"
-                                   className={"password-input-profile"}/>
+                                   className={"password-input-profile"}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                       this.setState({
+                                           newPassword: event.target.value
+                                       })
+                                   }}
+                            />
                             <input type="password" id="rpassword" name="repeatpassword" placeholder="Repeta parola noua"
-                                   className={"password-input-profile"}/>
-                            <Button className={"submit-button"}>
+                                   className={"password-input-profile"}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                       this.setState({
+                                           repeatNewPassword: event.target.value
+                                       })
+                                   }}
+                            />
+                            <Button className={"submit-button"}
+                                    onClick={() => {
+                                        if(this.state.oldPassword!='' && this.state.newPassword!='' && this.state.repeatNewPassword!='') {
+                                            if (this.state.newPassword === this.state.repeatNewPassword) {
+                                                let userUpdatedLocal = this.state.userUpdated;
+                                                userUpdatedLocal.password = this.state.newPassword;
+                                                this.setState({userUpdated:userUpdatedLocal});
+                                                userService.updateUser(this.state.userUpdated);
+                                            }
+                                        }
+                                            }}
+                            >
                                 {messages.RESET_PASSWORD}
+
                             </Button>
                         </form>
                     </div>
@@ -119,7 +173,17 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
 
     componentDidMount(): void {
         userService.getCurrentUser().then((response: User) => {
-            this.setState({currentUser: response});
+            let userUp: UserForPasswordUpdate = {
+                id: response.id,
+                email: response.email,
+                username: response.username,
+                firstName: response.firstName,
+                lastName: response.lastName,
+                role: response.role,
+                password: ''
+            }
+
+            this.setState({currentUser: response, userUpdated:userUp});
         });
     }
 }
