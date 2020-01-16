@@ -1,0 +1,12 @@
+.grey-rectangle-links {
+    position: absolute;
+    background: var(--grey);
+    width: 20%;
+    height: 45%;
+    margin-left: 60%;
+    text-align: center;
+}
+
+.link{
+    color: #FFFFFF;
+}

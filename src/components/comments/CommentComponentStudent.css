@@ -1,0 +1,16 @@
+.grey-rectangle-comments {
+    position: absolute;
+    background: var(--grey);
+    width: 20%;
+    height: 45%;
+    margin-left: 60%;
+    text-align: center;
+}
+
+.comment{
+    color: #FFFFFF;
+}
+
+.comments-list {
+    height: 17vw !important;
+}

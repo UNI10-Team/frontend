@@ -81,3 +81,7 @@
     font-size: 4vw !important;
     color: white;
 }
+
+.pdf-viewer {
+    overflow: hidden;
+}

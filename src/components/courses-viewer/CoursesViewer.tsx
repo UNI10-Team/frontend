@@ -16,6 +16,8 @@ import {AttachmentDrop} from "../attachment-drop/attachmentDrop";
 import {i18NService} from "../../services/I18NService";
 import Subject from "../../interfaces/subject";
 import {subjectService} from "../../services/SubjectService";
+import {RightMenuCourses} from "../right-menu-courses/RightMenuCourses";
+import PDFViewer from "./PDFViewer";
 
 export interface CoursesViewerProperties {
     courseId: number;
@@ -104,9 +106,13 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
                         <Button className={"course-button"}>#14</Button>
                     </ButtonGroup>
 
+                    {/*<div className={"pdf-viewer"}>*/}
+                    {/*    <PDFViewer/>*/}
+                    {/*</div>*/}
                 </div>
                 <RightMenuComponent role={this.props.role}/>
                 <LeftMenuComponent role={this.props.role}/>
+                <RightMenuCourses role={this.props.role} courseId={this.props.courseId}/>
             </div>
         );
     }

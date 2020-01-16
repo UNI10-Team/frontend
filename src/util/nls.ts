@@ -21,6 +21,7 @@ export default {
     YOU_CAN_UPLOAD_FILES: "Vei putea incarca materiale utile pentru cursuri, seminarii sau laboratoare!",
     YEAR: "Anul",
     WHATS_NEW: "Ce e nou",
-    COMMENTS: "Comentarii"
+    COMMENTS: "Comentarii",
+    USEFUL_LINKS: "Link-uri utile"
   }
 };

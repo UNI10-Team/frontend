@@ -1,0 +1,32 @@
+.button-comments, .button-links {
+    display: block !important;
+    height: 5vw;
+    width: 5vw;
+    text-align: center;
+    left: 95%;
+}
+.button-comments{
+    margin-top: 10% !important;
+    left: 80%;
+}
+
+.button-links{
+    left: 80%;
+    margin-top: 2px !important;
+}
+
+.button-comments{
+    background: var(--grey) !important;
+}
+.button-links {
+    background: var(--grey) !important;
+}
+.button-comments:active{
+    background: var(--yellow) !important;
+}
+.button-links:active {
+    background: var(--yellow) !important;
+}
+.white-icon {
+    color: white;
+}
