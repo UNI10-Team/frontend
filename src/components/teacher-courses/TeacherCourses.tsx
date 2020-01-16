@@ -19,7 +19,7 @@ export class TeacherCourses extends Component<TeacherCoursesProperties, TeacherC
                 <div className={"grey-rectangle-courses"}>
                     <div className={"logo"}/>
                     <div className={"main-text-2-courses"}>
-                        {messages.TAKE_A_LOOK_TO_COURSES}
+                        {messages.YOU_CAN_UPLOAD_FILES}
                     </div>
                 </div>
 

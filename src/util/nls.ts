@@ -18,8 +18,9 @@ export default {
     TIMETABLE: "Orar",
     TAKE_A_LOOK_TO_COURSES: "Arunca o privire peste materiile disponibile!",
     WHAT_WILL_YOU_STUDY_TODAY: "Ce vei studia astazi?",
+    YOU_CAN_UPLOAD_FILES: "Vei putea incarca materiale utile pentru cursuri, seminarii sau laboratoare!",
     YEAR: "Anul",
     WHATS_NEW: "Ce e nou",
-    COMMENTS: "Ce zic studentii"
+    COMMENTS: "Comentarii"
   }
 };

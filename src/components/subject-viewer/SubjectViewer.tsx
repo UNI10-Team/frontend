@@ -2,13 +2,7 @@ import React, {Component} from "react";
 import "./SubjectViewer.css";
 import {RightMenuComponent} from "../right-menu/RightMenuComponent";
 import {LeftMenuComponent} from "../left-menu/LeftMenuComponent";
-import {
-    MdDesktopMac,
-    MdFolderOpen,
-    MdLaptop,
-    MdSend,
-    MdModeComment
-} from "react-icons/md";
+import {MdDesktopMac, MdFolderOpen, MdLaptop, MdModeComment, MdSend} from "react-icons/md";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -26,20 +20,9 @@ import {commentService} from "../../services/CommentService";
 import {Page} from "../../interfaces/page";
 import Subject from "../../interfaces/subject";
 import {subjectService} from "../../services/SubjectService";
-import {IconButton} from "@material-ui/core";
 import {noticeService} from "../../services/NoticeService";
 import Notice from "../../interfaces/notice";
 
-const news_messages = [
-    {
-        id: 1,
-        primary: "S-au modificat deadline-ul si cerinta de la laboratorul 5!"
-    },
-    {
-        id: 2,
-        primary: "S-a modificat ponderea laboratorului 6."
-    }
-];
 
 export interface SubjectViewerProperties {
     subjectId: number;
@@ -48,14 +31,15 @@ export interface SubjectViewerProperties {
 
 export interface SubjectViewerState {
     comments: Comment[];
+    commentsToAccept: Comment[];
     notices: Notice[];
     last: boolean;
-    subject: Subject,
-    comment: string,
-    page: number,
-    notice: string,
-    lastN: boolean,
-    pageN: number
+    subject: Subject;
+    comment: string;
+    page: number;
+    notice: string;
+    lastN: boolean;
+    pageN: number;
 }
 
 export class SubjectViewer extends Component<SubjectViewerProperties, SubjectViewerState> {
@@ -67,6 +51,7 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
         super(props);
         this.state = {
             comments: [],
+            commentsToAccept: [],
             notices: [],
             last: false,
             subject: {
@@ -103,6 +88,7 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
             })
         })
     }
+
     private loadData() {
         subjectService.getSubject(this.props.subjectId).then(subject => {
             this.setState({
@@ -115,6 +101,7 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
             this.loading = false;
             this.setState({
                 comments: page.content,
+                commentsToAccept: page.content.filter(comment => {if (!comment.accepted) return comment; else return null;}),
                 last: page.last
             })
         });
@@ -123,10 +110,14 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
 
     render() {
         const messages = i18NService.getBundle();
-        const {comments, notices, subject} = this.state;
+        let {comments, commentsToAccept, notices, subject} = this.state;
         const {role} = this.props;
 
         const isTeacher = role === 'teacher';
+
+        // TODO: delete this statement when CommentService is updated
+        if (isTeacher)
+            comments = [];
 
         return (
             <div className={"course-component"}>
@@ -137,8 +128,8 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                     <div className={"news-rectangle"}>
                         <div className={"rectangle-text"}>{messages.WHATS_NEW}</div>
                         <div className={"news-inside-rectangle"}>
-                            <List className={"scrollable-list news-list"} onScroll={()=>this.onScrollNotices()}>
-                                {notices.map((notice)=>this.renderNotice(notice))}
+                            <List className={"scrollable-list news-list"} onScroll={() => this.onScrollNotices()}>
+                                {notices.map((notice) => this.renderNotice(notice))}
                             </List>
                         </div>
                         {this.renderAddNews(isTeacher)}
@@ -147,8 +138,9 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                         <div className={"rectangle-text"}>{messages.COMMENTS}</div>
                         <div className={"comments-inside-rectangle"}>
                             <List className={"scrollable-list " + this.getListClass()} onScroll={() => this.onScroll()}>
-                                {comments.map((comment) => this.renderComment(comment, isTeacher))}
+                                {comments.map((comment) => this.renderComment(comment))}
                             </List>
+                            {this.renderCommentsToAcceptList(commentsToAccept, isTeacher)}
                         </div>
                         <div>
                             <input
@@ -156,6 +148,7 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                                 id="comment"
                                 name="comment"
                                 placeholder="Adauga un comentariu..."
+                                value={this.state.comment}
                                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                     this.setState({
                                         comment: event.target.value
@@ -164,7 +157,7 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                                 className={"comment-input"}
                             />
                             <MdSend className={"send-icon"} onClick={() => {
-                                this.saveComment();
+                                this.saveComment(isTeacher);
                             }}/>
                         </div>
                     </div>
@@ -190,7 +183,7 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
         );
     }
 
-    private saveComment() {
+    private saveComment(isTeacher: boolean) {
         const {comment} = this.state;
         commentService.saveComment({
             id: 0,
@@ -198,6 +191,10 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
             subjectId: this.props.subjectId
         }).then((comment) => {
             console.log(comment.text);
+            this.setState({
+                comments: this.state.comments.concat(comment),
+                comment: ''
+            })
         });
     }
 
@@ -216,6 +213,27 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
         });
     }
 
+    private acceptComment(comment: Comment) {
+        comment.accepted = true;
+        commentService.updateComment(comment)
+            .then((comment) => {
+                console.log(comment);
+                this.setState({
+                    commentsToAccept: this.state.commentsToAccept.filter(comm => comm !=comment),
+                    comments: this.state.comments.concat(comment)
+                });
+            });
+    }
+
+    private declineComment(comment: Comment) {
+        commentService.deleteComment(comment.id)
+            .then((msg) => {
+                this.setState({
+                    commentsToAccept: this.state.commentsToAccept.filter(comm => comm != comment)
+                })
+            })
+    }
+
     private getListClass() {
         if (this.props.role == "teacher") {
             return "short-comments-list";
@@ -223,6 +241,17 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
             return "long-comments-list";
         }
     }
+
+    private renderCommentsToAcceptList(commentsToAccept: Comment[], isTeacher: boolean) {
+        if (!isTeacher)
+            return null;
+        return (
+            <List className={"scrollable-list comments-to-accept"}>
+                {commentsToAccept.map((comment) => this.renderCommentToAccept(comment))}
+            </List>
+        );
+    }
+
 
     private renderAddNews(isTeacher: boolean) {
         if (!isTeacher)
@@ -241,12 +270,39 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                         })
                     }}
                     className={"news-input"}/>
-                <MdSend className={"send-icon"} onClick={()=>this.saveNotice()}/>
+                <MdSend className={"send-icon"} onClick={() => this.saveNotice()}/>
             </div>
         )
     }
 
-    private renderComment(comment: Comment, isTeacher: boolean) {
+    private renderCommentToAccept(comment: Comment) {
+        return (
+            <ListItem key={comment.id}>
+                <ListItemAvatar>
+                    <Avatar>
+                        <PriorityHighIcon/>
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                    primary={comment.username}
+                    secondary={comment.text}
+                    secondaryTypographyProps={{
+                        style: {color: "white"}
+                    }}
+                    primaryTypographyProps={{
+                        style: {color: "white", fontWeight: "bold"}
+                    }}
+                />
+                <div className={"center-div"}>
+                    <Button className={"accept-comment-button"} onClick={() => this.acceptComment(comment)}><CheckIcon/></Button>
+                    <Button className={"decline-comment-button"}
+                            onClick={() => this.declineComment(comment)}><BlockIcon/></Button>
+                </div>
+            </ListItem>
+        );
+    }
+
+    private renderComment(comment: Comment) {
         return (
             <ListItem key={comment.id}>
                 <ListItemAvatar>
@@ -264,7 +320,6 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                         style: {color: "white", fontWeight: "bold"}
                     }}
                 />
-                {this.renderAcceptDeclineButtons(comment, isTeacher)}
             </ListItem>
         )
     }

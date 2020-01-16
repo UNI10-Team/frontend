@@ -46,7 +46,7 @@ export default class RestService {
                 ...headers
             },
             method: 'DELETE'
-        }).then(RestService.json);
+        }).then(()=>console.log("ok"));
     }
 
     addJWT(jwt: string) {

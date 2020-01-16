@@ -29,6 +29,10 @@ export default class CommentService {
     saveComment(comment: Partial<Comment>): Promise<Comment> {
         return this.restService.post(endpoints.comments, comment);
     }
+
+    updateComment(comment: Partial<Comment>):Promise<Comment> {
+        return this.restService.put(`${endpoints.comments}/${comment.id}`, comment);
+    }
 }
 
 export const commentService = new CommentService(restService);
