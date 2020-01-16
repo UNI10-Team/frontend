@@ -20,6 +20,15 @@ export interface LoginState {
 
 export class Login extends Component<LoginProperties, LoginState> {
 
+
+    constructor(props: Readonly<LoginProperties>) {
+        super(props);
+        this.state = {
+            username: 'LUPSA Radu',
+            password: 'pass'
+        }
+    }
+
     render() {
         const messages = i18NService.getBundle();
         return (

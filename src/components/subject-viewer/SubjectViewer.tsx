@@ -22,6 +22,11 @@ import CheckIcon from '@material-ui/icons/Check';
 import BlockIcon from '@material-ui/icons/Block';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import Comment from '../../interfaces/comment'
+import {commentService} from "../../services/CommentService";
+import {Page} from "../../interfaces/page";
+import Subject from "../../interfaces/subject";
+import {subjectService} from "../../services/SubjectService";
+import {IconButton} from "@material-ui/core";
 
 const news_messages = [
     {
@@ -34,66 +39,77 @@ const news_messages = [
     }
 ];
 
-const comments = [
-    {
-        id: 1,
-        user: "Valentina",
-        text: "Iubesc proiectul colectiv"
-    },
-    {
-        id: 2,
-        user: "Amalia",
-        text: "Iubesc si eu proiectul colectiv"
-    }
-];
-
-const newComments = [
-    {
-        id: 1,
-        primary: "Silviu",
-        secondary: "Pot sa iubesc si eu proiectul colectiv?"
-    }
-];
-
 export interface SubjectViewerProperties {
-    courseId: string;
+    subjectId: number;
     role: string;
 }
 
 export interface SubjectViewerState {
     comments: Comment[];
+    last: boolean;
+    subject: Subject,
+    comment: string,
+    page: number
 }
 
 export class SubjectViewer extends Component<SubjectViewerProperties, SubjectViewerState> {
+
+    private loading = false;
+
     constructor(props: SubjectViewerProperties) {
         super(props);
         this.state = {
-            comments: []
+            comments: [],
+            last: false,
+            subject: {
+                id: this.props.subjectId,
+                name: '',
+                teacherId: 0,
+                year: 0
+            },
+            page: 0,
+            comment: ''
         }
     }
 
     componentDidMount(): void {
-        // this.setState({
-        //     comments: [{id: 1, text: "Imi place acest curs", userId: 2, attachmentId: 2}]
-        // });
+        this.loadData();
+    }
+
+    componentDidUpdate(prevProps: Readonly<SubjectViewerProperties>, prevState: Readonly<SubjectViewerState>, snapshot?: any): void {
+        if (prevProps.subjectId !== this.props.subjectId) {
+            this.loadData();
+        }
+    }
+
+    private loadData() {
+        subjectService.getSubject(this.props.subjectId).then(subject => {
+            this.setState({
+                subject
+            })
+        });
+
+        this.loading = true;
+        commentService.getCommentsForSubject(this.props.subjectId).then((page: Page<Comment>) => {
+            this.loading = false;
+            this.setState({
+                comments: page.content,
+                last: page.last
+            })
+        });
     }
 
     render() {
         const messages = i18NService.getBundle();
-        // const {comments} = this.state;
-        const currentSubject = this.props.courseId;
-        const currentRole = this.props.role;
-        let addNews, newCommentsList;
-        let commentsListClass: string = "";
-        const customVars = this.initCustomVars(commentsListClass, addNews, newCommentsList);
-        commentsListClass = customVars.commentsListClass;
-        addNews = customVars.addNews;
-        newCommentsList = customVars.newCommentsList;
+        const {comments, subject} = this.state;
+        const {role} = this.props;
+
+        const isTeacher = role === 'teacher';
 
         return (
             <div className={"course-component"}>
                 <div className={"side-rectangle"}>
-                    <div className={"side-text"}>{currentSubject}</div>
+                    <div className={"side-text"}>{subject.name}</div>
                 </div>
                 <div className={"grey-rectangle"}>
                     <div className={"news-rectangle"}>
@@ -116,112 +132,139 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                                 ))}
                             </List>
                         </div>
-                        {addNews}
+                        {this.renderAddNews()}
                     </div>
                     <div className={"comments-rectangle"}>
                         <div className={"rectangle-text"}>{messages.COMMENTS}</div>
                         <div className={"comments-inside-rectangle"}>
-                            <List className={"scrollable-list " + commentsListClass}>
-                                {comments.map(({id, user, text}) => (
-                                    <React.Fragment key={id}>
-                                        <ListItem>
-                                            <ListItemAvatar>
-                                                <Avatar>
-                                                    <MdModeComment/>
-                                                </Avatar>
-                                            </ListItemAvatar>
-                                            <div>
-                                                <ListItemText
-                                                    primary={user}
-                                                    secondary={text}
-                                                    secondaryTypographyProps={{
-                                                        style: {color: "white"}
-                                                    }}
-                                                    primaryTypographyProps={{
-                                                        style: {color: "white", fontWeight: "bold"}
-                                                    }}
-                                                />
-                                            </div>
-                                        </ListItem>
-                                    </React.Fragment>
-                                ))}
+                            <List className={"scrollable-list " + this.getListClass()} onScroll={() => this.onScroll()}>
+                                {comments.map((comment) => this.renderComment(comment, isTeacher))}
                             </List>
-                            {newCommentsList}
                         </div>
-                        <input
-                            type="text"
-                            id="comment"
-                            name="comment"
-                            placeholder="Adauga un comentariu..."
-                            className={"comment-input"}
-                        />
-                        <MdSend className={"send-icon"}/>
+                        <div>
+                            <input
+                                type="text"
+                                id="comment"
+                                name="comment"
+                                placeholder="Adauga un comentariu..."
+                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                    this.setState({
+                                        comment: event.target.value
+                                    })
+                                }}
+                                className={"comment-input"}
+                            />
+                            <IconButton aria-label="send" onClick={() => {
+                                this.saveComment();
+                            }}>
+                                <MdSend className={"send-icon"}/>
+                            </IconButton>
+                        </div>
                     </div>
                     <div className={"content-type-circle laboratoare-align"}
-                         onClick={() => history.push(`/${currentRole}/labs/${currentSubject}/viewer`)}>
+                         onClick={() => history.push(`/${role}/labs/${subject.id}/viewer`)}>
                         <MdLaptop className={"content-type-icon"}/>
                         <div className={"content-type-text"}>{messages.LABORATORIES}</div>
                     </div>
                     <div className={"content-type-circle seminarii-align"}
-                         onClick={() => history.push(`/${currentRole}/seminaries/${currentSubject}/viewer`)}>
+                         onClick={() => history.push(`/${role}/seminaries/${subject.id}/viewer`)}>
                         <MdFolderOpen className={"content-type-icon"}/>
                         <div className={"content-type-text"}>{messages.SEMINARIES}</div>
                     </div>
                     <div className={"content-type-circle cursuri-align"}
-                         onClick={() => history.push(`/${currentRole}/courses/${currentSubject}/viewer`)}>
+                         onClick={() => history.push(`/${role}/courses/${subject.id}/viewer`)}>
                         <MdDesktopMac className={"content-type-icon"}/>
                         <div className={"content-type-text"}>{messages.COURSES}</div>
                     </div>
                 </div>
-                <RightMenuComponent role={this.props.role}/>
-                <LeftMenuComponent role={this.props.role}/>
-
+                <RightMenuComponent role={role}/>
+                <LeftMenuComponent role={role}/>
             </div>
         );
     }
 
-    private initCustomVars(commentsListClass: string, addNews: any, newCommentsList: any) {
+    private saveComment() {
+        const {comment} = this.state;
+        commentService.saveComment({
+            id: 0,
+            text: comment,
+            subjectId: this.props.subjectId
+        }).then((comment) => {
+            console.log(comment.text);
+        });
+    }
+
+    private getListClass() {
         if (this.props.role == "teacher") {
-            commentsListClass = "short-comments-list";
-            addNews = <div><input
-                type="text"
-                id="anunt"
-                name="anunt"
-                placeholder="Adauga un anunt..."
-                className={"news-input"}/>
-                <MdSend className={"send-icon"}/></div>;
-            newCommentsList = <List className={"scrollable-list comments-to-accept"}>
-                {newComments.map(({id, primary, secondary}) => (
-                    <React.Fragment key={id}>
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar>
-                                    <PriorityHighIcon/>
-                                </Avatar>
-                            </ListItemAvatar>
-                            <div>
-                                <ListItemText
-                                    primary={primary}
-                                    secondary={secondary}
-                                    secondaryTypographyProps={{
-                                        style: {color: "white"}
-                                    }}
-                                    primaryTypographyProps={{
-                                        style: {color: "white", fontWeight: "bold"}
-                                    }}
-                                />
-                                <div className={"center-div"}>
-                                    <Button className={"accept-comment-button"}><CheckIcon/></Button>
-                                    <Button className={"decline-comment-button"}><BlockIcon/></Button>
-                                </div>
-                            </div>
-                        </ListItem>
-                    </React.Fragment>
-                ))}
-            </List>
-        } else
-            commentsListClass = "long-comments-list";
-        return {commentsListClass, addNews, newCommentsList};
+            return "short-comments-list";
+        } else {
+            return "long-comments-list";
+        }
+    }
+
+    private renderAddNews() {
+        return (
+            <div>
+                <input
+                    type="text"
+                    id="anunt"
+                    name="anunt"
+                    placeholder="Adauga un anunt..."
+                    className={"news-input"}/>
+                <MdSend className={"send-icon"}/>
+            </div>
+        )
+    }
+
+    private renderComment(comment: Comment, isTeacher: boolean) {
+        return (
+            <ListItem key={comment.id}>
+                <ListItemAvatar>
+                    <Avatar>
+                        {comment.accepted ? <MdModeComment/> : <PriorityHighIcon/>}
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                    primary={comment.username}
+                    secondary={comment.text}
+                    secondaryTypographyProps={{
+                        style: {color: "white"}
+                    }}
+                    primaryTypographyProps={{
+                        style: {color: "white", fontWeight: "bold"}
+                    }}
+                />
+                {this.renderAcceptDeclineButtons(comment, isTeacher)}
+            </ListItem>
+        )
+    }
+
+    private renderAcceptDeclineButtons(comment: Comment, isTeacher: boolean) {
+        if (comment.accepted) {
+            return null;
+        } else if (!isTeacher) {
+            return null;
+        } else return (
+            <div className={"center-div"}>
+                <Button className={"accept-comment-button"}><CheckIcon/></Button>
+                <Button className={"decline-comment-button"}><BlockIcon/></Button>
+            </div>
+        )
+    }
+
+
+    private onScroll() {
+        if (!this.state.last && !this.loading) {
+            this.loading = true;
+            commentService.getCommentsForSubject(this.props.subjectId, this.state.page + 1).then(page => {
+                this.loading = false;
+                this.setState({
+                    comments: [...this.state.comments, ...page.content],
+                    page: page.number
+                });
+            });
+        }
+
     }
 }
 

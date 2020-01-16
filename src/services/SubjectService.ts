@@ -13,6 +13,10 @@ export default class SubjectService {
         return this.restService.get(endpoints.subjects);
     }
 
+    getSubject(id: number): Promise<Subject>{
+        return this.restService.get(`${endpoints.subjects}/${id}`);
+    }
+
     getSubjectsByTeacher(teacherId: number): Promise<Page<Subject>>{
         return this.restService.get(`${endpoints.subjects}?teacherId=${teacherId}`);
     }

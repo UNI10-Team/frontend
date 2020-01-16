@@ -15,7 +15,7 @@ export class TeacherCourse extends Component<TeacherCourseProperties, TeacherCou
 
     render() {
         return (
-            <SubjectViewer courseId={this.props.match.params.courseId} role={"teacher"}/>
+            <SubjectViewer subjectId={this.props.match.params.courseId} role={"teacher"}/>
         );
     }
 }

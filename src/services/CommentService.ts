@@ -2,6 +2,7 @@ import {Page} from "../interfaces/page";
 import Subject from "../interfaces/subject";
 import RestService, {restService} from "./RestService";
 import * as endpoints from "../paths";
+import Comment from "../interfaces/comment";
 
 
 export default class CommentService {
@@ -17,7 +18,7 @@ export default class CommentService {
         return this.restService.get(`${endpoints.comments}?attachmentId=${attachmentId}`);
     }
 
-    getCommentsForSubject(subjectId: number):Promise<Page<Comment>> {
+    getCommentsForSubject(subjectId: number, page: number = 0, size: number = 20):Promise<Page<Comment>> {
         return this.restService.get(`${endpoints.comments}?subjectId=${subjectId}`);
     }
 
@@ -25,8 +26,7 @@ export default class CommentService {
         return this.restService.delete(`${endpoints.comments}/${commentId}`);
     }
 
-    postComment(comment:Comment): Promise<Comment>
-    {
+    saveComment(comment: Partial<Comment>): Promise<Comment> {
         return this.restService.post(endpoints.comments, comment);
     }
 }

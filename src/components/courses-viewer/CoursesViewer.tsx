@@ -9,21 +9,22 @@ import {
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Attachment from "../../interfaces/attachment";
-import Course from "../../interfaces/course";
 import {RightMenuComponent} from "../right-menu/RightMenuComponent";
 import {LeftMenuComponent} from "../left-menu/LeftMenuComponent";
 import history from "../../history";
 import {AttachmentDrop} from "../attachment-drop/attachmentDrop";
 import {i18NService} from "../../services/I18NService";
+import Subject from "../../interfaces/subject";
+import {subjectService} from "../../services/SubjectService";
 
 export interface CoursesViewerProperties {
-    courseId: string;
+    courseId: number;
     role: string;
     type: string;
 }
 
 export interface CoursesViewerState {
-    course?: Course,
+    subject?: Subject,
     attachments: Attachment[]
 }
 
@@ -36,22 +37,30 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
         }
     }
 
+    componentDidMount(): void {
+        subjectService.getSubject(this.props.courseId).then(subject => {
+            this.setState({
+                subject
+            });
+        })
+    }
+
     render() {
         const messages = i18NService.getBundle();
         let header, customTitle;
-
+        const {subject} = this.state;
         if (this.props.type == "courses")
-            customTitle=<div className={"right-desktop-icon-teacher"}>
+            customTitle = <div className={"right-desktop-icon-teacher"}>
                 <MdDesktopMac className={"desktop-icon"}/>
                 <div>{messages.COURSES}</div>
             </div>;
-        else if (this.props.type=="seminaries")
-            customTitle=<div className={"right-desktop-icon-teacher"}>
+        else if (this.props.type == "seminaries")
+            customTitle = <div className={"right-desktop-icon-teacher"}>
                 <MdFolderOpen className={"desktop-icon"}/>
                 <div>{messages.SEMINARIES}</div>
             </div>;
         else
-            customTitle=<div className={"right-desktop-icon-teacher"}>
+            customTitle = <div className={"right-desktop-icon-teacher"}>
                 <MdLaptop className={"desktop-icon"}/>
                 <div>{messages.LABORATORIES}</div>
             </div>;
@@ -74,7 +83,7 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
         return (
             <div className={"courses-viewer-component"}>
                 <div className={"side-rectangle"}>
-                    <div className={"side-text"}>{this.props.courseId}</div>
+                    <div className={"side-text"}>{subject ? subject.name : ''}</div>
                 </div>
                 <div className={"grey-rectangle-courses"}>
                     {header}
@@ -90,7 +99,7 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
                         <Button className={"course-button"}>#9</Button>
                         <Button className={"course-button"}>#10</Button>
                         <Button className={"course-button"}>#11</Button>
-                        <Button className={"course-button"}> #12</Button>
+                        <Button className={"course-button"}>#12</Button>
                         <Button className={"course-button"}>#13</Button>
                         <Button className={"course-button"}>#14</Button>
                     </ButtonGroup>

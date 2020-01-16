@@ -69,7 +69,7 @@ export class LeftMenuComponentItem extends Component<LeftMenuComponentItemProper
                                     subjects.map(subject => {
                                         return (
                                             <Button key={subject.id} className={"course-button"}
-                                                    onClick={() => history.push(`/${this.props.role}/courses/${subject.name}`)}>
+                                                    onClick={() => history.push(`/${this.props.role}/courses/${subject.id}`)}>
                                                 {LeftMenuComponentItem.getSubjectName(subject.name)}
                                             </Button>
                                         )
