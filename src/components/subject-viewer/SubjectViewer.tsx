@@ -27,6 +27,8 @@ import {Page} from "../../interfaces/page";
 import Subject from "../../interfaces/subject";
 import {subjectService} from "../../services/SubjectService";
 import {IconButton} from "@material-ui/core";
+import {noticeService} from "../../services/NoticeService";
+import Notice from "../../interfaces/notice";
 
 const news_messages = [
     {
@@ -46,20 +48,26 @@ export interface SubjectViewerProperties {
 
 export interface SubjectViewerState {
     comments: Comment[];
+    notices: Notice[];
     last: boolean;
     subject: Subject,
     comment: string,
-    page: number
+    page: number,
+    notice: string,
+    lastN: boolean,
+    pageN: number
 }
 
 export class SubjectViewer extends Component<SubjectViewerProperties, SubjectViewerState> {
 
     private loading = false;
+    private loadingNotices = false;
 
     constructor(props: SubjectViewerProperties) {
         super(props);
         this.state = {
             comments: [],
+            notices: [],
             last: false,
             subject: {
                 id: this.props.subjectId,
@@ -68,7 +76,10 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                 year: 0
             },
             page: 0,
-            comment: ''
+            comment: '',
+            notice: '',
+            lastN: false,
+            pageN: 0
         }
     }
 
@@ -82,6 +93,16 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
         }
     }
 
+    private loadNotices() {
+        this.loadingNotices = true;
+        noticeService.getNoticesForSubject(this.props.subjectId).then((page: Page<Notice>) => {
+            this.loadingNotices = false;
+            this.setState({
+                notices: page.content,
+                lastN: page.last
+            })
+        })
+    }
     private loadData() {
         subjectService.getSubject(this.props.subjectId).then(subject => {
             this.setState({
@@ -97,11 +118,12 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                 last: page.last
             })
         });
+        this.loadNotices();
     }
 
     render() {
         const messages = i18NService.getBundle();
-        const {comments, subject} = this.state;
+        const {comments, notices, subject} = this.state;
         const {role} = this.props;
 
         const isTeacher = role === 'teacher';
@@ -115,24 +137,11 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                     <div className={"news-rectangle"}>
                         <div className={"rectangle-text"}>{messages.WHATS_NEW}</div>
                         <div className={"news-inside-rectangle"}>
-                            <List className={"scrollable-list news-list"}>
-                                {news_messages.map(({id, primary}) => (
-                                    <React.Fragment key={id}>
-                                        <ListItem button>
-                                            <ListItemAvatar>
-                                                <Avatar>
-                                                    <NotificationsIcon/>
-                                                </Avatar>
-                                            </ListItemAvatar>
-                                            <div className={"news-text"}>
-                                                <ListItemText disableTypography primary={primary}/>
-                                            </div>
-                                        </ListItem>
-                                    </React.Fragment>
-                                ))}
+                            <List className={"scrollable-list news-list"} onScroll={()=>this.onScrollNotices()}>
+                                {notices.map((notice)=>this.renderNotice(notice))}
                             </List>
                         </div>
-                        {this.renderAddNews()}
+                        {this.renderAddNews(isTeacher)}
                     </div>
                     <div className={"comments-rectangle"}>
                         <div className={"rectangle-text"}>{messages.COMMENTS}</div>
@@ -154,11 +163,9 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                                 }}
                                 className={"comment-input"}
                             />
-                            <IconButton aria-label="send" onClick={() => {
+                            <MdSend className={"send-icon"} onClick={() => {
                                 this.saveComment();
-                            }}>
-                                <MdSend className={"send-icon"}/>
-                            </IconButton>
+                            }}/>
                         </div>
                     </div>
                     <div className={"content-type-circle laboratoare-align"}
@@ -194,6 +201,21 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
         });
     }
 
+    private saveNotice() {
+        const {notice} = this.state;
+        noticeService.saveNotice({
+            id: 0,
+            text: notice,
+            subjectId: this.props.subjectId
+        }).then((notice) => {
+            console.log(notice.text);
+            this.setState({
+                notices: this.state.notices.concat(notice),
+                notice: ''
+            });
+        });
+    }
+
     private getListClass() {
         if (this.props.role == "teacher") {
             return "short-comments-list";
@@ -202,7 +224,9 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
         }
     }
 
-    private renderAddNews() {
+    private renderAddNews(isTeacher: boolean) {
+        if (!isTeacher)
+            return null;
         return (
             <div>
                 <input
@@ -210,8 +234,14 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                     id="anunt"
                     name="anunt"
                     placeholder="Adauga un anunt..."
+                    value={this.state.notice}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        this.setState({
+                            notice: event.target.value
+                        })
+                    }}
                     className={"news-input"}/>
-                <MdSend className={"send-icon"}/>
+                <MdSend className={"send-icon"} onClick={()=>this.saveNotice()}/>
             </div>
         )
     }
@@ -235,6 +265,21 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                     }}
                 />
                 {this.renderAcceptDeclineButtons(comment, isTeacher)}
+            </ListItem>
+        )
+    }
+
+    private renderNotice(notice: Notice) {
+        return (
+            <ListItem key={notice.id}>
+                <ListItemAvatar>
+                    <Avatar>
+                        <NotificationsIcon/>
+                    </Avatar>
+                </ListItemAvatar>
+                <div className={"news-text"}>
+                    <ListItemText disableTypography primary={notice.text}/>
+                </div>
             </ListItem>
         )
     }
@@ -265,6 +310,19 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
             });
         }
 
+    }
+
+    private onScrollNotices() {
+        if (!this.state.lastN && !this.loadingNotices) {
+            this.loadingNotices = true;
+            noticeService.getNoticesForSubject(this.props.subjectId, this.state.pageN + 1).then(page => {
+                this.loadingNotices = false;
+                this.setState({
+                    notices: [...this.state.notices, ...page.content],
+                    pageN: page.number
+                });
+            });
+        }
     }
 }
 

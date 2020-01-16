@@ -4,6 +4,7 @@ export const defaultURL = heroku;
 export const authenticate = `${defaultURL}/authenticate`;
 export const subjects = `${defaultURL}/subjects`;
 export const comments = `${defaultURL}/comments`;
+export const notices = `${defaultURL}/notices`;
 export const courses = `${defaultURL}/courses`;
 export const users = `${defaultURL}/users`;
 export const currentUser = `${users}/currentUser`;
