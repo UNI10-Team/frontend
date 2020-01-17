@@ -18,9 +18,7 @@ import Subject from "../../interfaces/subject";
 import {subjectService} from "../../services/SubjectService";
 import {RightMenuCourses} from "../right-menu-courses/RightMenuCourses";
 import PDFViewer from "./PDFViewer";
-import {SubjectViewerProperties, SubjectViewerState} from "../subject-viewer/SubjectViewer";
 import Comment from "../../interfaces/comment";
-import Notice from "../../interfaces/notice";
 import {commentService} from "../../services/CommentService";
 import {Page} from "../../interfaces/page";
 
@@ -134,7 +132,7 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
                     <Button> <ArrowBackIosIcon className={"left-icon"} onClick={() => history.goBack()}/> </Button>
                 </div>
                 {this.renderTitle()}
-                <div className={"right1"}> Încărcare:<AttachmentDrop/></div>
+                <div className={"right1"}> Încărcare:<AttachmentDrop courseId={this.props.courseId}/></div>
             </div>
         } else
             header = <div>
