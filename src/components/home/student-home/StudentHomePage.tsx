@@ -17,30 +17,25 @@ import Avatar from '@material-ui/core/Avatar';
 import history from "../../../history";
 import {i18NService} from "../../../services/I18NService";
 import User from '../../../interfaces/user';
+import Subject from '../../../interfaces/subject';
 import Notice from '../../../interfaces/notice';
 import {Role} from '../../../interfaces/role';
 import {userService} from '../../../services/UserService';
 import {noticeService} from '../../../services/NoticeService';
 import {restService} from "../../../services/RestService";
+import {subjectService} from "../../../services/SubjectService";
+import {Page} from "../../../interfaces/page";
 
-const news_messages = [
-    {
-        id: 1,
-        primary: 'LFTC',
-        secondary: "S-a modificat deadline-ul pentru laboratorul 5!"
-    },
-    {
-        id: 2,
-        primary: 'PPD',
-        secondary: "S-a modificat ponderea laboratorului 6."
-    }
-];
 
 export interface HomeProperties {
 }
 
 export interface HomeState {
     currentUser: User;
+    subjectsByYear: Subject[];
+    last: boolean;
+    notices: Notice[];
+    lastN: boolean;
 }
 
 export class StudentHomePage extends Component<HomeProperties, HomeState> {
@@ -54,7 +49,13 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
             role: Role.ROLE_COURSE_TEACHER,
             username: "",
         };
-        this.state = {currentUser: userNull};
+        this.state = {
+            currentUser: userNull,
+            subjectsByYear: [],
+            notices: [],
+            last: false,
+            lastN: false
+        };
     }
 
 
@@ -75,13 +76,15 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
                                     {messages.NEWS}
                                 </Typography>
                                 <List className={"scrollable-list"}>
-                                    {news_messages.map(({id, primary, secondary}) => (
-                                        <React.Fragment key={id}>
+                                    {this.state.notices.map((notice) => (
+                                        <React.Fragment key={notice.id}>
                                             <ListItem button>
                                                 <ListItemAvatar>
                                                     <Avatar><NotificationsIcon/></Avatar>
                                                 </ListItemAvatar>
-                                                <ListItemText primary={primary} secondary={secondary}/>
+                                                <ListItemText
+                                                    primary={this.state.subjectsByYear.filter((subject) => subject.id == notice.subjectId)[0].name}
+                                                    secondary={notice.text}/>
                                             </ListItem>
                                         </React.Fragment>
                                     ))}
@@ -122,6 +125,27 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
     componentDidMount(): void {
         userService.getCurrentUser().then((response: User) => {
             this.setState({currentUser: response});
+            var messages = this.state.currentUser.username.split("");
+            var year = Number(messages[this.state.currentUser.username.length - 2]);
+            console.log(year);
+            ;subjectService.getSubjectsByYear(year).then((page: Page<Subject>) => {
+                console.log(page);
+                this.setState({
+                    subjectsByYear: page.content,
+                    last: page.last
+                });
+                for (let subject of this.state.subjectsByYear) {
+                    noticeService.getNoticesForSubject(subject.id).then((page2: Page<Notice>) => {
+                        this.setState({
+                            notices: this.state.notices.concat(page2.content),
+                            lastN: page2.last
+                        });
+                        console.log(page2.content);
+                    });
+                }
+                console.log(this.state.subjectsByYear);
+                console.log(this.state.notices);
+            });
         });
     }
 }

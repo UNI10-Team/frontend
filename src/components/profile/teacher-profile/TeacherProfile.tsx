@@ -15,6 +15,7 @@ import '../Profile.css';
 import history from "../../../history";
 import {i18NService} from "../../../services/I18NService";
 import User from '../../../interfaces/user';
+import UserForPasswordUpdate from '../../../interfaces/userForPasswordUpdate';
 import {Role} from '../../../interfaces/role';
 import {userService} from '../../../services/UserService';
 import {restService} from "../../../services/RestService";
@@ -24,9 +25,10 @@ export interface TeacherProfileProperties {
 
 export interface TeacherProfileState {
     currentUser: User;
-    currentPassword: string;
+    userUpdated:UserForPasswordUpdate;
     newPassword:string;
     repeatNewPassword:string;
+    show:boolean;
 }
 
 export class TeacherProfile extends Component<TeacherProfileProperties, TeacherProfileState> {
@@ -41,11 +43,22 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
             role: Role.ROLE_COURSE_TEACHER,
             username: "",
         };
+        const userUpdatedNull : UserForPasswordUpdate = {
+            email: "",
+            firstName: "",
+            id: 1,
+            lastName: "",
+            role: Role.ROLE_COURSE_TEACHER,
+            username: "",
+            password: ""
+
+        };
         this.state = {
             currentUser:userNull,
-            currentPassword:'',
-            newPassword:'',
-            repeatNewPassword:''
+            userUpdated:userUpdatedNull,
+            newPassword:"",
+            repeatNewPassword:"",
+            show:false
         };
     }
 
@@ -65,13 +78,6 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                             <div className={"main-text-profile"}>
                                 {messages.CHANGE_PASSWORD}
                             </div>
-                            <input type="password" id="opassword" name="oldpassword" placeholder="Parola curenta"
-                                   className={"password-input-profile"}
-                                    onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {
-                                        this.setState({
-                                            currentPassword: event.target.value
-                                        })}}
-                            />
                             <input type="password" id="npassword" name="newpassword" placeholder="Parola noua"
                                    className={"password-input-profile"}
                                    onChange = {(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +92,22 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
                                            repeatNewPassword: event.target.value
                                        })}}
                             />
-                            <Button className={"submit-button"}>
+                            <Button className={"submit-button"}
+                                    onClick={() => {
+                                if( this.state.newPassword!='' && this.state.repeatNewPassword!='') {
+                                    if (this.state.newPassword === this.state.repeatNewPassword) {
+                                        let userUpdatedLocal = this.state.userUpdated;
+                                        userUpdatedLocal.password = this.state.newPassword;
+                                        this.setState({userUpdated:userUpdatedLocal});
+                                        userService.updateUser(this.state.userUpdated);
+                                        restService.removeJWT();
+                                        history.push('/');
+                                    }
+                                    else{
+                                        alert(messages.INCORECT_PASSWORDS);
+                                    }
+                                }
+                            }}>
                                 {messages.RESET_PASSWORD}
 
                             </Button>
@@ -146,7 +167,17 @@ export class TeacherProfile extends Component<TeacherProfileProperties, TeacherP
 
     componentDidMount(): void {
         userService.getCurrentUser().then((response: User) => {
-            this.setState({currentUser: response});
+            let userUp: UserForPasswordUpdate = {
+                id: response.id,
+                email: response.email,
+                username: response.username,
+                firstName: response.firstName,
+                lastName: response.lastName,
+                role: response.role,
+                password: ''
+            }
+
+            this.setState({currentUser: response, userUpdated:userUp});
         });
     }
 }

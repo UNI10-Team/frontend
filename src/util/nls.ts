@@ -22,6 +22,9 @@ export default {
     YEAR: "Anul",
     WHATS_NEW: "Ce e nou",
     COMMENTS: "Comentarii",
-    USEFUL_LINKS: "Link-uri utile"
+    USEFUL_LINKS: "Link-uri utile",
+    INCORECT_PASSWORDS: "Cele doua parole sunt diferite. Incearca din nou",
+      ERROR_MESSAGE: "Eroare",
+      CLOSE_BUTTON:"Inchide"
   }
 };
