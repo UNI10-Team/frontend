@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {userService} from "../../services/UserService";
 import {IoMdPerson, IoMdPersonAdd} from "react-icons/io";
 import './Register.css';
 import history from "../../history";
@@ -12,10 +13,10 @@ export interface registerProperties {
 export interface registerState {
     email: string;
     username: string;
-    first_name: string;
-    last_name: string; 
+    firstName: string;
+    lastName: string; 
     password: string;
-    repeat_password: string;
+    repeatPassword: string;
 }
 
 
@@ -60,7 +61,11 @@ export default class Register extends Component<registerProperties, registerStat
                         <input type="rpassword" id="rpass" name="password" placeholder="Repeat password.."
                                className={"repeat-password-input"}/>
                         <button className={"lets-start-button"} onClick={()=>{
-                            const {email, username, first_name, last_name, password, repeat_password } = this.state;
+                            const {email, username, firstName, lastName, password, repeatPassword } = this.state;
+                            userService.register({email, username, firstName, lastName, password, repeatPassword})
+                            .catch(error => {
+                                console.log(error);
+                            });
                         }}>
                             <div className={"lets-start-text"}>{messages.LET_S_START}</div>
                         </button>
