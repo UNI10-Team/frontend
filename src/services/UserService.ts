@@ -15,8 +15,8 @@ export default class UserService {
         return this.restService.post(endpoints.authenticate, request);
     }
 
-    register(user : UserForRegister) : Promise<User>{
-        return this.restService.post(`${endpoints.users}/${user.id}`, user)
+    register(user : UserForRegister) : Promise<AuthenticationResponse>{
+        return this.restService.post(endpoints.register, user)
     }
 
     getCurrentUser(): Promise<User> {

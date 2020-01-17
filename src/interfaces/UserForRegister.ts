@@ -1,4 +1,4 @@
-export default interface UserForPasswordUpdate{
+export default interface UserForRegister{
     username: string;
     email: string;
     firstName: string;
