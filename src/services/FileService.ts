@@ -5,7 +5,7 @@ export default class FileService {
     constructor(private restService: RestService) {}
 
     private defaultHeaders: any = {
-        "Content-type": "application/text"
+        "Content-type": "text/plain"
     };
 
     get(path: string, headers?: Headers): Promise<any> {
@@ -15,7 +15,7 @@ export default class FileService {
                 ...this.defaultHeaders,
                 ...headers
             }
-        }).then(data => data.blob());
+        }).then(data => data.text());
     }
 
 }

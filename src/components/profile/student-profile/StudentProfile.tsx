@@ -29,7 +29,7 @@ export interface StudentProfileState {
     userUpdated:UserForPasswordUpdate;
     newPassword:string;
     repeatNewPassword:string;
-    oldPassword:string;
+
 }
 
 export class StudentProfile extends Component<StudentProfileProperties, StudentProfileState> {
@@ -59,7 +59,6 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
         this.state = {
             currentUser:userNull,
             userUpdated:userUpdatedNull,
-            oldPassword:"",
             newPassword:"",
             repeatNewPassword:""
         };
@@ -81,14 +80,6 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                             <div className={"main-text-profile"}>
                                 {messages.CHANGE_PASSWORD}
                             </div>
-                            <input type="password" id="opassword" name="oldpassword" placeholder="Parola curenta"
-                                   className={"password-input-profile"}
-                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                       this.setState({
-                                           oldPassword: event.target.value
-                                       })
-                                   }}
-                            />
                             <input type="password" id="npassword" name="newpassword" placeholder="Parola noua"
                                    className={"password-input-profile"}
                                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,12 +98,17 @@ export class StudentProfile extends Component<StudentProfileProperties, StudentP
                             />
                             <Button className={"submit-button"}
                                     onClick={() => {
-                                        if(this.state.oldPassword!='' && this.state.newPassword!='' && this.state.repeatNewPassword!='') {
+                                        if( this.state.newPassword!='' && this.state.repeatNewPassword!='') {
                                             if (this.state.newPassword === this.state.repeatNewPassword) {
                                                 let userUpdatedLocal = this.state.userUpdated;
                                                 userUpdatedLocal.password = this.state.newPassword;
                                                 this.setState({userUpdated:userUpdatedLocal});
                                                 userService.updateUser(this.state.userUpdated);
+                                                restService.removeJWT();
+                                                history.push('/');
+                                            }
+                                            else{
+                                                alert(messages.INCORECT_PASSWORDS);
                                             }
                                         }
                                             }}

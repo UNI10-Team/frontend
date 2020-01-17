@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import './CommentComponentStudent.css'
+import './CommentComponent.css'
 import {i18NService} from "../../services/I18NService";
 import Comment from "../../interfaces/comment";
 import Notice from "../../interfaces/notice";
@@ -26,7 +26,7 @@ export interface CommentsComponentStudentState {
     page: number;
 }
 
-export class CommentsComponentStudent extends Component<CommentsComponentStudentProperties, CommentsComponentStudentState> {
+export class CommentsComponent extends Component<CommentsComponentStudentProperties, CommentsComponentStudentState> {
 
     private loading = false;
     constructor(props: CommentsComponentStudentProperties) {

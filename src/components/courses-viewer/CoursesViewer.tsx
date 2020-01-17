@@ -18,6 +18,13 @@ import Subject from "../../interfaces/subject";
 import {subjectService} from "../../services/SubjectService";
 import {RightMenuCourses} from "../right-menu-courses/RightMenuCourses";
 import PDFViewer from "./PDFViewer";
+import Comment from "../../interfaces/comment";
+import {commentService} from "../../services/CommentService";
+import {Page} from "../../interfaces/page";
+import {courses} from "../../paths";
+import {courseService} from "../../services/CourseService";
+import Course from "../../interfaces/course";
+import {attachmentService} from "../../services/AttachmentService";
 
 export interface CoursesViewerProperties {
     courseId: number;
@@ -27,15 +34,27 @@ export interface CoursesViewerProperties {
 
 export interface CoursesViewerState {
     subject?: Subject,
-    attachments: Attachment[]
+    attachments: Attachment[],
+    courses: Course[],
+    attachmentId: number,
+    pdfVisible: boolean,
+    type: string;
+    attachment: any;
 }
 
 export class CoursesViewer extends Component<CoursesViewerProperties, CoursesViewerState> {
 
+    private loading = false;
+
     constructor(props: CoursesViewerProperties) {
         super(props);
         this.state = {
-            attachments: []
+            type: this.props.type,
+            attachments: [],
+            courses: [],
+            pdfVisible: false,
+            attachmentId: 0,
+            attachment: null
         }
     }
 
@@ -44,19 +63,84 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
             this.setState({
                 subject
             });
-        })
+        });
+
+        courseService.getCoursesByTypeSubject(this.mapType(), this.props.courseId).then((page: Page<Course>) => {
+            this.setState({
+                courses: page.content
+            })
+        });
+    }
+
+    componentDidUpdate(prevProps: Readonly<CoursesViewerProperties>, prevState: Readonly<CoursesViewerState>, snapshot?: any): void {
+        if (prevState.attachmentId != this.state.attachmentId) {
+            // this.loadComments();
+        }
     }
 
     render() {
-        const messages = i18NService.getBundle();
-        let header, customTitle;
         const {subject} = this.state;
-        if (this.props.type == "courses")
+        return (
+            <div className={"courses-viewer-component"}>
+                <div className={"side-rectangle"}>
+                    <div className={"side-text"}>{subject ? subject.name : ''}</div>
+                </div>
+                <div className={"grey-rectangle-courses"}>
+                    {this.renderHeader()}
+                    <ButtonGroup className={"button-group"}>
+                        {this.renderButtons().map(index => {
+                            return (<Button key={index} className={"course-button"}
+                                            onClick={() => {
+                                                if (index < this.state.courses.length && this.state.courses[index].attachmentId !== 0) {
+                                                    console.log(this.state.courses[index]);
+                                                    this.openPDF(this.state.courses[index].attachmentId);
+                                                }
+                                            }}>{index + 1}</Button>)
+                        })}
+                    </ButtonGroup>
+                    <PDFViewer visible={this.state.pdfVisible} document={this.state.attachment}/>;
+                </div>
+                <RightMenuComponent role={this.props.role}/>
+                <LeftMenuComponent role={this.props.role}/>
+                <RightMenuCourses role={this.props.role} courseId={this.props.courseId}/>
+            </div>
+        );
+    }
+
+    private openPDF(attachmentId: number) {
+
+        attachmentService.getAttachmentById(attachmentId).then((data: any) => {
+            console.log(data);
+            this.setState({
+                pdfVisible: true,
+                attachmentId,
+                attachment: data
+            });
+        });
+
+
+    }
+
+    private mapType() {
+        switch (this.props.type) {
+            case "courses":
+                return "Curs"
+            case "seminaries":
+                return "Seminar"
+            default:
+                return "Laborator"
+        }
+    }
+
+    private renderTitle() {
+        let customTitle;
+        const messages = i18NService.getBundle();
+        if (this.props.type == "courses") {
             customTitle = <div className={"right-desktop-icon-teacher"}>
                 <MdDesktopMac className={"desktop-icon"}/>
                 <div>{messages.COURSES}</div>
             </div>;
-        else if (this.props.type == "seminaries")
+        } else if (this.props.type == "seminaries")
             customTitle = <div className={"right-desktop-icon-teacher"}>
                 <MdFolderOpen className={"desktop-icon"}/>
                 <div>{messages.SEMINARIES}</div>
@@ -67,54 +151,36 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
                 <div>{messages.LABORATORIES}</div>
             </div>;
 
-        if (this.props.role == "teacher") {
+        return customTitle;
+    }
+
+    private renderHeader() {
+        let header;
+        if (this.props.role == "teacher" && this.state.attachmentId !== 0) {
             header = <div>
                 <div className={"left-back-button-teacher"}>
                     <Button> <ArrowBackIosIcon className={"left-icon"} onClick={() => history.goBack()}/> </Button>
                 </div>
-                {customTitle}
-                <div className={"right1"}> Încărcare:<AttachmentDrop/></div>
+                {this.renderTitle()}
+                <div className={"right1"}> Încărcare:<AttachmentDrop courseId={this.props.courseId}/></div>
             </div>
         } else
             header = <div>
                 <div className={"left-back-button"}>
                     <Button> <ArrowBackIosIcon className={"left-icon"} onClick={() => history.goBack()}/> </Button>
                 </div>
-                {customTitle}
+                {this.renderTitle()}
             </div>;
-        return (
-            <div className={"courses-viewer-component"}>
-                <div className={"side-rectangle"}>
-                    <div className={"side-text"}>{subject ? subject.name : ''}</div>
-                </div>
-                <div className={"grey-rectangle-courses"}>
-                    {header}
-                    <ButtonGroup className={"button-group"}>
-                        <Button className={"course-button"}>#1</Button>
-                        <Button className={"course-button"}>#2</Button>
-                        <Button className={"course-button"}>#3</Button>
-                        <Button className={"course-button"}>#4</Button>
-                        <Button className={"course-button"}>#5</Button>
-                        <Button className={"course-button"}>#6</Button>
-                        <Button className={"course-button"}>#7</Button>
-                        <Button className={"course-button"}>#8</Button>
-                        <Button className={"course-button"}>#9</Button>
-                        <Button className={"course-button"}>#10</Button>
-                        <Button className={"course-button"}>#11</Button>
-                        <Button className={"course-button"}>#12</Button>
-                        <Button className={"course-button"}>#13</Button>
-                        <Button className={"course-button"}>#14</Button>
-                    </ButtonGroup>
 
-                    {/*<div className={"pdf-viewer"}>*/}
-                    {/*    <PDFViewer/>*/}
-                    {/*</div>*/}
-                </div>
-                <RightMenuComponent role={this.props.role}/>
-                <LeftMenuComponent role={this.props.role}/>
-                <RightMenuCourses role={this.props.role} courseId={this.props.courseId}/>
-            </div>
-        );
+        return header;
+    }
+
+    private renderButtons(): number[] {
+        let buttons = [];
+        for (let i = 0; i < 14; i++) {
+            buttons.push(i);
+        }
+        return buttons;
     }
 }
 

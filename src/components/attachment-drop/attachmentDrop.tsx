@@ -1,19 +1,28 @@
 import React, {Component} from "react";
 import './attachmentDrop.css'
 import Button from "@material-ui/core/Button/Button";
-interface AttachmentDropProperties {
+import Attachment from "../../interfaces/attachment";
 
+interface AttachmentDropProperties {
+    courseId: number;
 }
 
 interface AttachmentDropState {
-    files: FileList,
+    files: Attachment[],
     error: string,
     msg: string
 }
 
 export class AttachmentDrop extends Component<AttachmentDropProperties, AttachmentDropState> {
-    private attachments: any = [];
 
+    constructor(props: Readonly<AttachmentDropProperties>) {
+        super(props);
+        this.state = {
+            files: [],
+            error: '',
+            msg: ''
+        }
+    }
 
     render() {
         return (
@@ -35,31 +44,32 @@ export class AttachmentDrop extends Component<AttachmentDropProperties, Attachme
     };
 
     onChange = (event: any) => {
-        this.setState({
-            files: event.target.files
-        })
+        this.uploadFile(event);
     };
 
     uploadFile = (event: any) => {
         event.preventDefault();
-        this.setState({error: '', msg: ''});
-
-        if (!this.state.files) {
-            this.setState({error: 'Please upload files.'});
-            return;
-        }
-        const files = this.state.files;
-        for (let i = 0; i < files.length; i++) {
-            const file = files.item(i);
+        const inputFiles = event.target.files;
+        const {files} = this.state;
+        for (let i = 0; i < inputFiles.length; i++) {
+            const file = inputFiles.item(i);
             if (file != null) {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => {
-                    this.attachments.push({id: -1, name: file.name, file: reader.result, bugId: -1, type: file.type});
+                    const id = 0;
+                    const name = file.name;
+                    const data = reader.result;
+                    const type = file.type;
+                    const courseId = this.props.courseId;
+                    if (data !== null) {
+                        files.push({id, name, data: data, type,courseId});
+                        this.setState({
+                            files
+                        });
+                    }
                 }
             }
         }
-        // attachments contains all the uploaded files
-        console.log(this.attachments);
     }
 }
