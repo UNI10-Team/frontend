@@ -134,11 +134,43 @@
     padding-left: 1vw;
 }
 
-.password-input{
+.fname-input{
     position: absolute;
     left: 18.07%;
     right: 6.72%;
     top: 48.08%;
+    bottom: 60.64%;
+    height: 5%;
+    width: 60%;
+    font-family: Adamina, serif;
+
+    background: rgba(206, 202, 202, 0.33);
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding-left: 1vw;
+}
+
+.lname-input{
+    position: absolute;
+    left: 18.07%;
+    right: 6.72%;
+    top: 55.08%;
+    bottom: 60.64%;
+    height: 5%;
+    width: 60%;
+    font-family: Adamina, serif;
+
+    background: rgba(206, 202, 202, 0.33);
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding-left: 1vw;
+}
+
+.password-input{
+    position: absolute;
+    left: 18.07%;
+    right: 6.72%;
+    top: 62.08%;
     bottom: 60.64%;
     height: 5%;
     width: 60%;
@@ -153,7 +185,7 @@
     position: absolute;
     left: 18.07%;
     right: 6.72%;
-    top: 55.08%;
+    top: 69.08%;
     bottom: 60.64%;
     height: 5%;
     width: 60%;
@@ -184,7 +216,7 @@
     position: absolute;
     left: 33%;
     right: 6.72%;
-    top: 66.83%;
+    top: 78.83%;
     bottom: 41.21%;
     height: 8%;
     width: 30%;

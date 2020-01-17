@@ -3,6 +3,8 @@ import * as endpoints from "../paths";
 import {AuthenticationResponse, AuthenticationRequest} from "../interfaces/authentication"
 import User from "../interfaces/user";
 import UserForPasswordUpdate from "../interfaces/userForPasswordUpdate";
+import UserForRegister from "../interfaces/UserForRegister";
+
 
 export default class UserService {
 
@@ -11,6 +13,10 @@ export default class UserService {
 
     authenticate(request: AuthenticationRequest): Promise<AuthenticationResponse> {
         return this.restService.post(endpoints.authenticate, request);
+    }
+
+    register(user : UserForRegister) : Promise<User>{
+        return this.restService.post(`${endpoints.users}/${user.id}`, user)
     }
 
     getCurrentUser(): Promise<User> {

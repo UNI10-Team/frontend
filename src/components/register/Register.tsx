@@ -10,6 +10,12 @@ export interface registerProperties {
 
 
 export interface registerState {
+    email: string;
+    username: string;
+    first_name: string;
+    last_name: string; 
+    password: string;
+    repeat_password: string;
 }
 
 
@@ -43,13 +49,19 @@ export default class Register extends Component<registerProperties, registerStat
                         <text className={"login-text"}>{messages.REGISTER}</text>
                         <input type="email" id="email" name="email" placeholder="E-mail address.."
                                className={"email-input"}/>
-                        <input type="text" id="fname" name="firstname" placeholder="Username.."
+                        <input type="text" id="uname" name="username" placeholder="Username.."
                                className={"username-input"}/>
+                        <input type="text" id="fname" name="firstname" placeholder="First name.."
+                               className={"fname-input"}/>
+                        <input type="text" id="lname" name="lastname" placeholder="Last name.."
+                               className={"lname-input"}/>
                         <input type="password" id="pass" name="password" placeholder="Password.."
                                className={"password-input"}/>
                         <input type="rpassword" id="rpass" name="password" placeholder="Repeat password.."
                                className={"repeat-password-input"}/>
-                        <button className={"lets-start-button"}>
+                        <button className={"lets-start-button"} onClick={()=>{
+                            const {email, username, first_name, last_name, password, repeat_password } = this.state;
+                        }}>
                             <div className={"lets-start-text"}>{messages.LET_S_START}</div>
                         </button>
                     </form>
