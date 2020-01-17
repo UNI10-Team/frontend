@@ -24,8 +24,8 @@ export class Login extends Component<LoginProperties, LoginState> {
     constructor(props: Readonly<LoginProperties>) {
         super(props);
         this.state = {
-            username: 'LUPSA Radu',
-            password: 'pass'
+            username: 'student232',
+            password: 'password'
         }
     }
 

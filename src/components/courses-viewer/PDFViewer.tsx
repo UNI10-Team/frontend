@@ -1,22 +1,9 @@
 import * as React from 'react';
-import {
-    PdfViewerComponent,
-    Toolbar,
-    Magnification,
-    Navigation,
-    LinkAnnotation,
-    BookmarkView,
-    ThumbnailView,
-    Print,
-    TextSelection,
-    Annotation,
-    TextSearch,
-    Inject
-} from '@syncfusion/ej2-react-pdfviewer';
 import {Component} from "react";
 
 export interface PDFViewerProperties {
-    visible: boolean
+    visible: boolean;
+    document: any;
 }
 
 
@@ -30,16 +17,17 @@ export default class PDFViewer extends Component<PDFViewerProperties, PDFViewerS
     }
 
     render() {
-        return (
-            <div className='control-section' style={{"visibility": this.props.visible ? "visible" : "hidden"}}>
-                <PdfViewerComponent
-                    id="container" documentPath="PDF_Succinctly.pdf"
-                    serviceUrl="https://ej2services.syncfusion.com/production/web-services/api/pdfviewer"
-                    style={{'height': '440px', "visibility": this.props.visible ? "visible" : "hidden"}}>
-                    <Inject
-                        services={[Toolbar, Magnification, Navigation, LinkAnnotation, Annotation, BookmarkView, ThumbnailView, Print, TextSelection, TextSearch]}/>
-                </PdfViewerComponent>
-            </div>
-        );
+        const {visible, document} = this.props;
+        console.log(document);
+        if (!visible) {
+            return null;
+        } else {
+            return (
+
+                <object style={{"width": "850px", "height": "520px"}} data={document}>
+                    <iframe src="https://docs.google.com/viewer?&embedded=true"/>
+                </object>
+            )
+        }
     }
 }

@@ -12,6 +12,10 @@ export default class CourseService {
         return this.restService.get(endpoints.courses);
     }
 
+    getCoursesByTypeSubject(type: string, subjectId: number): Promise<Page<Course>> {
+        return this.restService.get(`${endpoints.courses}?subjectId=${subjectId}&type=${type}`);
+    }
+
     getCoursesBySubjectId(subjectId: number): Promise<Page<Course>> {
         return this.restService.get(`${endpoints.courses}?subjectId=${subjectId}`);
     }

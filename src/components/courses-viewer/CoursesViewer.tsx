@@ -21,6 +21,10 @@ import PDFViewer from "./PDFViewer";
 import Comment from "../../interfaces/comment";
 import {commentService} from "../../services/CommentService";
 import {Page} from "../../interfaces/page";
+import {courses} from "../../paths";
+import {courseService} from "../../services/CourseService";
+import Course from "../../interfaces/course";
+import {attachmentService} from "../../services/AttachmentService";
 
 export interface CoursesViewerProperties {
     courseId: number;
@@ -31,11 +35,11 @@ export interface CoursesViewerProperties {
 export interface CoursesViewerState {
     subject?: Subject,
     attachments: Attachment[],
+    courses: Course[],
     attachmentId: number,
     pdfVisible: boolean,
-    comments: Comment[];
-    last: boolean;
-    page: number;
+    type: string;
+    attachment: any;
 }
 
 export class CoursesViewer extends Component<CoursesViewerProperties, CoursesViewerState> {
@@ -45,12 +49,12 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
     constructor(props: CoursesViewerProperties) {
         super(props);
         this.state = {
+            type: this.props.type,
             attachments: [],
+            courses: [],
             pdfVisible: false,
             attachmentId: 0,
-            comments: [],
-            page: 0,
-            last: false
+            attachment: null
         }
     }
 
@@ -61,7 +65,11 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
             });
         });
 
-        // this.loadComments();
+        courseService.getCoursesByTypeSubject(this.mapType(), this.props.courseId).then((page: Page<Course>) => {
+            this.setState({
+                courses: page.content
+            })
+        });
     }
 
     componentDidUpdate(prevProps: Readonly<CoursesViewerProperties>, prevState: Readonly<CoursesViewerState>, snapshot?: any): void {
@@ -80,12 +88,17 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
                 <div className={"grey-rectangle-courses"}>
                     {this.renderHeader()}
                     <ButtonGroup className={"button-group"}>
-                        {this.renderButtons().map(buttonName => {
-                            return (<Button key={buttonName} className={"course-button"}
-                                            onClick={() => this.openPDF(buttonName)}>{buttonName}</Button>)
+                        {this.renderButtons().map(index => {
+                            return (<Button key={index} className={"course-button"}
+                                            onClick={() => {
+                                                if (index < this.state.courses.length && this.state.courses[index].attachmentId !== 0) {
+                                                    console.log(this.state.courses[index]);
+                                                    this.openPDF(this.state.courses[index].attachmentId);
+                                                }
+                                            }}>{index + 1}</Button>)
                         })}
                     </ButtonGroup>
-                    <PDFViewer visible={this.state.pdfVisible}/>;
+                    <PDFViewer visible={this.state.pdfVisible} document={this.state.attachment}/>;
                 </div>
                 <RightMenuComponent role={this.props.role}/>
                 <LeftMenuComponent role={this.props.role}/>
@@ -94,23 +107,40 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
         );
     }
 
-    private openPDF(attachment: string) {
-        const attachmentId = attachment.toString().slice(1, attachment.toString().length);
-        this.setState({
-            pdfVisible: true,
-            attachmentId: +attachmentId
+    private openPDF(attachmentId: number) {
+
+        attachmentService.getAttachmentById(attachmentId).then((data: any) => {
+            console.log(data);
+            this.setState({
+                pdfVisible: true,
+                attachmentId,
+                attachment: data
+            });
         });
+
+
+    }
+
+    private mapType() {
+        switch (this.props.type) {
+            case "courses":
+                return "Curs"
+            case "seminaries":
+                return "Seminar"
+            default:
+                return "Laborator"
+        }
     }
 
     private renderTitle() {
         let customTitle;
         const messages = i18NService.getBundle();
-        if (this.props.type == "courses")
+        if (this.props.type == "courses") {
             customTitle = <div className={"right-desktop-icon-teacher"}>
                 <MdDesktopMac className={"desktop-icon"}/>
                 <div>{messages.COURSES}</div>
             </div>;
-        else if (this.props.type == "seminaries")
+        } else if (this.props.type == "seminaries")
             customTitle = <div className={"right-desktop-icon-teacher"}>
                 <MdFolderOpen className={"desktop-icon"}/>
                 <div>{messages.SEMINARIES}</div>
@@ -145,24 +175,12 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
         return header;
     }
 
-    private renderButtons() {
+    private renderButtons(): number[] {
         let buttons = [];
-        for (let i = 1; i < 15; i++) {
-            const buttonName = "#" + i;
-            buttons.push(buttonName);
+        for (let i = 0; i < 14; i++) {
+            buttons.push(i);
         }
         return buttons;
-    }
-
-    private loadComments() {
-        this.loading = true;
-        commentService.getCommentsForSubjectAttachment(this.state.attachmentId, this.props.courseId).then((page: Page<Comment>) => {
-            this.loading = false;
-            this.setState({
-                comments: page.content,
-                last: page.last
-            })
-        });
     }
 }
 

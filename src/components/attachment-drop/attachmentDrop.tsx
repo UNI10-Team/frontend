@@ -63,7 +63,7 @@ export class AttachmentDrop extends Component<AttachmentDropProperties, Attachme
                     const type = file.type;
                     const courseId = this.props.courseId;
                     if (data !== null) {
-                        files.push({id, name, data, type,courseId});
+                        files.push({id, name, data: data, type,courseId});
                         this.setState({
                             files
                         });
