@@ -3,12 +3,12 @@ import Button from "@material-ui/core/Button";
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import GetAppOutlinedIcon from '@material-ui/icons/GetAppOutlined';
 import './RightMenuCourses.css'
-import {CommentsComponentStudent} from "../comments/CommentsComponentStudent";
+import {CommentsComponent} from "../comments/CommentsComponent";
 import {LinksComponentStudent} from "../links/LinksComponentStudent";
 
 export interface RightMenuCoursesProperties {
     role: string;
-    courseId:number;
+    courseId: number;
 }
 
 export interface RightMenuCoursesState {
@@ -17,26 +17,29 @@ export interface RightMenuCoursesState {
 }
 
 export class RightMenuCourses extends Component<RightMenuCoursesProperties, RightMenuCoursesState> {
-    constructor(props: RightMenuCoursesProperties){
+    constructor(props: RightMenuCoursesProperties) {
         super(props);
-        this.state={openCommentsComponent:false,openLinksComponent:false};
+        this.state = {openCommentsComponent: false, openLinksComponent: false};
     }
-    toogleOpenCommentsComponent(){
-        this.setState({openCommentsComponent: !this.state.openCommentsComponent});
+
+    toogleOpenCommentsComponent = () => {
+        this.setState({openCommentsComponent: !this.state.openCommentsComponent, openLinksComponent: false});
     }
-    toogleOpenLinksComponent(){
-        this.setState({openLinksComponent: !this.state.openLinksComponent});
-    }
+
+    toogleOpenLinksComponent = (event: any) => {
+        this.setState({openLinksComponent: !this.state.openLinksComponent, openCommentsComponent: false});
+    };
 
     render() {
         return (
             <div>
-                {this.state.openCommentsComponent===true? <CommentsComponentStudent subjectId={this.props.courseId}/> : null}
-                {this.state.openLinksComponent===true? <LinksComponentStudent/> : null}
-                <Button className={"button-comments"} onClick={() => this.toogleOpenCommentsComponent()}>
+                {this.state.openCommentsComponent === true ?
+                    <CommentsComponent subjectId={this.props.courseId}/> : null}
+                {this.state.openLinksComponent === true ? <LinksComponentStudent/> : null}
+                <Button className={"button-comments"} onClick={this.toogleOpenCommentsComponent}>
                     <NotificationsNoneOutlinedIcon className={"white-icon"} fontSize={"large"}/>
                 </Button>
-                <Button className={"button-links"} onClick={()=>this.toogleOpenLinksComponent()}>
+                <Button className={"button-links"} onClick={this.toogleOpenLinksComponent}>
                     <GetAppOutlinedIcon className={"white-icon"} fontSize={"large"}/>
                 </Button>
             </div>

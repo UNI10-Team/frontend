@@ -21,11 +21,19 @@
 .button-links {
     background: var(--grey) !important;
 }
-.button-comments:active{
+.button-comments:active, .button-comments:hover {
     background: var(--yellow) !important;
 }
-.button-links:active {
+.button-links:active, .button-links:hover {
     background: var(--yellow) !important;
+}
+
+.yellow-button {
+    background: var(--yellow) !important;
+}
+
+.grey-button {
+    background: var(--grey) !important;
 }
 .white-icon {
     color: white;

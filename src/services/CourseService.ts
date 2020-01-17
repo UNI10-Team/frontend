@@ -8,12 +8,24 @@ export default class CourseService {
 
     }
 
-    getCourses(): Promise<Page<Course>> {
+    getAllCourses(): Promise<Page<Course>> {
         return this.restService.get(endpoints.courses);
     }
 
     getCoursesBySubjectId(subjectId: number): Promise<Page<Course>> {
         return this.restService.get(`${endpoints.courses}?subjectId=${subjectId}`);
+    }
+
+    getLaboratories(subjectId: number): Promise<Page<Course>> {
+        return this.restService.get(`${endpoints.courses}?subjectId=${subjectId}&type=Laborator`);
+    }
+
+    getSeminaries(subjectId: number): Promise<Page<Course>> {
+        return this.restService.get(`${endpoints.courses}?subjectId=${subjectId}&type=Seminar`);
+    }
+
+    getCourses(subjectId: number): Promise<Page<Course>> {
+        return this.restService.get(`${endpoints.courses}?subjectId=${subjectId}&type=Curs`);
     }
 }
 

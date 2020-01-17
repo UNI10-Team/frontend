@@ -34,7 +34,7 @@ export interface HomeProperties {
 export interface HomeState {
     currentUser: User;
     subjects: Subject[];
-    last:boolean;
+    last: boolean;
     comments: Comment[],
     lastC: boolean
 }
@@ -53,7 +53,7 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
         this.state = {
             currentUser: userNull,
             last: false,
-            subjects:[],
+            subjects: [],
             comments: [],
             lastC: false
         };
@@ -78,15 +78,19 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
                                     {messages.NEWS}
                                 </Typography>
                                 <List className={"scrollable-list"}>
-                                    { this.state.comments.map((comment) => (
+                                    {this.state.comments.map((comment) => (
                                         <React.Fragment key={comment.id}>
                                             <ListItem button>
                                                 <ListItemAvatar>
                                                     <Avatar><NotificationsIcon/></Avatar>
                                                 </ListItemAvatar>
-                                                <ListItemText primary={`${comment.username} @${this.getSubjectName1(this.state.subjects.filter((subject)=> subject.id == comment.subjectId )[0].name)}`} secondary={comment.text}/>
-                                                <Button className={"accept-button"}>Accepta<CheckIcon/></Button>
-                                                <Button className={"decline-button"}>Refuza<CloseIcon/></Button>
+                                                <ListItemText
+                                                    primary={`${comment.username} @${this.getSubjectName1(this.state.subjects.filter((subject) => subject.id == comment.subjectId)[0].name)}`}
+                                                    secondary={comment.text}/>
+                                                <Button className={"accept-button"}
+                                                        onClick={() => this.acceptComment(comment)}>Accepta<CheckIcon/></Button>
+                                                <Button className={"decline-button"}
+                                                        onClick={() => this.declineComment(comment)}>Refuza<CloseIcon/></Button>
                                             </ListItem>
                                         </React.Fragment>
                                     ))}
@@ -126,21 +130,21 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
     componentDidMount(): void {
         userService.getCurrentUser().then((response: User) => {
             this.setState({currentUser: response});
-            subjectService.getSubjectsByTeacher(this.state.currentUser.id).then((page:Page<Subject>) =>{
+            subjectService.getSubjectsByTeacher(this.state.currentUser.id).then((page: Page<Subject>) => {
                 this.setState({
-                    subjects:page.content,
-                    last:page.last
+                    subjects: page.content,
+                    last: page.last
                 });
-                for(let subject of this.state.subjects){
+                for (let subject of this.state.subjects) {
                     commentService.getCommentsForSubject(subject.id).then((page: Page<Comment>) => {
                         this.setState({
-                            comments: this.state.comments.concat(page.content),
+                            comments: this.state.comments.concat(page.content.filter(comm => !comm.accepted)),
                             lastC: page.last
                         });
                     });
-            }
+                }
+            });
         });
-    });
     }
 
     private getSubjectName1(initial: string): string {
@@ -152,4 +156,23 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
         return finalName.toUpperCase();
     }
 
+    private acceptComment(comment: Comment) {
+        comment.accepted = true;
+        commentService.updateComment(comment)
+            .then((comment) => {
+                console.log(comment);
+                this.setState({
+                    comments: this.state.comments.filter(comm => comm.id != comment.id)
+                });
+            });
+    }
+
+    private declineComment(comment: Comment) {
+        commentService.deleteComment(comment.id)
+            .then((msg) => {
+                this.setState({
+                    comments: this.state.comments.filter(comm => comm != comment)
+                })
+            })
+    }
 }

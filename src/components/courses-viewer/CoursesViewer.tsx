@@ -18,6 +18,11 @@ import Subject from "../../interfaces/subject";
 import {subjectService} from "../../services/SubjectService";
 import {RightMenuCourses} from "../right-menu-courses/RightMenuCourses";
 import PDFViewer from "./PDFViewer";
+import {SubjectViewerProperties, SubjectViewerState} from "../subject-viewer/SubjectViewer";
+import Comment from "../../interfaces/comment";
+import Notice from "../../interfaces/notice";
+import {commentService} from "../../services/CommentService";
+import {Page} from "../../interfaces/page";
 
 export interface CoursesViewerProperties {
     courseId: number;
@@ -27,15 +32,27 @@ export interface CoursesViewerProperties {
 
 export interface CoursesViewerState {
     subject?: Subject,
-    attachments: Attachment[]
+    attachments: Attachment[],
+    attachmentId: number,
+    pdfVisible: boolean,
+    comments: Comment[];
+    last: boolean;
+    page: number;
 }
 
 export class CoursesViewer extends Component<CoursesViewerProperties, CoursesViewerState> {
 
+    private loading = false;
+
     constructor(props: CoursesViewerProperties) {
         super(props);
         this.state = {
-            attachments: []
+            attachments: [],
+            pdfVisible: false,
+            attachmentId: 0,
+            comments: [],
+            page: 0,
+            last: false
         }
     }
 
@@ -44,13 +61,52 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
             this.setState({
                 subject
             });
-        })
+        });
+
+        // this.loadComments();
+    }
+
+    componentDidUpdate(prevProps: Readonly<CoursesViewerProperties>, prevState: Readonly<CoursesViewerState>, snapshot?: any): void {
+        if (prevState.attachmentId != this.state.attachmentId) {
+            // this.loadComments();
+        }
     }
 
     render() {
-        const messages = i18NService.getBundle();
-        let header, customTitle;
         const {subject} = this.state;
+        return (
+            <div className={"courses-viewer-component"}>
+                <div className={"side-rectangle"}>
+                    <div className={"side-text"}>{subject ? subject.name : ''}</div>
+                </div>
+                <div className={"grey-rectangle-courses"}>
+                    {this.renderHeader()}
+                    <ButtonGroup className={"button-group"}>
+                        {this.renderButtons().map(buttonName => {
+                            return (<Button key={buttonName} className={"course-button"}
+                                            onClick={() => this.openPDF(buttonName)}>{buttonName}</Button>)
+                        })}
+                    </ButtonGroup>
+                    <PDFViewer visible={this.state.pdfVisible}/>;
+                </div>
+                <RightMenuComponent role={this.props.role}/>
+                <LeftMenuComponent role={this.props.role}/>
+                <RightMenuCourses role={this.props.role} courseId={this.props.courseId}/>
+            </div>
+        );
+    }
+
+    private openPDF(attachment: string) {
+        const attachmentId = attachment.toString().slice(1, attachment.toString().length);
+        this.setState({
+            pdfVisible: true,
+            attachmentId: +attachmentId
+        });
+    }
+
+    private renderTitle() {
+        let customTitle;
+        const messages = i18NService.getBundle();
         if (this.props.type == "courses")
             customTitle = <div className={"right-desktop-icon-teacher"}>
                 <MdDesktopMac className={"desktop-icon"}/>
@@ -67,12 +123,17 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
                 <div>{messages.LABORATORIES}</div>
             </div>;
 
-        if (this.props.role == "teacher") {
+        return customTitle;
+    }
+
+    private renderHeader() {
+        let header;
+        if (this.props.role == "teacher" && this.state.attachmentId !== 0) {
             header = <div>
                 <div className={"left-back-button-teacher"}>
                     <Button> <ArrowBackIosIcon className={"left-icon"} onClick={() => history.goBack()}/> </Button>
                 </div>
-                {customTitle}
+                {this.renderTitle()}
                 <div className={"right1"}> Încărcare:<AttachmentDrop/></div>
             </div>
         } else
@@ -80,41 +141,30 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
                 <div className={"left-back-button"}>
                     <Button> <ArrowBackIosIcon className={"left-icon"} onClick={() => history.goBack()}/> </Button>
                 </div>
-                {customTitle}
+                {this.renderTitle()}
             </div>;
-        return (
-            <div className={"courses-viewer-component"}>
-                <div className={"side-rectangle"}>
-                    <div className={"side-text"}>{subject ? subject.name : ''}</div>
-                </div>
-                <div className={"grey-rectangle-courses"}>
-                    {header}
-                    <ButtonGroup className={"button-group"}>
-                        <Button className={"course-button"}>#1</Button>
-                        <Button className={"course-button"}>#2</Button>
-                        <Button className={"course-button"}>#3</Button>
-                        <Button className={"course-button"}>#4</Button>
-                        <Button className={"course-button"}>#5</Button>
-                        <Button className={"course-button"}>#6</Button>
-                        <Button className={"course-button"}>#7</Button>
-                        <Button className={"course-button"}>#8</Button>
-                        <Button className={"course-button"}>#9</Button>
-                        <Button className={"course-button"}>#10</Button>
-                        <Button className={"course-button"}>#11</Button>
-                        <Button className={"course-button"}>#12</Button>
-                        <Button className={"course-button"}>#13</Button>
-                        <Button className={"course-button"}>#14</Button>
-                    </ButtonGroup>
 
-                    {/*<div className={"pdf-viewer"}>*/}
-                    {/*    <PDFViewer/>*/}
-                    {/*</div>*/}
-                </div>
-                <RightMenuComponent role={this.props.role}/>
-                <LeftMenuComponent role={this.props.role}/>
-                <RightMenuCourses role={this.props.role} courseId={this.props.courseId}/>
-            </div>
-        );
+        return header;
+    }
+
+    private renderButtons() {
+        let buttons = [];
+        for (let i = 1; i < 15; i++) {
+            const buttonName = "#" + i;
+            buttons.push(buttonName);
+        }
+        return buttons;
+    }
+
+    private loadComments() {
+        this.loading = true;
+        commentService.getCommentsForSubjectAttachment(this.state.attachmentId, this.props.courseId).then((page: Page<Comment>) => {
+            this.loading = false;
+            this.setState({
+                comments: page.content,
+                last: page.last
+            })
+        });
     }
 }
 

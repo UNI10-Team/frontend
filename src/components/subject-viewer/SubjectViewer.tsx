@@ -115,10 +115,6 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
 
         const isTeacher = role === 'teacher';
 
-        // TODO: delete this statement when CommentService is updated
-        if (isTeacher)
-            comments = [];
-
         return (
             <div className={"course-component"}>
                 <div className={"side-rectangle"}>
@@ -157,7 +153,7 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                                 className={"comment-input"}
                             />
                             <MdSend className={"send-icon"} onClick={() => {
-                                this.saveComment(isTeacher);
+                                this.saveComment();
                             }}/>
                         </div>
                     </div>
@@ -183,7 +179,7 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
         );
     }
 
-    private saveComment(isTeacher: boolean) {
+    private saveComment() {
         const {comment} = this.state;
         commentService.saveComment({
             id: 0,
@@ -219,8 +215,7 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
             .then((comment) => {
                 console.log(comment);
                 this.setState({
-                    commentsToAccept: this.state.commentsToAccept.filter(comm => comm !=comment),
-                    comments: this.state.comments.concat(comment)
+                    commentsToAccept: this.state.commentsToAccept.filter(comm => comm.id !=comment.id)
                 });
             });
     }
@@ -336,19 +331,6 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
                     <ListItemText disableTypography primary={notice.text}/>
                 </div>
             </ListItem>
-        )
-    }
-
-    private renderAcceptDeclineButtons(comment: Comment, isTeacher: boolean) {
-        if (comment.accepted) {
-            return null;
-        } else if (!isTeacher) {
-            return null;
-        } else return (
-            <div className={"center-div"}>
-                <Button className={"accept-comment-button"}><CheckIcon/></Button>
-                <Button className={"decline-comment-button"}><BlockIcon/></Button>
-            </div>
         )
     }
 
