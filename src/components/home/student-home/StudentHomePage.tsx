@@ -125,11 +125,9 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
     componentDidMount(): void {
         userService.getCurrentUser().then((response: User) => {
             this.setState({currentUser: response});
-            var messages = this.state.currentUser.username.split("");
-            var year = Number(messages[this.state.currentUser.username.length - 2]);
-            console.log(year);
-            ;subjectService.getSubjectsByYear(year).then((page: Page<Subject>) => {
-                console.log(page);
+            let messages = this.state.currentUser.username.split("");
+            let year = Number(messages[this.state.currentUser.username.length - 2]);
+            subjectService.getSubjectsByYear(year).then((page: Page<Subject>) => {
                 this.setState({
                     subjectsByYear: page.content,
                     last: page.last
@@ -140,11 +138,8 @@ export class StudentHomePage extends Component<HomeProperties, HomeState> {
                             notices: this.state.notices.concat(page2.content),
                             lastN: page2.last
                         });
-                        console.log(page2.content);
                     });
                 }
-                console.log(this.state.subjectsByYear);
-                console.log(this.state.notices);
             });
         });
     }

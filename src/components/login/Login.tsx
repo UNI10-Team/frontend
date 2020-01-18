@@ -24,8 +24,8 @@ export class Login extends Component<LoginProperties, LoginState> {
     constructor(props: Readonly<LoginProperties>) {
         super(props);
         this.state = {
-            username: 'student232',
-            password: 'password'
+            username: 'LUPSA Dana',
+            password: 'pass'
         }
     }
 
@@ -67,7 +67,7 @@ export class Login extends Component<LoginProperties, LoginState> {
                                    password: event.target.value
                                })
                            }}
-                           className={"password-input"}/>
+                           className={"login-password-input"}/>
                     <button className={"lets-go-button"} onClick={() => {
                         const {username, password} = this.state;
                         userService.authenticate({username, password}).then((response: AuthenticationResponse) => {
@@ -75,17 +75,14 @@ export class Login extends Component<LoginProperties, LoginState> {
                             const ROLE = restService.parseJWT().ROLES[0];
                             if (ROLE === Role.ROLE_STUDENT) {
                                 history.push("/student/home");
-                            }
-                            else if (ROLE === Role.ROLE_ADMIN) {
+                            } else if (ROLE === Role.ROLE_ADMIN) {
                                 //TO DO
                             } else {
                                 history.push("/teacher/home");
                             }
                         }).catch(error => {
-                            console.log(error);
+                            alert(error);
                         });
-
-                        console.log(username);
                     }}>
 
                         <div className={"lets-go-text"}>{messages.LET_S_GO}</div>

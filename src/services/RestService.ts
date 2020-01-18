@@ -68,6 +68,7 @@ export default class RestService {
         if (response.ok) {
             return response.json();
         } else {
+            console.log(response.statusText);
             throw new Error(response.statusText);
         }
     }

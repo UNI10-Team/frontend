@@ -5,3 +5,7 @@ export default interface Attachment{
     type:string;
     courseId:number;
 }
+
+export interface UnsavedAttachment extends Attachment{
+    courseType: string
+}

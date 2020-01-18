@@ -213,7 +213,6 @@ export class SubjectViewer extends Component<SubjectViewerProperties, SubjectVie
         comment.accepted = true;
         commentService.updateComment(comment)
             .then((comment) => {
-                console.log(comment);
                 this.setState({
                     commentsToAccept: this.state.commentsToAccept.filter(comm => comm.id !=comment.id)
                 });

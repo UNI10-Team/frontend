@@ -4,8 +4,7 @@
 }
 .input{
     font-size: large !important;
-    font-family: Arial !important;
-    /*background: var(--green) !important;*/
+    font-family: Arial, serif !important;
 
 }
 .upload{

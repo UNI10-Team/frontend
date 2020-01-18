@@ -27,7 +27,7 @@ import Course from "../../interfaces/course";
 import {attachmentService} from "../../services/AttachmentService";
 
 export interface CoursesViewerProperties {
-    courseId: number;
+    courseId: number; //subjectId
     role: string;
     type: string;
 }
@@ -40,6 +40,7 @@ export interface CoursesViewerState {
     pdfVisible: boolean,
     type: string;
     attachment: any;
+    courseId: number;
 }
 
 export class CoursesViewer extends Component<CoursesViewerProperties, CoursesViewerState> {
@@ -54,7 +55,8 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
             courses: [],
             pdfVisible: false,
             attachmentId: 0,
-            attachment: null
+            attachment: null,
+            courseId: 0,
         }
     }
 
@@ -68,7 +70,7 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
         courseService.getCoursesByTypeSubject(this.mapType(), this.props.courseId).then((page: Page<Course>) => {
             this.setState({
                 courses: page.content
-            })
+            });
         });
     }
 
@@ -92,7 +94,6 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
                             return (<Button key={index} className={"course-button"}
                                             onClick={() => {
                                                 if (index < this.state.courses.length && this.state.courses[index].attachmentId !== 0) {
-                                                    console.log(this.state.courses[index]);
                                                     this.openPDF(this.state.courses[index].attachmentId);
                                                 }
                                             }}>{index + 1}</Button>)
@@ -110,7 +111,6 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
     private openPDF(attachmentId: number) {
 
         attachmentService.getAttachmentById(attachmentId).then((data: any) => {
-            console.log(data);
             this.setState({
                 pdfVisible: true,
                 attachmentId,
@@ -124,9 +124,9 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
     private mapType() {
         switch (this.props.type) {
             case "courses":
-                return "Curs"
+                return "Curs";
             case "seminaries":
-                return "Seminar"
+                return "Seminar";
             default:
                 return "Laborator"
         }
@@ -162,7 +162,7 @@ export class CoursesViewer extends Component<CoursesViewerProperties, CoursesVie
                     <Button> <ArrowBackIosIcon className={"left-icon"} onClick={() => history.goBack()}/> </Button>
                 </div>
                 {this.renderTitle()}
-                <div className={"right1"}> Încărcare:<AttachmentDrop courseId={this.props.courseId}/></div>
+                <div className={"right1"}> Încărcare:<AttachmentDrop type={this.mapType()} courseId={this.props.courseId}/></div>
             </div>
         } else
             header = <div>

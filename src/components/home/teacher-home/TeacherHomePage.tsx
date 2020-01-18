@@ -160,7 +160,6 @@ export class TeacherHomePage extends Component<HomeProperties, HomeState> {
         comment.accepted = true;
         commentService.updateComment(comment)
             .then((comment) => {
-                console.log(comment);
                 this.setState({
                     comments: this.state.comments.filter(comm => comm.id != comment.id)
                 });

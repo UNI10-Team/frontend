@@ -1,14 +1,16 @@
 import React, {Component} from "react";
 import './attachmentDrop.css'
 import Button from "@material-ui/core/Button/Button";
-import Attachment from "../../interfaces/attachment";
+import Attachment, {UnsavedAttachment} from "../../interfaces/attachment";
+import {attachmentService} from "../../services/AttachmentService";
 
 interface AttachmentDropProperties {
     courseId: number;
+    type: string
 }
 
 interface AttachmentDropState {
-    files: Attachment[],
+    attachments: UnsavedAttachment[],
     error: string,
     msg: string
 }
@@ -18,7 +20,7 @@ export class AttachmentDrop extends Component<AttachmentDropProperties, Attachme
     constructor(props: Readonly<AttachmentDropProperties>) {
         super(props);
         this.state = {
-            files: [],
+            attachments: [],
             error: '',
             msg: ''
         }
@@ -26,32 +28,21 @@ export class AttachmentDrop extends Component<AttachmentDropProperties, Attachme
 
     render() {
         return (
-            <div onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} className={"browse buttons"}>
-                <input type="file" multiple onChange={this.onChange} className={"input"}/>
+            <div>
+                <input type="file" onChange={this.onChange} className={"input"}/>
                 <Button onClick={this.uploadFile} className={"upload"}>Încarcă</Button>
             </div>
         )
     }
-
-    onDragOver = (event: any) => {
-        event.preventDefault();
-        console.log("onDragOver")
-    };
-
-    onDragLeave = (event: any) => {
-        event.preventDefault();
-        console.log("onDragEnd")
+    uploadFile = () => {
+        this.state.attachments.forEach(attachment => attachmentService.saveAttachment(attachment));
     };
 
     onChange = (event: any) => {
-        this.uploadFile(event);
-    };
-
-    uploadFile = (event: any) => {
-        event.preventDefault();
         const inputFiles = event.target.files;
-        const {files} = this.state;
-        for (let i = 0; i < inputFiles.length; i++) {
+        const {attachments} = this.state;
+        // for (let i = 0; i < inputFiles.length; i++) {
+        for (let i = 0; i < 1; i++) {
             const file = inputFiles.item(i);
             if (file != null) {
                 const reader = new FileReader();
@@ -63,9 +54,9 @@ export class AttachmentDrop extends Component<AttachmentDropProperties, Attachme
                     const type = file.type;
                     const courseId = this.props.courseId;
                     if (data !== null) {
-                        files.push({id, name, data: data, type,courseId});
+                        attachments.push({id, name, data: data, type, courseId, courseType: this.props.type});
                         this.setState({
-                            files
+                            attachments
                         });
                     }
                 }
